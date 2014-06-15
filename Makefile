@@ -15,7 +15,7 @@ test:
 	mocha test
 
 doc: ../../gh-pages/doc/index.html
-doc/index.html:  $(LIB_SOURCES)
+../../gh-pages/doc/index.html:  $(LIB_SOURCES)
 	codo --name "ShioriJK" --title "ShioriJK Documentation" -o ../../gh-pages/doc src
 
 .PHONY: test doc
