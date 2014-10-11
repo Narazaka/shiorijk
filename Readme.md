@@ -15,7 +15,7 @@ ShioriJK is a library of SHIORI protocol parsers and containers implemented by J
 
 ### Usage
 
-See the SHIORI implementation [Miyo](https://github.com/Narazaka/miyoshiori.git) that is using ShioriJK.
+See the SHIORI implementation [MiyoJS](https://github.com/Narazaka/miyojs.git) that is using ShioriJK.
 
 Overview
 --------------------------

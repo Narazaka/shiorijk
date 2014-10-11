@@ -23,7 +23,7 @@ ShioriJKはSHIORIプロトコルパーサとコンテナのみを実装してい
 
 この説明でピンと来ない人には縁遠いものです。
 
-このライブラリを使用した栞の実装である[Miyo](https://github.com/Narazaka/miyoshiori.git)等をまずはご参照ください。
+このライブラリを使用した栞の実装である[MiyoJS](https://github.com/Narazaka/miyojs.git)等をまずはご参照ください。
 
 どんなかんじか
 --------------------------
