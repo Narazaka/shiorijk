@@ -200,6 +200,22 @@ class ShioriJK.Headers
 	# @return [String] header value
 	set_separated : (name, value, separator = '\x01') ->
 		@header[name] = value.join separator
+	# get header separated by \x02 and \x01 or some as an array
+	# @param name [String] header name
+	# @param separator1 [String] first level separator characters
+	# @param separator2 [String] second level separator characters
+	# @return [Array<Array<String>>] header values
+	get_separated2 : (name, separator1 = '\x02', separator2 = '\x01') ->
+		if @header[name]?
+			((element.split separator2) for element in @header[name].split separator1)
+	# set header separated by \x02 and \x01 or some as an array
+	# @param name [String] header name
+	# @param value [Array<Array<String>>] header values
+	# @param separator1 [String] first level separator characters
+	# @param separator2 [String] second level separator characters
+	# @return [String] header value
+	set_separated2 : (name, value, separator1 = '\x02', separator2 = '\x01') ->
+		@header[name] = (element.join separator2 for element in value).join separator1
 	# check that headers are line feed free
 	# @throw [String] if not
 	validate : ->

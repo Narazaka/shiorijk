@@ -68,6 +68,12 @@ describe 'headers', ->
 		mh.set_separated 'Reference0', ['Sakura', '0', '10']
 		(mh.get_separated 'Reference0').should.to.deep.equal ['Sakura', '0', '10']
 		(mh.get 'Reference0').should.be.equal 'Sakura\x010\x0110'
+	it 'should handle \\x02 and \\x01', ->
+		sites = [['home', 'http://narazaka.net/', 'narazaka.net.png', 'this is my home'], ['usada', 'http://usada.sakura.vg/', 'usada.png', 'materia']]
+		mh.set_separated2 'Value', sites
+		(mh.get_separated2 'Value').should.to.deep.equal sites
+		(mh.get_separated 'Value', '\x02').should.to.deep.equal ['home\x01http://narazaka.net/\x01narazaka.net.png\x01this is my home', 'usada\x01http://usada.sakura.vg/\x01usada.png\x01materia']
+		(mh.get 'Value').should.be.equal 'home\x01http://narazaka.net/\x01narazaka.net.png\x01this is my home\x02usada\x01http://usada.sakura.vg/\x01usada.png\x01materia'
 	it 'should make headers string', ->
 		mh.header.ID = 'OnBoot'
 		mh.header.Reference0 = 'master'
