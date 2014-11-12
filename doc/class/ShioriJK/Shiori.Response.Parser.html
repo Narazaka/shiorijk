@@ -21,88 +21,82 @@
     &raquo;
     <span class='title'>ShioriJK</span>
     &raquo;
-    <span class='title'>StatusLine</span>
+    <span class='title'>Shiori</span>
+    &raquo;
+    <span class='title'>Response</span>
+    &raquo;
+    <span class='title'>Parser</span>
   </div>
 </div>
     <div id='content'>
       <h1>
         Class:
-        ShioriJK.StatusLine
+        ShioriJK.Shiori.Response.Parser
       </h1>
       <table class='box'>
         <tr>
           <td>Defined in:</td>
-          <td>src\lib\shiorijk-container.coffee</td>
+          <td>src\lib\shiorijk-shiori-parser.coffee</td>
+        </tr>
+        <tr>
+          <td>Inherits:</td>
+          <td>
+            <a href='../../class/ShioriJK/Shiori.Parser.html'>ShioriJK.Shiori.Parser</a>
+          </td>
         </tr>
       </table>
       <h2>Overview</h2>
       <div class='docstring'>
-  <p>SHIORI Response Message&#39;s StatusLine Container</p>
+  <p>SHIORI Response parser</p>
 </div>
 <div class='tags'>
 </div>
-      <h2>Property Summary</h2>
-      <dl class='properties'>
-        <dt id='code-property'>
-          <span class='signature'>
-            (String)
-            <b>
-              code
-            </b>
-          </span>
-        </dt>
-        <dd class='desc'>
-          status code
-        </dd>
-        <dt id='protocol-property'>
-          <span class='signature'>
-            (String)
-            <b>
-              protocol
-            </b>
-          </span>
-        </dt>
-        <dd class='desc'>
-          protocol
-        </dd>
-        <dt id='version-property'>
-          <span class='signature'>
-            (String)
-            <b>
-              version
-            </b>
-          </span>
-        </dt>
-        <dd class='desc'>
-          version
-        </dd>
-        <dt id='message-property'>
-          <span class='signature'>
-            (Hash&lt;Number, String&gt;)
-            <b>
-              message
-            </b>
-          </span>
-        </dt>
-        <dd class='desc'>
-          status messages for status codes
-        </dd>
-      </dl>
       <h2>Instance Method Summary</h2>
       <ul class='summary'>
   <li>
     <span class='signature'>
-      <a href='#toString-dynamic'>
+      <a href='#result_builder-dynamic'>
         #
-(String)
-<b>toString</b><span>()</span>
+(void)
+<b>result_builder</b><span>()</span>
       </a>
     </span>
     <span class='desc'>
-      Message to string 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#parse_main-dynamic'>
+        #
+(void)
+<b>parse_main</b><span>(line)</span>
+      </a>
+    </span>
+    <span class='desc'>
     </span>
   </li>
 </ul>
+      <h2>
+        <small>Inherited Method Summary</small>
+        <h3 class='inherited'>
+          Methods inherited from
+          <a href='../../class/ShioriJK/Shiori.Parser.html'>ShioriJK.Shiori.Parser</a>
+        </h3>
+        <p class='inherited'>
+          <a href='../../class/ShioriJK/Shiori.Parser.html#is_parsing-dynamic'>#is_parsing</a>
+          <a href='../../class/ShioriJK/Shiori.Parser.html#is_parsing_end-dynamic'>#is_parsing_end</a>
+          <a href='../../class/ShioriJK/Shiori.Parser.html#get_result-dynamic'>#get_result</a>
+          <a href='../../class/ShioriJK/Shiori.Parser.html#result_builder-dynamic'>#result_builder</a>
+          <a href='../../class/ShioriJK/Shiori.Parser.html#begin_parse-dynamic'>#begin_parse</a>
+          <a href='../../class/ShioriJK/Shiori.Parser.html#end_parse-dynamic'>#end_parse</a>
+          <a href='../../class/ShioriJK/Shiori.Parser.html#abort_parse-dynamic'>#abort_parse</a>
+          <a href='../../class/ShioriJK/Shiori.Parser.html#parse-dynamic'>#parse</a>
+          <a href='../../class/ShioriJK/Shiori.Parser.html#parse_chunk-dynamic'>#parse_chunk</a>
+          <a href='../../class/ShioriJK/Shiori.Parser.html#parse_lines-dynamic'>#parse_lines</a>
+          <a href='../../class/ShioriJK/Shiori.Parser.html#parse_line-dynamic'>#parse_line</a>
+          <a href='../../class/ShioriJK/Shiori.Parser.html#parse_main-dynamic'>#parse_main</a>
+        </p>
+      </h2>
       <h2>Constructor Details</h2>
       <div class='methods'>
   <div class='method_details'>
@@ -118,28 +112,22 @@
       <h2>Instance Method Details</h2>
       <div class='methods'>
   <div class='method_details'>
-    <p class='signature' id='toString-dynamic'>
+    <p class='signature' id='result_builder-dynamic'>
       #
-(String)
-<b>toString</b><span>()</span>
+(void)
+<b>result_builder</b><span>()</span>
       <br>
     </p>
-    <div class='docstring'>
-  <p>Message to string</p>
-</div>
-<div class='tags'>
-  <h3>Returns:</h3>
-  <ul class='return'>
-    <li>
-      <span class='type'></span>
-      (
-        <tt>String</tt>
-      )
-      &mdash;
-      <span class='desc'>message string </span>
-    </li>
-  </ul>
-</div>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='parse_main-dynamic'>
+      #
+(void)
+<b>parse_main</b><span>(line)</span>
+      <br>
+    </p>
+    
   </div>
 </div>
     </div>

@@ -23,15 +23,15 @@
     &raquo;
     <span class='title'>Shiori</span>
     &raquo;
-    <span class='title'>Request</span>
+    <span class='title'>Header</span>
     &raquo;
-    <span class='title'>Section</span>
+    <span class='title'>Parser</span>
   </div>
 </div>
     <div id='content'>
       <h1>
         Class:
-        ShioriJK.Shiori.Request.Section
+        ShioriJK.Shiori.Header.Parser
       </h1>
       <table class='box'>
         <tr>
@@ -41,31 +41,77 @@
         <tr>
           <td>Inherits:</td>
           <td>
-            <a href='../../class/ShioriJK/Shiori.Section.html'>ShioriJK.Shiori.Section</a>
+            <a href='../../class/ShioriJK/Shiori.Parser.html'>ShioriJK.Shiori.Parser</a>
           </td>
         </tr>
       </table>
+      <h2>Direct Known Subclasses</h2>
+      <p class='children'>
+        <a href='../../class/ShioriJK/Shiori.Request.Header.Parser.html'>ShioriJK.Shiori.Request.Header.Parser</a>
+        <a href='../../class/ShioriJK/Shiori.Response.Header.Parser.html'>ShioriJK.Shiori.Response.Header.Parser</a>
+      </p>
+      <h2>Instance Method Summary</h2>
+      <ul class='summary'>
+  <li>
+    <span class='signature'>
+      <a href='#parse_main-dynamic'>
+        #
+(void)
+<b>parse_main</b><span>(line)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#parse_header-dynamic'>
+        #
+(void)
+<b>parse_header</b><span>(line)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+</ul>
       <h2>
         <small>Inherited Method Summary</small>
         <h3 class='inherited'>
           Methods inherited from
-          <a href='../../class/ShioriJK/Shiori.Section.html'>ShioriJK.Shiori.Section</a>
+          <a href='../../class/ShioriJK/Shiori.Parser.html'>ShioriJK.Shiori.Parser</a>
         </h3>
         <p class='inherited'>
-          <a href='../../class/ShioriJK/Shiori.Section.html#is-dynamic'>#is</a>
-          <a href='../../class/ShioriJK/Shiori.Section.html#next-dynamic'>#next</a>
-          <a href='../../class/ShioriJK/Shiori.Section.html#previous-dynamic'>#previous</a>
-          <a href='../../class/ShioriJK/Shiori.Section.html#set-dynamic'>#set</a>
-          <a href='../../class/ShioriJK/Shiori.Section.html#get-dynamic'>#get</a>
+          <a href='../../class/ShioriJK/Shiori.Parser.html#is_parsing-dynamic'>#is_parsing</a>
+          <a href='../../class/ShioriJK/Shiori.Parser.html#is_parsing_end-dynamic'>#is_parsing_end</a>
+          <a href='../../class/ShioriJK/Shiori.Parser.html#get_result-dynamic'>#get_result</a>
+          <a href='../../class/ShioriJK/Shiori.Parser.html#result_builder-dynamic'>#result_builder</a>
+          <a href='../../class/ShioriJK/Shiori.Parser.html#begin_parse-dynamic'>#begin_parse</a>
+          <a href='../../class/ShioriJK/Shiori.Parser.html#end_parse-dynamic'>#end_parse</a>
+          <a href='../../class/ShioriJK/Shiori.Parser.html#abort_parse-dynamic'>#abort_parse</a>
+          <a href='../../class/ShioriJK/Shiori.Parser.html#parse-dynamic'>#parse</a>
+          <a href='../../class/ShioriJK/Shiori.Parser.html#parse_chunk-dynamic'>#parse_chunk</a>
+          <a href='../../class/ShioriJK/Shiori.Parser.html#parse_lines-dynamic'>#parse_lines</a>
+          <a href='../../class/ShioriJK/Shiori.Parser.html#parse_line-dynamic'>#parse_line</a>
+          <a href='../../class/ShioriJK/Shiori.Parser.html#parse_main-dynamic'>#parse_main</a>
         </p>
       </h2>
-      <h2>Constructor Details</h2>
+      <h2>Instance Method Details</h2>
       <div class='methods'>
   <div class='method_details'>
-    <p class='signature' id='constructor-dynamic'>
+    <p class='signature' id='parse_main-dynamic'>
       #
 (void)
-<b>constructor</b><span>(sections = [&#39;idle&#39;, &#39;request_line&#39;, &#39;headers&#39;, &#39;end&#39;])</span>
+<b>parse_main</b><span>(line)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='parse_header-dynamic'>
+      #
+(void)
+<b>parse_header</b><span>(line)</span>
       <br>
     </p>
     
