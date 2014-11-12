@@ -112,6 +112,30 @@
   </li>
   <li>
     <span class='signature'>
+      <a href='#get_separated2-dynamic'>
+        #
+(Array&lt;Array&lt;String&gt;&gt;)
+<b>get_separated2</b><span>(name, separator1 = &#39;\x02&#39;, separator2 = &#39;\x01&#39;)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      get header separated by \x02 and \x01 or some as an array 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#set_separated2-dynamic'>
+        #
+(String)
+<b>set_separated2</b><span>(name, value, separator1 = &#39;\x02&#39;, separator2 = &#39;\x01&#39;)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      set header separated by \x02 and \x01 or some as an array 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
       <a href='#validate-dynamic'>
         #
 (void)
@@ -338,6 +362,130 @@
 </div>
   </div>
   <div class='method_details'>
+    <p class='signature' id='get_separated2-dynamic'>
+      #
+(Array&lt;Array&lt;String&gt;&gt;)
+<b>get_separated2</b><span>(name, separator1 = &#39;\x02&#39;, separator2 = &#39;\x01&#39;)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>get header separated by \x02 and \x01 or some as an array</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>name</span>
+      <span class='type'>
+        (
+          <tt>String</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>header name </span>
+    </li>
+    <li>
+      <span class='name'>separator1</span>
+      <span class='type'>
+        (
+          <tt>String</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>first level separator characters </span>
+    </li>
+    <li>
+      <span class='name'>separator2</span>
+      <span class='type'>
+        (
+          <tt>String</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>second level separator characters </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt>Array&lt;Array&lt;String&gt;&gt;</tt>
+      )
+      &mdash;
+      <span class='desc'>header values </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='set_separated2-dynamic'>
+      #
+(String)
+<b>set_separated2</b><span>(name, value, separator1 = &#39;\x02&#39;, separator2 = &#39;\x01&#39;)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>set header separated by \x02 and \x01 or some as an array</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>name</span>
+      <span class='type'>
+        (
+          <tt>String</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>header name </span>
+    </li>
+    <li>
+      <span class='name'>value</span>
+      <span class='type'>
+        (
+          <tt>Array&lt;Array&lt;String&gt;&gt;</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>header values </span>
+    </li>
+    <li>
+      <span class='name'>separator1</span>
+      <span class='type'>
+        (
+          <tt>String</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>first level separator characters </span>
+    </li>
+    <li>
+      <span class='name'>separator2</span>
+      <span class='type'>
+        (
+          <tt>String</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>second level separator characters </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt>String</tt>
+      )
+      &mdash;
+      <span class='desc'>header value </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
     <p class='signature' id='validate-dynamic'>
       #
 (void)
@@ -388,7 +536,7 @@
 </div>
     </div>
     <div id='footer'>
-  October 12, 14 16:06:58 by
+  November 13, 14 04:34:31 by
   <a href='https://github.com/coffeedoc/codo' title='CoffeeScript API documentation generator'>
     Codo
   </a>
