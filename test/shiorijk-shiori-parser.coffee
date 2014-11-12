@@ -89,3 +89,61 @@ describe 'ShioriJK.Shiori.Request.Parser', ->
 		mrl.version = '2.0'
 		p.parse "#{m}"
 		.should.be.deep.equal m
+
+describe 'ShioriJK.Shiori.Response.StatusLine.Parser', ->
+	p = null
+	msl = null
+	beforeEach ->
+		p = new ShioriJK.Shiori.Response.StatusLine.Parser()
+		msl = new ShioriJK.StatusLine()
+	it 'should throw on wrong input', ->
+		(-> p.parse_line '').should.throw /Invalid/
+		(-> p.parse_line 'SHIORI/3.0 512 is 2^9').should.throw /Invalid/
+	it 'should parse request line', ->
+		msl.protocol = 'SHIORI'
+		msl.version = '3.0'
+		msl.code = 200
+		p.parse_line msl.toString()
+		.should.to.be.deep.equal
+			result: msl
+			state: 'end'
+	it 'should parse old request line', ->
+		msl.protocol = 'SHIORI'
+		msl.version = '2.0'
+		msl.code = 204
+		p.parse_line msl.toString()
+		.should.to.be.deep.equal
+			result: msl
+			state: 'end'
+
+describe 'ShioriJK.Shiori.Response.Parser', ->
+	p = null
+	m = null
+	msl = null
+	mh = null
+	beforeEach ->
+		p = new ShioriJK.Shiori.Response.Parser()
+		m = new ShioriJK.Message.Response()
+		msl = new ShioriJK.StatusLine()
+		mh = new ShioriJK.Headers.Response()
+		m.status_line = msl
+		m.headers = mh
+	it 'should throw on wrong input', ->
+		(-> p.parse_line '').should.throw /Invalid/
+		(-> p.begin_parse()).should.throw /cannot/
+		(-> p.end_parse()).should.throw /abort/
+		(-> p.begin_parse()).should.not.throw()
+		(-> p.end_parse()).should.throw /abort/
+		(-> p.parse_line 'aaa').should.throw /Invalid/
+	it 'should parse headers', ->
+		msl.protocol = 'SHIORI'
+		msl.version = '3.0'
+		msl.code = 200
+		mh.header.Value = '\\h\\s[0]なんとか。\\e'
+		mh.header.Reference0 = 'さくら'
+		p.parse_chunk "#{m}"
+		.should.be.deep.equal
+			results: [m]
+			state: 'end'
+		p.parse "#{m}"
+		.should.be.deep.equal m

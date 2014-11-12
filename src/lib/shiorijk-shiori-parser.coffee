@@ -1,7 +1,11 @@
 ShioriJK.Shiori = {}
+ShioriJK.Shiori.Header = {}
 ShioriJK.Shiori.Request = {}
 ShioriJK.Shiori.Request.RequestLine = {}
 ShioriJK.Shiori.Request.Header = {}
+ShioriJK.Shiori.Response = {}
+ShioriJK.Shiori.Response.StatusLine = {}
+ShioriJK.Shiori.Response.Header = {}
 
 # parser base class
 class ShioriJK.Shiori.Parser
@@ -109,6 +113,25 @@ class ShioriJK.Shiori.Section
 	get : ->
 		@sections[@index]
 
+class ShioriJK.Shiori.Header.Parser extends ShioriJK.Shiori.Parser
+	parse_main : (line) ->
+		result = @parse_header line
+		if result.state == 'end'
+			@section.next()
+	parse_header : (line) ->
+		if line.length
+			if result = line.match /^(.+?): (.*)$/
+				@result.header[result[1]] = result[2]
+			else
+				throw 'Invalid header line : ' + line
+			state : 'continue'
+		else
+			state : 'end'
+
+class ShioriJK.Shiori.Header.Section extends ShioriJK.Shiori.Section
+	constructor : (@sections = ['idle', 'header', 'end']) ->
+		@index = 0
+
 # SHIORI Request parser
 class ShioriJK.Shiori.Request.Parser extends ShioriJK.Shiori.Parser
 	constructor : () ->
@@ -145,29 +168,62 @@ class ShioriJK.Shiori.Request.RequestLine.Parser
 		result : @result
 		state : 'end'
 
-class ShioriJK.Shiori.Request.Header.Parser extends ShioriJK.Shiori.Parser
+class ShioriJK.Shiori.Request.Header.Parser extends ShioriJK.Shiori.Header.Parser
 	constructor : () ->
 		@section = new ShioriJK.Shiori.Request.Header.Section()
 	result_builder : ->
 		new ShioriJK.Headers.Request()
-	parse_main : (line) ->
-		result = @parse_header line
-		if result.state == 'end'
-			@section.next()
-	parse_header : (line) ->
-		if line.length
-			if result = line.match /^(.+?): (.*)$/
-				@result.header[result[1]] = result[2]
-			else
-				throw 'Invalid header line : ' + line
-			state : 'continue'
-		else
-			state : 'end'
 
 class ShioriJK.Shiori.Request.Section extends ShioriJK.Shiori.Section
 	constructor : (@sections = ['idle', 'request_line', 'headers', 'end']) ->
 		@index = 0
 
-class ShioriJK.Shiori.Request.Header.Section extends ShioriJK.Shiori.Section
-	constructor : (@sections = ['idle', 'header', 'end']) ->
+class ShioriJK.Shiori.Request.Header.Section extends ShioriJK.Shiori.Header.Section
+
+# SHIORI Response parser
+class ShioriJK.Shiori.Response.Parser extends ShioriJK.Shiori.Parser
+	constructor : () ->
+		@parsers = {
+			status_line : new ShioriJK.Shiori.Response.StatusLine.Parser()
+			headers : new ShioriJK.Shiori.Response.Header.Parser()
+		}
+		@section = new ShioriJK.Shiori.Response.Section()
+	result_builder : ->
+		new ShioriJK.Message.Response(no_prepare: true)
+	parse_main : (line) ->
+		parser = @parsers[@section.get()]
+		parser_result = parser.parse_line line
+		if parser_result.state == 'end'
+			@result[@section.get()] = parser_result.result
+			@section.next()
+
+class ShioriJK.Shiori.Response.StatusLine.Parser
+	constructor : () ->
+	result_builder : ->
+		new ShioriJK.StatusLine()
+	parse : (transaction) ->
+		@parse_chunk transaction
+	parse_chunk : (chunk) ->
+		@parse_line chunk
+	parse_line : (line) ->
+		result = line.match /^SHIORI\/([0-9.]+) (\d+) (.+)$/
+		unless result
+			throw 'Invalid status line : ' + line
+		@result = @result_builder()
+		@result.protocol = 'SHIORI'
+		@result.version = result[1]
+		@result.code = result[2] - 0
+		result : @result
+		state : 'end'
+
+class ShioriJK.Shiori.Response.Header.Parser extends ShioriJK.Shiori.Header.Parser
+	constructor : () ->
+		@section = new ShioriJK.Shiori.Response.Header.Section()
+	result_builder : ->
+		new ShioriJK.Headers.Response()
+
+class ShioriJK.Shiori.Response.Section extends ShioriJK.Shiori.Section
+	constructor : (@sections = ['idle', 'status_line', 'headers', 'end']) ->
 		@index = 0
+
+class ShioriJK.Shiori.Response.Header.Section extends ShioriJK.Shiori.Header.Section
