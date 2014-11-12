@@ -86,6 +86,10 @@ describe 'headers', ->
 			Reference7: さくら
 			
 		'''.replace /\r?\n/g, '\r\n'
+	it 'should throw when toString() if header contains line feed', ->
+		mh.header.ID = 'OnTest'
+		mh.header.Reference0 = 'foo\nbar'
+		(-> "#{mh}").should.throw /line feed/
 
 describe 'request message', ->
 	m = null
