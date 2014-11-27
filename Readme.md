@@ -8,6 +8,8 @@ Installation
 
     npm install shiorijk
 
+    bower install shiorijk
+
 What is ShioriJK ?
 --------------------------
 

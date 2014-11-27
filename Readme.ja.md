@@ -8,6 +8,8 @@ ShioriJK - 「伺か」のSHIORIサブシステム基盤
 
     npm install shiorijk
 
+    bower install shiorijk
+
 ShioriJKとは何か?
 --------------------------
 
