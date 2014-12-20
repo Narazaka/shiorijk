@@ -58,7 +58,7 @@ class ShioriJK.RequestLine
 					@validate_method_version method, @version
 				else if method?
 					switch method
-						when 'GET', 'NOTIFY', 'GET Version', 'GET Sentence', 'GET Word', 'GET Status', 'TEACH', 'GET String', 'NOTIFY OwnerGhostName', 'TRANSLATE Sentence'
+						when 'GET', 'NOTIFY', 'GET Version', 'GET Sentence', 'GET Word', 'GET Status', 'TEACH', 'GET String', 'NOTIFY OwnerGhostName', 'NOTIFY OtherGhostName', 'TRANSLATE Sentence'
 						else
 							throw 'Invalid protocol method : ' + method
 				@arguments.method = method
@@ -88,7 +88,7 @@ class ShioriJK.RequestLine
 		switch version
 			when '2.0'
 				switch method
-					when 'GET Version', 'NOTIFY', 'GET Sentence', 'GET Word', 'GET Status'
+					when 'GET Version', 'NOTIFY OwnerGhostName', 'GET Sentence', 'GET Word', 'GET Status'
 						is_valid = true
 			when '2.2'
 				switch method
@@ -96,7 +96,7 @@ class ShioriJK.RequestLine
 						is_valid = true
 			when '2.3'
 				switch method
-					when 'NOTIFY', 'GET Sentence'
+					when 'NOTIFY OtherGhostName', 'GET Sentence'
 						is_valid = true
 			when '2.4'
 				switch method
@@ -108,7 +108,7 @@ class ShioriJK.RequestLine
 						is_valid = true
 			when '2.6' # spec is unknown
 				switch method
-					when 'GET Sentence', 'GET Status', 'GET String', 'NOTIFY OwnerGhostName', 'GET Version', 'TRANSLATE Sentence'
+					when 'GET Sentence', 'GET Status', 'GET String', 'NOTIFY OwnerGhostName', 'NOTIFY OtherGhostName', 'GET Version', 'TRANSLATE Sentence'
 						is_valid = true
 			when '3.0'
 				switch method
