@@ -1,4 +1,4 @@
-ShioriJK - 「伺か」のSHIORIサブシステム基盤
+ShioriJK - SHIORI/3.x パーサ/コンテナ
 =============================================
 
 **つまるところ、栞はJKである**
@@ -25,7 +25,7 @@ ShioriJKはSHIORIプロトコルパーサとコンテナのみを実装してい
 
 この説明でピンと来ない人には縁遠いものです。
 
-このライブラリを使用した栞の実装である[MiyoJS](https://github.com/Narazaka/miyojs.git)等をまずはご参照ください。
+このライブラリを使用した栞の実装である[MiyoJS](https://github.com/Narazaka/miyojs)や、ベースウェアの実装である[イカガカ](https://github.com/Ikagaka/Ikagaka.demo)をまずはご参照ください。
 
 どんなかんじか
 --------------------------

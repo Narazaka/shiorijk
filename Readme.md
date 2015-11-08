@@ -1,4 +1,4 @@
-ShioriJK - basis of Ukagaka SHIORI subsystem
+ShioriJK - SHIORI/3.x Parser/Container
 =============================================
 
 **Do you know that SHIORI is not JS but JK ?**
@@ -23,8 +23,6 @@ Overview
 --------------------------
 
 Pass SHIORI request transaction or its chunk to ShioriJK then it parses the request and returns parsed request data in the container.
-
-Currently only SHIORI/3.0 is accepted.
 
 Document
 --------------------------
