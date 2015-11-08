@@ -1,6 +1,6 @@
 {
   "name": "shiorijk",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "SHIORI is JK - basis of Ukagaka SHIORI subsystem",
   "homepage": "http://narazaka.github.io/shiorijk/",
   "main": "index.js",
