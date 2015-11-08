@@ -83,6 +83,7 @@ gulp.task 'doc', ->
     .pipe $.codo
       name: "ShioriJK"
       title: "ShioriJK Documentation"
+      extra: "Readme.ja.md"
 
 gulp.task 'watch', ->
   gulp.start ['js', 'test-cli', 'test-browser-watch', 'doc']
