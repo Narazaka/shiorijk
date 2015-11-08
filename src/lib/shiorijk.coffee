@@ -3,4 +3,4 @@
 ShioriJK = {}
 
 if module? and module.exports?
-	module.exports = ShioriJK
+  module.exports = ShioriJK
