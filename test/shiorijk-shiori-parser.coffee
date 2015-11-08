@@ -1,6 +1,7 @@
-chai = require 'chai'
+if require?
+  chai = require 'chai'
+  ShioriJK = require '../lib/shiorijk.js'
 chai.should()
-ShioriJK = require '../lib/shiorijk.js'
 
 describe 'ShioriJK.Shiori.Request.RequestLine.Parser', ->
 	p = null
