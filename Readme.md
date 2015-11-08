@@ -31,6 +31,14 @@ See [http://narazaka.github.io/shiorijk/](http://narazaka.github.io/shiorijk/) o
 
 Also you can found the code snippets in test/.
 
+Build
+--------------------------
+
+    git submodule init
+    git submodule update
+    npm install
+    gulp
+
 License
 --------------------------
 
