@@ -1,9 +1,13 @@
 {
   "name": "shiorijk",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "SHIORI/3.x Parser/Container",
   "homepage": "http://narazaka.github.io/shiorijk/",
   "main": "index.js",
+  "typings": "./lib/shiorijk.d.ts",
+  "typescript": {
+    "definition": "./lib/shiorijk.d.ts"
+  },
   "scripts": {
     "test": "gulp test-cli && gulp test-browser-cli",
     "codecov": "gulp test-cli && cat coverage/lcov.info | codecov"
