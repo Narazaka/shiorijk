@@ -89,7 +89,7 @@
     <p class='signature' id='constructor-dynamic'>
       #
 (void)
-<b>constructor</b><span>(options)</span>
+<b>constructor</b><span>({request_line, headers, no_prepare} = {})</span>
       <br>
     </p>
     <div class='docstring'>
@@ -99,19 +99,25 @@
   <h3>Parameters:</h3>
   <ul class='param'>
     <li>
-      <span class='name'>options</span>
+      <span class='name'>request_line</span>
       <span class='type'>
         (
-          <tt>Hash</tt>
+          <tt>Hash|ShioriJK.Requestline</tt>
         )
       </span>
+      &mdash;
+      <span class='desc'>request line </span>
     </li>
-  </ul>
-  <h3>
-    Options Hash:
-    (options):
-  </h3>
-  <ul class='options'>
+    <li>
+      <span class='name'>headers</span>
+      <span class='type'>
+        (
+          <tt>Hash|ShioriJK.Headers.Request</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>request headers </span>
+    </li>
     <li>
       <span class='name'>no_prepare</span>
       <span class='type'>
@@ -120,7 +126,7 @@
         )
       </span>
       &mdash;
-      <span class='desc'>do not prepare RequestLine and Headers by the constructor </span>
+      <span class='desc'>do not prepare default RequestLine and Headers by the constructor </span>
     </li>
   </ul>
 </div>
@@ -155,7 +161,7 @@
 </div>
     </div>
     <div id='footer'>
-  November 08, 15 13:06:20 by
+  December 26, 15 13:32:47 by
   <a href='https://github.com/coffeedoc/codo' title='CoffeeScript API documentation generator'>
     Codo
   </a>
