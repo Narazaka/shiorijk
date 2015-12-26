@@ -7,12 +7,26 @@ ShioriJK.Message = {}
 # SHIORI Request Message Container
 class ShioriJK.Message.Request
   # initialize inner containers
-  # @param options [Hash]
-  # @option options [Boolean] no_prepare do not prepare RequestLine and Headers by the constructor
-  constructor : (options) ->
-    unless options? and options.no_prepare
-      @request_line = new ShioriJK.RequestLine()
-      @headers = new ShioriJK.Headers.Request()
+  # @param request_line [Hash|ShioriJK.Requestline] request line
+  # @param headers [Hash|ShioriJK.Headers.Request] request headers
+  # @param no_prepare [Boolean] do not prepare default RequestLine and Headers by the constructor
+  constructor : ({request_line, headers, no_prepare} = {}) ->
+    @request_line =
+      if request_line?
+        if request_line instanceof ShioriJK.RequestLine
+          request_line
+        else
+          new ShioriJK.RequestLine(request_line)
+      else if not no_prepare
+        new ShioriJK.RequestLine()
+    @headers =
+      if headers?
+        if headers instanceof ShioriJK.Headers.Request
+          headers
+        else
+          new ShioriJK.Headers.Request(headers)
+      else
+        new ShioriJK.Headers.Request()
   # @property [ShioriJK.RequestLine] RequestLine Container
   request_line: null
   # @property [ShioriJK.Headers.Request] Headers Container
@@ -25,12 +39,26 @@ class ShioriJK.Message.Request
 # SHIORI Response Message Container
 class ShioriJK.Message.Response
   # initialize inner containers
-  # @param options [Hash]
-  # @option options [Boolean] no_prepare do not prepare StatusLine and Headers by the constructor
-  constructor : (options) ->
-    unless options? and options.no_prepare
-      @status_line = new ShioriJK.StatusLine()
-      @headers = new ShioriJK.Headers.Response()
+  # @param status_line [Hash|ShioriJK.Statusline] status line
+  # @param headers [Hash|ShioriJK.Headers.Response] response headers
+  # @param no_prepare [Boolean] do not prepare default StatusLine and Headers by the constructor
+  constructor : ({status_line, headers, no_prepare} = {}) ->
+    @status_line =
+      if status_line?
+        if status_line instanceof ShioriJK.StatusLine
+          status_line
+        else
+          new ShioriJK.StatusLine(status_line)
+      else if not no_prepare
+        new ShioriJK.StatusLine()
+    @headers =
+      if headers?
+        if headers instanceof ShioriJK.Headers.Response
+          headers
+        else
+          new ShioriJK.Headers.Response(headers)
+      else
+        new ShioriJK.Headers.Response()
   # @property [ShioriJK.RequestLine] StatusLine Container
   status_line: null
   # @property [ShioriJK.Headers.Request] Headers Container
@@ -42,8 +70,15 @@ class ShioriJK.Message.Response
 
 # SHIORI Request Message's RequestLine Container
 class ShioriJK.RequestLine
-  constructor : ->
+  # initialize request line
+  # @param method [string] method
+  # @param protocol [string] protocol (default = 'SHIORI')
+  # @param version [string] version
+  constructor : ({method, protocol, version} = {}) ->
     @arguments = {}
+    if method? then @method = method
+    @protocol = protocol || 'SHIORI' # for codo
+    if version? then @version = version
   # @property [String] request method
   method: null
   # @property [String] protocol
@@ -123,8 +158,15 @@ class ShioriJK.RequestLine
 
 # SHIORI Response Message's StatusLine Container
 class ShioriJK.StatusLine
-  constructor : ->
-    @arguments = {protocol: 'SHIORI'}
+  # initialize status line
+  # @param code [number] status code
+  # @param protocol [string] protocol (default = 'SHIORI')
+  # @param version [string] version
+  constructor : ({code, protocol, version} = {}) ->
+    @arguments = {}
+    if code? then @code = code
+    @protocol = protocol || 'SHIORI' # for codo
+    if version? then @version = version
   # @property [String] status code
   code: null
   # @property [String] protocol
@@ -170,8 +212,9 @@ class ShioriJK.StatusLine
 
 # SHIORI Message Headers Container
 class ShioriJK.Headers
-  constructor : ->
-    @header = {}
+  # initialize headers
+  # @param header [Hash<String, String>] headers
+  constructor : (@header = {}) ->
   # @property [Hash<String, String>] headers
   header: null
   # get header

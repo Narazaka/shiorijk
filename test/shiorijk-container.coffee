@@ -28,6 +28,21 @@ describe 'request line', ->
     mrl.version = '3.0'
     mrl.method = 'GET'
     "#{mrl}".should.to.be.equal 'GET SHIORI/3.0'
+  it 'should be able to initialize with values', ->
+    mrl = new ShioriJK.RequestLine(method: 'GET', protocol: 'SHIORI', version: '3.0')
+    mrl.method.should.be.equal 'GET'
+    mrl.protocol.should.be.equal 'SHIORI'
+    mrl.version.should.be.equal '3.0'
+  it 'should be able to initialize with default values', ->
+    mrl = new ShioriJK.RequestLine(method: 'GET', version: '3.0')
+    mrl.method.should.be.equal 'GET'
+    mrl.protocol.should.be.equal 'SHIORI'
+    mrl.version.should.be.equal '3.0'
+  it 'should throw on wrong initialize', ->
+    (-> new ShioriJK.RequestLine(method: 'GETTT')).should.throw /Invalid/
+    (-> new ShioriJK.RequestLine(protocol: 'SAORI')).should.throw /Invalid/
+    (-> new ShioriJK.RequestLine(version: '2.9')).should.throw /Invalid/
+    (-> new ShioriJK.RequestLine(method: 'GET', version: '2.6')).should.throw /Invalid/
 
 describe 'status line', ->
   msl = null
@@ -52,6 +67,20 @@ describe 'status line', ->
     msl.version = '3.0'
     msl.method = 'GET'
     "#{msl}".should.to.be.equal 'SHIORI/3.0 200 OK'
+  it 'should be able to initialize with values', ->
+    mrl = new ShioriJK.StatusLine(code: 200, protocol: 'SHIORI', version: '3.0')
+    mrl.code.should.be.equal 200
+    mrl.protocol.should.be.equal 'SHIORI'
+    mrl.version.should.be.equal '3.0'
+  it 'should be able to initialize with default values', ->
+    mrl = new ShioriJK.StatusLine(code: 200, version: '3.0')
+    mrl.code.should.be.equal 200
+    mrl.protocol.should.be.equal 'SHIORI'
+    mrl.version.should.be.equal '3.0'
+  it 'should throw on wrong initialize', ->
+    (-> new ShioriJK.StatusLine(code: 501)).should.throw /Invalid/
+    (-> new ShioriJK.StatusLine(protocol: 'SAORI')).should.throw /Invalid/
+    (-> new ShioriJK.StatusLine(version: '2.9')).should.throw /Invalid/
 
 describe 'headers', ->
   mh = null
@@ -91,6 +120,10 @@ describe 'headers', ->
     mh.header.ID = 'OnTest'
     mh.header.Reference0 = 'foo\nbar'
     (-> "#{mh}").should.throw /line feed/
+  it 'should be able to initialize with values', ->
+    mh = new ShioriJK.Headers(ID: 'OnBoot', Reference6: 'halt')
+    mh.header.ID.should.be.equal 'OnBoot'
+    mh.header.Reference6.should.be.equal 'halt'
 
 describe 'request message', ->
   m = null
@@ -119,6 +152,18 @@ describe 'request message', ->
       
       
     '''.replace /\r?\n/g, '\r\n'
+  it 'should be able to initialize with hash values', ->
+    m = new ShioriJK.Message.Request(request_line: {method: 'NOTIFY', version: '3.0'}, headers: {ID: 'OnBoot'})
+    m.request_line.method.should.be.equal 'NOTIFY'
+    m.request_line.version.should.be.equal '3.0'
+    m.headers.header.ID.should.be.equal 'OnBoot'
+  it 'should be able to initialize with class values', ->
+    mrl = new ShioriJK.RequestLine(method: 'NOTIFY', version: '3.0')
+    mh = new ShioriJK.Headers.Request(ID: 'OnBoot')
+    m = new ShioriJK.Message.Request(request_line: mrl, headers: mh)
+    m.request_line.method.should.be.equal 'NOTIFY'
+    m.request_line.version.should.be.equal '3.0'
+    m.headers.header.ID.should.be.equal 'OnBoot'
 
 describe 'response message', ->
   m = null
@@ -143,3 +188,15 @@ describe 'response message', ->
       
       
     '''.replace /\r?\n/g, '\r\n'
+  it 'should be able to initialize with hash values', ->
+    m = new ShioriJK.Message.Response(status_line: {code: 204, version: '3.0'}, headers: {Value: 'value'})
+    m.status_line.code.should.be.equal 204
+    m.status_line.version.should.be.equal '3.0'
+    m.headers.header.Value.should.be.equal 'value'
+  it 'should be able to initialize with class values', ->
+    msl = new ShioriJK.StatusLine(code: 204, version: '3.0')
+    mh = new ShioriJK.Headers.Response(Value: 'value')
+    m = new ShioriJK.Message.Response(status_line: msl, headers: mh)
+    m.status_line.code.should.be.equal 204
+    m.status_line.version.should.be.equal '3.0'
+    m.headers.header.Value.should.be.equal 'value'
