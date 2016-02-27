@@ -1,0 +1,23 @@
+version: "{build}"
+branches:
+  except:
+    - gh-pages
+install:
+  - choco install firefox
+  - choco install googlechrome
+  - ps: Install-Product node $env:nodejs_version
+  - node --version
+  - npm install -g npm
+  - npm install -g bower
+  - npm --version
+  - bower --version
+  - npm install
+  - bower install
+test_script:
+  - npm test
+build: off
+deploy: off
+environment:
+  matrix:
+    - nodejs_version: 4
+    - nodejs_version: 5
