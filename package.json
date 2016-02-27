@@ -9,7 +9,7 @@
     "definition": "./lib/shiorijk.d.ts"
   },
   "scripts": {
-    "test": "gulp test-cli && gulp test-browser-cli",
+    "test": "gulp test",
     "codecov": "gulp test-cli && cat coverage/lcov.info | codecov"
   },
   "dependencies": {},
