@@ -263,7 +263,7 @@ class ShioriJK.Headers
   # @throw [String] if not
   validate : ->
     for name, value of @header
-      if value.match /\n/
+      if "#{value}".match /\n/
         throw 'Invalid header value - line feed found : [' + name + '] : ' + value
   # Message to string
   # @return [String] message string
