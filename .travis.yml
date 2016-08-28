@@ -1,13 +1,13 @@
 language: node_js
 node_js:
-  - "4.1"
+  - 5
+os:
+  - linux
+  - osx
 before_script:
-  - sudo apt-get update
-  - sudo apt-get install --assume-yes fonts-liberation libappindicator1
-  - wget -O /tmp/chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-  - sudo dpkg -i /tmp/chrome.deb
-  - export CHROME_BIN=google-chrome-stable
   - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
+  - if [ "${TRAVIS_OS_NAME}" = "linux" ]; then export CHROME_BIN=chromium-browser ; fi
+  - if [ "${TRAVIS_OS_NAME}" = "linux" ]; then sh -e /etc/init.d/xvfb start ; fi
+  - sleep 3 # give xvfb some time to start
 after_success:
-  - npm run codecov
+  - bash <(curl -s https://codecov.io/bash)
