@@ -124,6 +124,9 @@ describe 'headers', ->
     mh = new ShioriJK.Headers(ID: 'OnBoot', Reference6: 'halt')
     mh.header.ID.should.be.equal 'OnBoot'
     mh.header.Reference6.should.be.equal 'halt'
+  it 'should get references array', ->
+    mh = new ShioriJK.Headers(ID: 'OnBoot', Reference0: 'master', Reference6: '', Reference7: '')
+    mh.references().should.be.deep.equal ['master', undefined, undefined, undefined, undefined, undefined, '', '']
 
 describe 'request message', ->
   m = null

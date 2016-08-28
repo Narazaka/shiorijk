@@ -259,6 +259,14 @@ class ShioriJK.Headers
   # @return [String] header value
   set_separated2 : (name, value, separator1 = '\x02', separator2 = '\x01') ->
     @header[name] = (element.join separator2 for element in value).join separator1
+  # get Reference* headers
+  # @return [Array<String | undefined>] Reference* header values
+  references : ->
+    reference_max_index = -1
+    for name of @header
+      if (result = /^Reference(\d+)$/.exec(name)) and reference_max_index < result[1] - 0
+        reference_max_index = result[1] - 0
+    (@header["Reference#{index}"] for index in [0 ... reference_max_index + 1])
   # check that headers are line feed free
   # @throw [String] if not
   validate : ->
