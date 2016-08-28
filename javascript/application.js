@@ -11725,5 +11725,28 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
   });
 
 }).call(this);
+(function() {
+  $(function() {
+    var parser, starter;
+    if ($('frameset').length > 0) {
+      parser = document.createElement('a');
+      parser.href = location.href;
+      starter = parser.hash.substr(1);
+      if (starter.length > 0) {
+        $('#content')[0].contentWindow.location.href = starter;
+      }
+      return $('#content').load(function() {
+        var hash;
+        hash = encodeURI(this.contentWindow.location.href);
+        if (history.pushState) {
+          return history.replaceState(null, document.title, '#' + hash);
+        } else {
+          return location.hash = hash;
+        }
+      });
+    }
+  });
+
+}).call(this);
 
 ;
