@@ -1,7 +1,7 @@
 module.exports = (config) ->
   config.set
     basePath: ''
-    frameworks: [ 'detectBrowsers', 'mocha-debug', 'mocha' ]
+    frameworks: [ 'detectBrowsers', 'mocha' ]
     files: [
       'node_modules/chai/chai.js'
       'src/lib/shiorijk.coffee'
@@ -24,7 +24,7 @@ module.exports = (config) ->
         path.replace /\.coffee$/, '.js'
     coverageReporter:
       reporters: [{type: 'lcov'}]
-    reporters: [ 'progress', 'coverage' ]
+    reporters: [ 'mocha-own', 'coverage' ]
     port: 9876
     colors: true
     logLevel: config.LOG_INFO
