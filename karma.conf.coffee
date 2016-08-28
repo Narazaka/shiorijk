@@ -25,6 +25,19 @@ module.exports = (config) ->
     coverageReporter:
       reporters: [{type: 'lcov'}]
     reporters: [ 'mocha-own', 'coverage' ]
+    detectBrowsers:
+      postDetection: (availableBrowsers) ->
+        result = availableBrowsers
+        if process.env.TRAVIS
+          chrome_index = availableBrowsers.indexOf('Chrome')
+          if chrome_index >= 0
+            result.splice(chrome_index, 1)
+            result.push('Chrome_travis_ci')
+        result
+    customLaunchers:
+      Chrome_travis_ci:
+         base: 'Chrome'
+         flags: ['--no-sandbox']
     port: 9876
     colors: true
     logLevel: config.LOG_INFO
