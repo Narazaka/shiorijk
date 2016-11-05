@@ -19,7 +19,7 @@ declare module ShioriJK{
       /**
        * @param options options
        */
-      constructor(options: {request_line?: RequestLine | {method?: string, protocol?: string, version?: string}, headers?: Headers.Request | {[name: string]: string}, no_prepare: boolean});
+      constructor(options?: {request_line?: RequestLine | {method?: string, protocol?: string, version?: string}, headers?: Headers.Request | {[name: string]: string}, no_prepare?: boolean});
       /**
        * @returns SHIORI Request Message string
        */
@@ -28,7 +28,7 @@ declare module ShioriJK{
     export class Response{
       status_line: StatusLine;
       headers: Headers.Response;
-      constructor(options: {status_line?: StatusLine | {code?: string, protocol?: string, version?: string}, headers?: Headers.Response | {[name: string]: string}, no_prepare: boolean});
+      constructor(options?: {status_line?: StatusLine | {code?: string, protocol?: string, version?: string}, headers?: Headers.Response | {[name: string]: string}, no_prepare?: boolean});
       toString(): string;
     }
   }
