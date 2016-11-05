@@ -19,7 +19,7 @@ declare module ShioriJK{
       /**
        * @param options options
        */
-      constructor(options?: {request_line?: RequestLine | {method?: string, protocol?: string, version?: string}, headers?: Headers.Request | {[name: string]: string}, no_prepare?: boolean});
+      constructor(options?: {request_line?: RequestLine | {method?: string | null, protocol?: string | null, version?: string | null}, headers?: Headers.Request | {[name: string]: string}, no_prepare?: boolean});
       /**
        * @returns SHIORI Request Message string
        */
@@ -28,7 +28,7 @@ declare module ShioriJK{
     export class Response{
       status_line: StatusLine;
       headers: Headers.Response;
-      constructor(options?: {status_line?: StatusLine | {code?: string, protocol?: string, version?: string}, headers?: Headers.Response | {[name: string]: string}, no_prepare?: boolean});
+      constructor(options?: {status_line?: StatusLine | {code?: string | null, protocol?: string | null, version?: string | null}, headers?: Headers.Response | {[name: string]: string}, no_prepare?: boolean});
       toString(): string;
     }
   }
@@ -37,7 +37,7 @@ declare module ShioriJK{
     method: string | null;
     protocol: string | null;
     version: string | null;
-    constructor(properties?: {method?: string, protocol?: string, version?: string});
+    constructor(properties?: {method?: string | null, protocol?: string | null, version?: string | null});
     validate_method_version(method: string, version: number): void;
     toString(): string;
   }
@@ -47,13 +47,13 @@ declare module ShioriJK{
     protocol: string | null;
     version: string | null;
     message: {[code: number]: string};
-    constructor(properties?: {code?: string, protocol?: string, version?: string});
+    constructor(properties?: {code?: string | null, protocol?: string | null, version?: string | null});
     toString(): string;
   }
 
   export class Headers{
     header: {[name: string]: string};
-    constructor(header: {[name: string]: string});
+    constructor(header?: {[name: string]: string});
     get(name: string): string | undefined;
     set(name: string, value: string): string;
     get_separated(name: string, separator?: string): string[];
