@@ -1,0 +1,8 @@
+{
+  "files": [
+    "src/**/*.coffee",
+    "test/**/*.coffee",
+    "/*.js",
+    "/*.coffee"
+  ]
+}
