@@ -6,4 +6,3 @@ coverage
 !.gitignore
 !.travis.yml
 !.codeclimate.yml
-!.bithoundrc
