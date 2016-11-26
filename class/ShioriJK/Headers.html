@@ -170,6 +170,43 @@
       Message to string 
     </span>
   </li>
+  <li>
+    <span class='signature'>
+      <a href='#Reference-dynamic'>
+        #
+(String)
+<b>Reference</b><span>(index)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Reference* header (SHIORI/2.2-2.6,3.x) 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#ReferenceSeparated-dynamic'>
+        #
+(Array&lt;String&gt;)
+<b>ReferenceSeparated</b><span>(index, separator = &#39;\x01&#39;)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Value header (GET SHIORI/3.0) Reference* header (SHIORI/2.2-2.6,3.x)
+
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#ReferenceSeparated2-dynamic'>
+        #
+(Array&lt;Array&lt;String&gt;&gt;)
+<b>ReferenceSeparated2</b><span>(index, separator1 = &#39;\x02&#39;, separator2 = &#39;\x01&#39;)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Reference* header (SHIORI/2.2-2.6,3.x) 
+    </span>
+  </li>
 </ul>
       <h2>Constructor Details</h2>
       <div class='methods'>
@@ -582,6 +619,148 @@
       )
       &mdash;
       <span class='desc'>message string </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='Reference-dynamic'>
+      #
+(String)
+<b>Reference</b><span>(index)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Reference* header (SHIORI/2.2-2.6,3.x)</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>index</span>
+      <span class='type'>
+        (
+          <tt>Number</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>reference index </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt>String</tt>
+      )
+      &mdash;
+      <span class='desc'>header value </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='ReferenceSeparated-dynamic'>
+      #
+(Array&lt;String&gt;)
+<b>ReferenceSeparated</b><span>(index, separator = &#39;\x01&#39;)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Value header (GET SHIORI/3.0)
+Reference* header (SHIORI/2.2-2.6,3.x)</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>index</span>
+      <span class='type'>
+        (
+          <tt>Number</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>reference index </span>
+    </li>
+    <li>
+      <span class='name'>separator</span>
+      <span class='type'>
+        (
+          <tt>String</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>separator characters </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt>Array&lt;String&gt;</tt>
+      )
+      &mdash;
+      <span class='desc'>header values </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='ReferenceSeparated2-dynamic'>
+      #
+(Array&lt;Array&lt;String&gt;&gt;)
+<b>ReferenceSeparated2</b><span>(index, separator1 = &#39;\x02&#39;, separator2 = &#39;\x01&#39;)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Reference* header (SHIORI/2.2-2.6,3.x)</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>index</span>
+      <span class='type'>
+        (
+          <tt>Number</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>reference index </span>
+    </li>
+    <li>
+      <span class='name'>separator1</span>
+      <span class='type'>
+        (
+          <tt>String</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>first level separator characters </span>
+    </li>
+    <li>
+      <span class='name'>separator2</span>
+      <span class='type'>
+        (
+          <tt>String</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>second level separator characters </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt>Array&lt;Array&lt;String&gt;&gt;</tt>
+      )
+      &mdash;
+      <span class='desc'>header values </span>
     </li>
   </ul>
 </div>

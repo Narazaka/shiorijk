@@ -50,6 +50,85 @@
 <div class='tags'>
 </div>
       <h2>Property Summary</h2>
+      <dl class='properties'>
+        <dt id='BalloonOffset-property'>
+          <span class='signature'>
+            (Array&lt;Array&lt;Number&gt;&gt;)
+            <b>
+              BalloonOffset
+            </b>
+          </span>
+        </dt>
+        <dd class='desc'>
+          BalloonOffset header (SHIORI/2.0) 
+        </dd>
+        <dt id='Surface-property'>
+          <span class='signature'>
+            (Array&lt;Number&gt;)
+            <b>
+              Surface
+            </b>
+          </span>
+        </dt>
+        <dd class='desc'>
+          Surface header (SHIORI/2.3b) 
+        </dd>
+        <dt id='Sentence-property'>
+          <span class='signature'>
+            (String)
+            <b>
+              Sentence
+            </b>
+          </span>
+        </dt>
+        <dd class='desc'>
+          Sentence header (SHIORI/2.0,2.2,2.3b,2.4) 
+        </dd>
+        <dt id='Word-property'>
+          <span class='signature'>
+            (String)
+            <b>
+              Word
+            </b>
+          </span>
+        </dt>
+        <dd class='desc'>
+          Word header (GET Word SHIORI/2.0) 
+        </dd>
+        <dt id='Status-property'>
+          <span class='signature'>
+            (Array&lt;Number&gt;)
+            <b>
+              Status
+            </b>
+          </span>
+        </dt>
+        <dd class='desc'>
+          Status header (GET Status SHIORI/2.0) 
+        </dd>
+        <dt id='String-property'>
+          <span class='signature'>
+            (String)
+            <b>
+              String
+            </b>
+          </span>
+        </dt>
+        <dd class='desc'>
+          String header (GET String SHIORI/2.5) 
+        </dd>
+        <dt id='Value-property'>
+          <span class='signature'>
+            (String)
+            <b>
+              Value
+            </b>
+          </span>
+        </dt>
+        <dd class='desc'>
+          Value header (GET SHIORI/3.0) 
+        </dd>
+      </dl>
       <h3 class='inherited'>
         Properties inherited from
         <a href='../../class/ShioriJK/Headers.html'>ShioriJK.Headers</a>
@@ -57,6 +136,57 @@
       <p class='inherited'>
         <a href='../../class/ShioriJK/Headers.html#header-property'>header</a>
       </p>
+      <h2>Instance Method Summary</h2>
+      <ul class='summary'>
+  <li>
+    <span class='signature'>
+      <a href='#StringSeparated-dynamic'>
+        #
+(Array&lt;String&gt;)
+<b>StringSeparated</b><span>(separator = &#39;\x01&#39;)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      String header (GET String SHIORI/2.5) 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#StringSeparated2-dynamic'>
+        #
+(Array&lt;Array&lt;String&gt;&gt;)
+<b>StringSeparated2</b><span>(separator1 = &#39;\x02&#39;, separator2 = &#39;\x01&#39;)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      String header (GET String SHIORI/2.5) 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#ValueSeparated-dynamic'>
+        #
+(Array&lt;String&gt;)
+<b>ValueSeparated</b><span>(separator = &#39;\x01&#39;)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Value header (GET SHIORI/3.0) 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#ValueSeparated2-dynamic'>
+        #
+(Array&lt;Array&lt;String&gt;&gt;)
+<b>ValueSeparated2</b><span>(separator1 = &#39;\x02&#39;, separator2 = &#39;\x01&#39;)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Value header (GET SHIORI/3.0) 
+    </span>
+  </li>
+</ul>
       <h2>
         <small>Inherited Method Summary</small>
         <h3 class='inherited'>
@@ -72,8 +202,182 @@
           <a href='../../class/ShioriJK/Headers.html#set_separated2-dynamic'>#set_separated2</a>
           <a href='../../class/ShioriJK/Headers.html#references-dynamic'>#references</a>
           <a href='../../class/ShioriJK/Headers.html#validate-dynamic'>#validate</a>
+          <a href='../../class/ShioriJK/Headers.html#Reference-dynamic'>#Reference</a>
+          <a href='../../class/ShioriJK/Headers.html#ReferenceSeparated-dynamic'>#ReferenceSeparated</a>
+          <a href='../../class/ShioriJK/Headers.html#ReferenceSeparated2-dynamic'>#ReferenceSeparated2</a>
         </p>
       </h2>
+      <h2>Instance Method Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='StringSeparated-dynamic'>
+      #
+(Array&lt;String&gt;)
+<b>StringSeparated</b><span>(separator = &#39;\x01&#39;)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>String header (GET String SHIORI/2.5)</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>separator</span>
+      <span class='type'>
+        (
+          <tt>String</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>separator characters </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt>Array&lt;String&gt;</tt>
+      )
+      &mdash;
+      <span class='desc'>header values </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='StringSeparated2-dynamic'>
+      #
+(Array&lt;Array&lt;String&gt;&gt;)
+<b>StringSeparated2</b><span>(separator1 = &#39;\x02&#39;, separator2 = &#39;\x01&#39;)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>String header (GET String SHIORI/2.5)</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>separator1</span>
+      <span class='type'>
+        (
+          <tt>String</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>first level separator characters </span>
+    </li>
+    <li>
+      <span class='name'>separator2</span>
+      <span class='type'>
+        (
+          <tt>String</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>second level separator characters </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt>Array&lt;Array&lt;String&gt;&gt;</tt>
+      )
+      &mdash;
+      <span class='desc'>header values </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='ValueSeparated-dynamic'>
+      #
+(Array&lt;String&gt;)
+<b>ValueSeparated</b><span>(separator = &#39;\x01&#39;)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Value header (GET SHIORI/3.0)</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>separator</span>
+      <span class='type'>
+        (
+          <tt>String</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>separator characters </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt>Array&lt;String&gt;</tt>
+      )
+      &mdash;
+      <span class='desc'>header values </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='ValueSeparated2-dynamic'>
+      #
+(Array&lt;Array&lt;String&gt;&gt;)
+<b>ValueSeparated2</b><span>(separator1 = &#39;\x02&#39;, separator2 = &#39;\x01&#39;)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Value header (GET SHIORI/3.0)</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>separator1</span>
+      <span class='type'>
+        (
+          <tt>String</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>first level separator characters </span>
+    </li>
+    <li>
+      <span class='name'>separator2</span>
+      <span class='type'>
+        (
+          <tt>String</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>second level separator characters </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt>Array&lt;Array&lt;String&gt;&gt;</tt>
+      )
+      &mdash;
+      <span class='desc'>header values </span>
+    </li>
+  </ul>
+</div>
+  </div>
+</div>
     </div>
     <div id='footer'>
   By
