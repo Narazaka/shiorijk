@@ -62,11 +62,41 @@ declare module ShioriJK{
     set_separated2(name: string, value: string[][], separator1?: string, separator2?: string): string;
     validate(): void;
     toString(): string;
+    Reference(index: number): string | undefined;
+    ReferenceSeparated(index: number, separator?: string): string[];
+    ReferenceSeparated2(index: number, separator1?: string, separator2?: string): string[][];
   }
 
   export namespace Headers{
-    export class Request extends Headers{ }
-    export class Response extends Headers{ }
+    export class Request extends Headers{
+      Charset?: string;
+      Sender?: string;
+      SecurityLevel?: string;
+      ID?: string;
+      Event?: string;
+      Type?: string;
+      Status: string[];
+      Ghost?: string;
+      Sentence?: string;
+      To?: string;
+      Age?: number;
+      Surface: number[];
+      Word?: string;
+    }
+
+    export class Response extends Headers{
+      BalloonOffset: number[][];
+      Surface: number[];
+      Sentence?: string;
+      Word?: string;
+      Status: number[];
+      String?: string;
+      StringSeparated(separator?: string): string[];
+      StringSeparated2(separator1?: string, separator2?: string): string[][];
+      Value?: string;
+      ValueSeparated(separator?: string): string[];
+      ValueSeparated2(separator1?: string, separator2?: string): string[][];
+    }
   }
 
   export namespace Shiori{

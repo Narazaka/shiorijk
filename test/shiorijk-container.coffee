@@ -114,7 +114,7 @@ describe 'headers', ->
       Reference0: master
       Reference6: halt
       Reference7: さくら
-      
+
     '''.replace /\r?\n/g, '\r\n'
   it 'should throw when toString() if header contains line feed', ->
     mh.header.ID = 'OnTest'
@@ -127,6 +127,92 @@ describe 'headers', ->
   it 'should get references array', ->
     mh = new ShioriJK.Headers(ID: 'OnBoot', Reference0: 'master', Reference6: '', Reference7: '')
     mh.references().should.be.deep.equal ['master', undefined, undefined, undefined, undefined, undefined, '', '']
+  it 'reference header alias should work', ->
+    mh.header.Reference0 = 'ref0'
+    mh.Reference(0).should.be.equal 'ref0'
+  it 'reference separated header alias should work', ->
+    mh.ReferenceSeparated(0).should.be.deep.equal []
+    mh.header.Reference0 = '0,1'
+    mh.ReferenceSeparated(0, ',').should.be.deep.equal ['0', '1']
+  it 'reference separated2 header alias should work', ->
+    mh.ReferenceSeparated2(0).should.be.deep.equal []
+    mh.set_separated2 'Reference0', [[0, 1], [2, 3]]
+    mh.ReferenceSeparated2(0).should.be.deep.equal [['0', '1'], ['2', '3']]
+
+describe 'request headers', ->
+  mh = null
+  beforeEach ->
+    mh = new ShioriJK.Headers.Request()
+  it 'header aliases should work', ->
+    mh.Status.should.be.deep.equal []
+    mh.Surface.should.be.deep.equal []
+    mh.header.Charset = 'UTF-8'
+    mh.header.Sender = 'Ikagaka'
+    mh.header.SecurityLevel = 'local'
+    mh.header.ID = 'OnBoot'
+    mh.header.Event = 'OnBoot'
+    mh.header.Type = '\\ms'
+    mh.header.Status = 'talking,online'
+    mh.header.Ghost = 'ikaga'
+    mh.header.Sentence = '\\0\\e'
+    mh.header.To = 'ikaga'
+    mh.header.Age = '0'
+    mh.header.Surface = '0,10'
+    mh.header.Word = 'piyo'
+    mh.Charset.should.be.equal 'UTF-8'
+    mh.Sender.should.be.equal 'Ikagaka'
+    mh.SecurityLevel.should.be.equal 'local'
+    mh.ID.should.be.equal 'OnBoot'
+    mh.Event.should.be.equal 'OnBoot'
+    mh.Type.should.be.equal '\\ms'
+    mh.Status.should.be.deep.equal ['talking', 'online']
+    mh.Ghost.should.be.equal 'ikaga'
+    mh.Sentence.should.be.equal '\\0\\e'
+    mh.To.should.be.equal 'ikaga'
+    mh.Age.should.be.equal 0
+    mh.Surface.should.be.deep.equal [0, 10]
+    mh.Word.should.be.equal 'piyo'
+
+describe 'response headers', ->
+  mh = null
+  beforeEach ->
+    mh = new ShioriJK.Headers.Response()
+  it 'header aliases should work', ->
+    mh.BalloonOffset.should.be.deep.equal []
+    mh.Surface.should.be.deep.equal []
+    mh.Status.should.be.deep.equal []
+    mh.set_separated2 'BalloonOffset', [[0, 0], [10, 10]], ','
+    mh.header.Surface = '0,10'
+    mh.header.Sentence = '\\0\\e'
+    mh.header.Word = 'piyo'
+    mh.header.Status = '0,0,0,0,0,0'
+    mh.BalloonOffset.should.be.deep.equal [[0, 0], [10, 10]]
+    mh.Surface.should.be.deep.equal [0, 10]
+    mh.Sentence.should.be.equal '\\0\\e'
+    mh.Word.should.be.equal 'piyo'
+    mh.Status.should.be.deep.equal [0, 0, 0, 0, 0, 0]
+  it 'String header alias should work', ->
+    mh.header.String = 'ref0'
+    mh.String.should.be.equal 'ref0'
+  it 'String separated header alias should work', ->
+    mh.StringSeparated().should.be.deep.equal []
+    mh.header.String = '0,1'
+    mh.StringSeparated(',').should.be.deep.equal ['0', '1']
+  it 'String separated2 header alias should work', ->
+    mh.StringSeparated2().should.be.deep.equal []
+    mh.set_separated2 'String', [[0, 1], [2, 3]]
+    mh.StringSeparated2().should.be.deep.equal [['0', '1'], ['2', '3']]
+  it 'Value header alias should work', ->
+    mh.header.Value = 'ref0'
+    mh.Value.should.be.equal 'ref0'
+  it 'Value separated header alias should work', ->
+    mh.ValueSeparated().should.be.deep.equal []
+    mh.header.Value = '0,1'
+    mh.ValueSeparated(',').should.be.deep.equal ['0', '1']
+  it 'Value separated2 header alias should work', ->
+    mh.ValueSeparated2().should.be.deep.equal []
+    mh.set_separated2 'Value', [[0, 1], [2, 3]]
+    mh.ValueSeparated2().should.be.deep.equal [['0', '1'], ['2', '3']]
 
 describe 'request message', ->
   m = null
@@ -152,8 +238,8 @@ describe 'request message', ->
       Reference0: master
       Reference6: halt
       Reference7: さくら
-      
-      
+
+
     '''.replace /\r?\n/g, '\r\n'
   it 'should be able to initialize with hash values', ->
     m = new ShioriJK.Message.Request(request_line: {method: 'NOTIFY', version: '3.0'}, headers: {ID: 'OnBoot'})
@@ -188,8 +274,8 @@ describe 'response message', ->
     "#{m}".should.to.be.equal '''
       SHIORI/3.0 200 OK
       Value: \\h\\s2 うわ。404。 ファイルがないって。\\n \\n ‥‥見捨てられた？\\n \\n \\e
-      
-      
+
+
     '''.replace /\r?\n/g, '\r\n'
   it 'should be able to initialize with hash values', ->
     m = new ShioriJK.Message.Response(status_line: {code: 204, version: '3.0'}, headers: {Value: 'value'})

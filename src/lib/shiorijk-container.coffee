@@ -281,10 +281,143 @@ class ShioriJK.Headers
     for name, value of @header
       str += "#{name}: #{value}\r\n"
     str
+  # Reference* header (SHIORI/2.2-2.6,3.x)
+  # @param index [Number] reference index
+  # @return [String] header value
+  Reference : (index) -> @get "Reference#{index}"
+  # Value header (GET SHIORI/3.0)
+  # Reference* header (SHIORI/2.2-2.6,3.x)
+  # @param index [Number] reference index
+  # @param separator [String] separator characters
+  # @return [Array<String>] header values
+  ReferenceSeparated : (index, separator = '\x01') -> (@get_separated "Reference#{index}", separator) || []
+  # Reference* header (SHIORI/2.2-2.6,3.x)
+  # @param index [Number] reference index
+  # @param separator1 [String] first level separator characters
+  # @param separator2 [String] second level separator characters
+  # @return [Array<Array<String>>] header values
+  ReferenceSeparated2 : (index, separator1 = '\x02', separator2 = '\x01') -> (@get_separated2 "Reference#{index}", separator1, separator2) || []
 
 # SHIORI Request Message Headers Container
 class ShioriJK.Headers.Request extends ShioriJK.Headers
+  # @property [String] Charset header
+  Charset: null
+  # @property [String] Sender header
+  Sender: null
+  # @property [String] SecurityLevel header (SHIORI/2.2,2.6,3.x)
+  SecurityLevel: null
+  # @property [String] ID header (SHIORI/2.5,3.x)
+  ID: null
+  # @property [String] Event header (SHIORI/2.2)
+  Event: null
+  # @property [String] Type header (GET Word SHIORI/2.0)
+  Type: null
+  # @property [Array<String>] Status header (SHIORI/3.1)
+  Status: null
+  # @property [String] Ghost header (NOTIFY OwnerGhostName SHIORI/2.0,2.3)
+  Ghost: null
+  # @property [String] Sentence header (SHIORI/2.0,2.3b)
+  Sentence: null
+  # @property [String] To header (SHIORI/2.3b)
+  To: null
+  # @property [Number] Age header (SHIORI/2.3b)
+  Age: null
+  # @property [Array<Number>] Surface header (SHIORI/2.3b)
+  Surface: null
+  # @property [String] Word header (TEACH SHIORI/2.4)
+  Word: null
+  @property
+    # @property [String] Charset header
+    Charset :
+      get : -> @get "Charset"
+    # @property [String] Sender header
+    Sender :
+      get : -> @get "Sender"
+    # @property [String] SecurityLevel header (SHIORI/2.2,2.6,3.x)
+    SecurityLevel :
+      get : -> @get "SecurityLevel"
+    # @property [String] ID header (SHIORI/2.5,3.x)
+    ID :
+      get : -> @get "ID"
+    # @property [String] Event header (SHIORI/2.2)
+    Event :
+      get : -> @get "Event"
+    # @property [String] Type header (GET Word SHIORI/2.0)
+    Type :
+      get : -> @get "Type"
+    # @property [Array<String>] Status header (SHIORI/3.1)
+    Status :
+      get : -> (@get_separated "Status", ",") || []
+    # @property [String] Ghost header (NOTIFY OwnerGhostName SHIORI/2.0,2.3)
+    Ghost :
+      get : -> @get "Ghost"
+    # @property [String] Sentence header (SHIORI/2.0,2.3b)
+    Sentence :
+      get : -> @get "Sentence"
+    # @property [String] To header (SHIORI/2.3b)
+    To :
+      get : -> @get "To"
+    # @property [Number] Age header (SHIORI/2.3b)
+    Age :
+      get : ->
+        age = @get "Age"
+        if age then Number(age)
+    # @property [Array<Number>] Surface header (SHIORI/2.3b)
+    Surface :
+      get : -> Number(value) for value in (@get_separated "Surface", ",") || []
+    # @property [String] Word header (TEACH SHIORI/2.4)
+    Word :
+      get : -> @get "Word"
 
 # SHIORI Response Message Headers Container
 class ShioriJK.Headers.Response extends ShioriJK.Headers
-
+  # @property [Array<Array<Number>>] BalloonOffset header (SHIORI/2.0)
+  BalloonOffset: null
+  # @property [Array<Number>] Surface header (SHIORI/2.3b)
+  Surface: null
+  # @property [String] Sentence header (SHIORI/2.0,2.2,2.3b,2.4)
+  Sentence: null
+  # @property [String] Word header (GET Word SHIORI/2.0)
+  Word: null
+  # @property [Array<Number>] Status header (GET Status SHIORI/2.0)
+  Status: null
+  # @property [String] String header (GET String SHIORI/2.5)
+  String: null
+  # String header (GET String SHIORI/2.5)
+  # @param separator [String] separator characters
+  # @return [Array<String>] header values
+  StringSeparated : (separator = '\x01') -> (@get_separated "String", separator) || []
+  # String header (GET String SHIORI/2.5)
+  # @param separator1 [String] first level separator characters
+  # @param separator2 [String] second level separator characters
+  # @return [Array<Array<String>>] header values
+  StringSeparated2 : (separator1 = '\x02', separator2 = '\x01') -> (@get_separated2 "String", separator1, separator2) || []
+  # @property [String] Value header (GET SHIORI/3.0)
+  Value: null
+  # Value header (GET SHIORI/3.0)
+  # @param separator [String] separator characters
+  # @return [Array<String>] header values
+  ValueSeparated : (separator = '\x01') -> (@get_separated "Value", separator) || []
+  # Value header (GET SHIORI/3.0)
+  # @param separator1 [String] first level separator characters
+  # @param separator2 [String] second level separator characters
+  # @return [Array<Array<String>>] header values
+  ValueSeparated2 : (separator1 = '\x02', separator2 = '\x01') -> (@get_separated2 "Value", separator1, separator2) || []
+  @property
+    BalloonOffset :
+      get : ->
+        for values in (@get_separated2 "BalloonOffset", ",") || []
+          for value in values
+            Number(value)
+    Surface :
+      get : -> Number(value) for value in (@get_separated "Surface", ",") || []
+    Sentence :
+      get : -> @get "Sentence"
+    Word :
+      get : -> @get "Word"
+    Status :
+      get : -> Number(value) for value in (@get_separated "Status", ",") || []
+    String :
+      get : -> @get "String"
+    Value :
+      get : -> @get "Value"
