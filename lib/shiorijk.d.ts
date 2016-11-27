@@ -60,6 +60,7 @@ declare module ShioriJK{
     set_separated(name: string, value: string[], separator?: string): string;
     get_separated2(name: string, separator1?: string, separator2?: string): string[][];
     set_separated2(name: string, value: string[][], separator1?: string, separator2?: string): string;
+    references(): (string | undefined)[];
     validate(): void;
     toString(): string;
     Reference(index: number): string | undefined;
