@@ -58,7 +58,7 @@ class ShioriJK.Shiori.Parser
     result.results[0]
   # parse transaction chunk
   # @param chunk [String] transaction chunk
-  # @return [Array] parse_lines()'s results
+  # @return [Hash] parse_lines()'s results
   parse_chunk : (chunk) ->
     lines = chunk.split /\r\n/
     if chunk.match /\r\n$/

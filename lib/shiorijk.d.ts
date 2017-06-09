@@ -109,9 +109,9 @@ declare module ShioriJK{
       end_parse(): void;
       abort_parse(): void;
       parse(transaction: string): any;
-      parse_chunk(chunk: string): any[];
+      parse_chunk(chunk: string): {results: any[], state: string };
       parse_lines(lines: string[]): {results: any[], state: string };
-      parse_line(line: string): {results: any, state: string};
+      parse_line(line: string): {result: any, state: string};
       parse_main(line: string): void;
     }
 
