@@ -1,43 +1,5 @@
-ShioriJK - SHIORI/3.x Parser/Container
-=============================================
-
-[![npm](https://img.shields.io/npm/v/shiorijk.svg)](https://www.npmjs.com/package/shiorijk)
-[![npm license](https://img.shields.io/npm/l/shiorijk.svg)](https://www.npmjs.com/package/shiorijk)
-[![npm download total](https://img.shields.io/npm/dt/shiorijk.svg)](https://www.npmjs.com/package/shiorijk)
-[![npm download by month](https://img.shields.io/npm/dm/shiorijk.svg)](https://www.npmjs.com/package/shiorijk)
-[![Bower](https://img.shields.io/bower/v/shiorijk.svg)](https://github.com/Narazaka/shiorijk)
-[![Bower](https://img.shields.io/bower/l/shiorijk.svg)](https://github.com/Narazaka/shiorijk)
-
-[![Dependency Status](https://david-dm.org/Narazaka/shiorijk.svg)](https://david-dm.org/Narazaka/shiorijk)
-[![devDependency Status](https://david-dm.org/Narazaka/shiorijk/dev-status.svg)](https://david-dm.org/Narazaka/shiorijk#info=devDependencies)
-[![Travis Build Status](https://travis-ci.org/Narazaka/shiorijk.svg)](https://travis-ci.org/Narazaka/shiorijk)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/Narazaka/shiorijk?svg=true)](https://ci.appveyor.com/project/Narazaka/shiorijk)
-[![codecov.io](https://codecov.io/github/Narazaka/shiorijk/coverage.svg?branch=master)](https://codecov.io/github/Narazaka/shiorijk?branch=master)
-[![Code Climate](https://codeclimate.com/github/Narazaka/shiorijk/badges/gpa.svg)](https://codeclimate.com/github/Narazaka/shiorijk)
-
-**Do you know that SHIORI is not JS but JK ?**
-
-Installation
---------------------------
-
-    npm install shiorijk
-
-or
-
-    bower install shiorijk
-
-What is ShioriJK ?
---------------------------
-
-ShioriJK is a library of SHIORI protocol parsers and containers implemented by Javascript (CoffeeScript with TypeScript definition) for making SHIORI subsystem.
-
-Usage overview
---------------------------
-
-[example.ts](example.ts)
-```typescript
-import * as ShioriJK from "shiorijk";
-// const ShioriJK = require("shiorijk"); // also OK
+import * as ShioriJK from "./lib/shiorijk";
+// const ShioriJK = require("./lib/shiorijk"); // also OK
 
 // ---------- parse request ----------
 
@@ -122,26 +84,3 @@ const response2 = new ShioriJK.Message.Response({
 });
 
 console.log(response2.toString() === "SHIORI/3.0 200 OK\r\nCharset: UTF-8\r\nSender: ikaga\r\nValue: 8.2.8\r\n\r\n");
-```
-
-MORE: See the SHIORI implementation [MiyoJS](https://github.com/Narazaka/miyojs.git) that is using ShioriJK.
-
-API Document
---------------------------
-
-See [http://narazaka.github.io/shiorijk/](http://narazaka.github.io/shiorijk/) or the source in src/.
-
-Also you can found the code snippets in test/.
-
-Build
---------------------------
-
-    git submodule init
-    git submodule update
-    npm install
-    gulp
-
-License
---------------------------
-
-This is released under [MIT License](http://narazaka.net/license/MIT?2017).
