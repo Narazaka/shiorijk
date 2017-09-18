@@ -2,6 +2,26 @@
  * SHIORI/2.x/3.x Protocol Parser/Builder/Container
  */
 
+/** SHIORI/2.x/3.x method */
+export type Method =
+  'GET' |
+  'NOTIFY' |
+  'GET Version' |
+  'GET Sentence' |
+  'GET Word' |
+  'GET Status' |
+  'TEACH' |
+  'GET String' |
+  'NOTIFY OwnerGhostName' |
+  'NOTIFY OtherGhostName' |
+  'TRANSLATE Sentence';
+
+/** SHIORI protocol */
+export type Protocol = 'SHIORI';
+
+/** SHIORI version */
+export type Version = '2.0' | '2.2' | '2.3' | '2.4' | '2.5' | '2.6' | '3.0';
+
 /**
  * SHIORI Protocol Message Container
  */
@@ -19,7 +39,7 @@ export namespace Message{
     /**
      * @param options options
      */
-    constructor(options?: {request_line?: RequestLine | {method?: string | null, protocol?: string | null, version?: string | null}, headers?: Headers.Request | {[name: string]: string}, no_prepare?: boolean});
+    constructor(options?: {request_line?: RequestLine | {method?: Method | null, protocol?: Protocol | null, version?: Version | null}, headers?: Headers.Request | {[name: string]: string}, no_prepare?: boolean});
     /**
      * @returns SHIORI Request Message string
      */
@@ -28,26 +48,26 @@ export namespace Message{
   export class Response{
     status_line: StatusLine;
     headers: Headers.Response;
-    constructor(options?: {status_line?: StatusLine | {code?: number | null, protocol?: string | null, version?: string | null}, headers?: Headers.Response | {[name: string]: string}, no_prepare?: boolean});
+    constructor(options?: {status_line?: StatusLine | {code?: number | null, protocol?: Protocol | null, version?: Version | null}, headers?: Headers.Response | {[name: string]: string}, no_prepare?: boolean});
     toString(): string;
   }
 }
 
 export class RequestLine{
-  method: string | null;
-  protocol: string | null;
-  version: string | null;
-  constructor(properties?: {method?: string | null, protocol?: string | null, version?: string | null});
-  validate_method_version(method: string, version: number): void;
+  method?: Method | null;
+  protocol?: Protocol | null;
+  version?: Version | null;
+  constructor(properties?: {method?: Method | null, protocol?: Protocol | null, version?: Version | null});
+  validate_method_version(method: Method, version: Version): void;
   toString(): string;
 }
 
 export class StatusLine{
-  code: number | null;
-  protocol: string | null;
-  version: string | null;
+  code?: number | null;
+  protocol?: Protocol | null;
+  version?: Version | null;
   message: {[code: number]: string};
-  constructor(properties?: {code?: number | null, protocol?: string | null, version?: string | null});
+  constructor(properties?: {code?: number | null, protocol?: Protocol | null, version?: Version | null});
   toString(): string;
 }
 
@@ -101,17 +121,17 @@ export namespace Headers{
 }
 
 export namespace Shiori{
-  export class Parser{
+  export class Parser<Container>{
     is_parsing(): boolean;
     is_parsing_end(): boolean;
-    get_result(): any;
+    get_result(): Container;
     begin_parse(): void;
     end_parse(): void;
     abort_parse(): void;
-    parse(transaction: string): any;
-    parse_chunk(chunk: string): {results: any[], state: string };
-    parse_lines(lines: string[]): {results: any[], state: string };
-    parse_line(line: string): {result: any, state: string};
+    parse(transaction: string): Container;
+    parse_chunk(chunk: string): {results: Container[], state: "continue" | "end" };
+    parse_lines(lines: string[]): {results: Container[], state: "continue" | "end" };
+    parse_line(line: string): {result?: Container, state: "continue" | "end"};
     parse_main(line: string): void;
   }
 
@@ -125,48 +145,44 @@ export namespace Shiori{
   }
 
   export namespace Header{
-    export class Parser extends Shiori.Parser{ }
+    export class Parser<Container extends Headers> extends Shiori.Parser<Container>{ }
     export class Section extends Shiori.Section{ }
   }
 
   export namespace Request{
-    export class Parser extends Shiori.Parser{
-      parse(transaction: string): Message.Request;
-    }
+    export class Parser extends Shiori.Parser<Message.Request>{ }
     export class Section extends Shiori.Section{ }
 
     export namespace RequestLine{
       export class Parser{
         constructor();
-        parse(transaction: string): any[];
-        parse_chunk(chunk: string): any[];
-        parse_line(line: string): {results: any, state: string};
+        parse(transaction: string): {results: RequestLine, state: "end"};
+        parse_chunk(chunk: string): {results: RequestLine, state: "end"};
+        parse_line(line: string): {results: RequestLine, state: "end"};
       }
     }
 
     export namespace Header{
-      export class Parser extends Shiori.Header.Parser{ }
+      export class Parser extends Shiori.Header.Parser<Headers.Request>{ }
       export class Section extends Shiori.Header.Section{ }
     }
   }
 
   export namespace Response{
-    export class Parser extends Shiori.Parser{
-      parse(transaction: string): Message.Response;
-    }
+    export class Parser extends Shiori.Parser<Message.Response>{ }
     export class Section extends Shiori.Section{ }
 
     export namespace StatusLine{
       export class Parser{
         constructor();
-        parse(transaction: string): any[];
-        parse_chunk(chunk: string): any[];
-        parse_line(line: string): {results: any, state: string};
+        parse(transaction: string): {results: StatusLine, state: "end"};
+        parse_chunk(chunk: string): {results: StatusLine, state: "end"};
+        parse_line(line: string): {results: StatusLine, state: "end"};
       }
     }
 
     export namespace Header{
-      export class Parser extends Shiori.Header.Parser{ }
+      export class Parser extends Shiori.Header.Parser<Headers.Response>{ }
       export class Section extends Shiori.Header.Section{ }
     }
   }
