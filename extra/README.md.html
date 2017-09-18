@@ -46,14 +46,99 @@
 <a href="https://codecov.io/github/Narazaka/shiorijk?branch=master"><img src="https://codecov.io/github/Narazaka/shiorijk/coverage.svg?branch=master" alt="codecov.io"></a>
 <a href="https://codeclimate.com/github/Narazaka/shiorijk"><img src="https://codeclimate.com/github/Narazaka/shiorijk/badges/gpa.svg" alt="Code Climate"></a></p><p><strong>Do you know that SHIORI is not JS but JK ?</strong></p><h2 id="installation">Installation</h2>
 <pre><code>npm install shiorijk
+</code></pre><p>or</p><pre><code>bower install shiorijk
+</code></pre><h2 id="what-is-shiorijk-">What is ShioriJK ?</h2><p>ShioriJK is a library of SHIORI protocol parsers and containers implemented by Javascript (CoffeeScript with TypeScript definition) for making SHIORI subsystem.</p><h2 id="usage-overview">Usage overview</h2><p><a href="example.ts">example.ts</a></p><pre><code class="lang-typescript">import * as ShioriJK from &quot;shiorijk&quot;;
+// const ShioriJK = require(&quot;shiorijk&quot;); // also OK
 
-bower install shiorijk
-</code></pre><h2 id="what-is-shiorijk-">What is ShioriJK ?</h2><p>ShioriJK is a library of SHIORI protocol parsers and containers implemented by Javascript (CoffeeScript) for making SHIORI subsystem.</p><h3 id="usage">Usage</h3><p>See the SHIORI implementation <a href="https://github.com/Narazaka/miyojs.git">MiyoJS</a> that is using ShioriJK.</p><h2 id="overview">Overview</h2><p>Pass SHIORI request transaction or its chunk to ShioriJK then it parses the request and returns parsed request data in the container.</p><h2 id="document">Document</h2><p>See <a href="http://narazaka.github.io/shiorijk/">http://narazaka.github.io/shiorijk/</a> or the source in src/.</p><p>Also you can found the code snippets in test/.</p><h2 id="build">Build</h2>
+// ---------- parse request ----------
+
+// parse transaction
+const requestParser = new ShioriJK.Shiori.Request.Parser();
+const requestStr =
+  &quot;GET SHIORI/3.0\r\n&quot; +
+  &quot;Charset: UTF-8\r\n&quot; +
+  &quot;Sender: embryo\r\n&quot; +
+  &quot;ID: OnBIFFComplete\r\n&quot; +
+  &quot;Reference0: 2\r\n&quot; +
+  &quot;Reference1: 1024\r\n&quot; +
+  &quot;Reference2: mail.example.com\r\n&quot; +
+  &quot;Reference3: 1\r\n&quot; +
+  &quot;Reference4: Subject: foo\x01X-Mailer: sendmail\x02Subject: bar\x01X-Mailer: Sylpheed\r\n&quot; +
+  &quot;Reference5: 512\x01512\r\n&quot; +
+  &quot;Reference6: 123@example.com\x01456@example.com\r\n&quot; +
+  &quot;\r\n&quot;;
+const request = requestParser.parse(requestStr);
+console.log(request.request_line.method === &quot;GET&quot;); // request line info
+console.log(request.headers.get(&quot;ID&quot;) === &quot;OnBIFFComplete&quot;); // gets header value
+console.log(request.headers.ID === &quot;OnBIFFComplete&quot;); // shortcut for common headers
+console.log(request.headers.Reference(1) === &quot;1024&quot;); // shortcut for Reference*
+console.log(request.headers.references().length === 7); // get all references
+console.log(request.headers.get_separated(&quot;Reference6&quot;)[0] === &quot;123@example.com&quot;); // separated by \x01
+console.log(request.headers.get_separated2(&quot;Reference4&quot;)[1][0] === &quot;Subject: bar&quot;); // separated by \x01 and \x02
+
+// parse chunks like HTTP
+let parseResult;
+parseResult = requestParser.parse_chunk(&quot;GET SHIORI/3.0\r\nCharset: UTF-8\r\n&quot;);
+console.log(parseResult.state === &quot;continue&quot;);
+parseResult = requestParser.parse_chunk(&quot;ID: version\r\n\r\n&quot;);
+console.log(parseResult.state === &quot;end&quot;);
+console.log(parseResult.results.length === 1);
+console.log(parseResult.results[0].headers.ID === &quot;version&quot;);
+
+// parse lines
+parseResult = requestParser.parse_lines([&quot;GET SHIORI/3.0&quot;, &quot;Charset: UTF-8&quot;]);
+console.log(parseResult.state === &quot;continue&quot;);
+parseResult = requestParser.parse_lines([&quot;ID: version&quot;, &quot;&quot;]);
+console.log(parseResult.state === &quot;end&quot;);
+console.log(parseResult.results[0].headers.ID === &quot;version&quot;);
+
+// ---------- parse response ----------
+
+const responseParser = new ShioriJK.Shiori.Response.Parser();
+const responseStr =
+  &quot;SHIORI/3.0 200 OK\r\n&quot; +
+  &quot;Sender: ikaga\r\n&quot; +
+  &quot;Charset: UTF-8\r\n&quot; +
+  &quot;Value: 8.2.8\r\n&quot; +
+  &quot;\r\n&quot;;
+const response = responseParser.parse(responseStr);
+console.log(response.headers.Value === &quot;8.2.8&quot;);
+
+// also you can parse by chunks and lines
+
+// ---------- build request ----------
+
+const request2 = new ShioriJK.Message.Request({
+  request_line: {method: &quot;GET&quot;, version: &quot;3.0&quot;},
+  headers: {
+    Charset: &quot;UTF-8&quot;,
+    Sender: &quot;embryo&quot;,
+  },
+});
+
+// can set after initialize
+request2.headers.set(&quot;ID&quot;, &quot;version&quot;);
+
+console.log(request2.toString() === &quot;GET SHIORI/3.0\r\nCharset: UTF-8\r\nSender: embryo\r\nID: version\r\n\r\n&quot;);
+
+// ---------- build response ----------
+
+const response2 = new ShioriJK.Message.Response({
+  status_line: {code: 200, version: &quot;3.0&quot;},
+  headers: {
+    Charset: &quot;UTF-8&quot;,
+    Sender: &quot;ikaga&quot;,
+    Value: &quot;8.2.8&quot;,
+  }
+});
+
+console.log(response2.toString() === &quot;SHIORI/3.0 200 OK\r\nCharset: UTF-8\r\nSender: ikaga\r\nValue: 8.2.8\r\n\r\n&quot;);
+</code></pre><p>MORE: See the SHIORI implementation <a href="https://github.com/Narazaka/miyojs.git">MiyoJS</a> that is using ShioriJK.</p><h2 id="api-document">API Document</h2><p>See <a href="http://narazaka.github.io/shiorijk/">http://narazaka.github.io/shiorijk/</a> or the source in src/.</p><p>Also you can found the code snippets in test/.</p><h2 id="build">Build</h2>
 <pre><code>git submodule init
 git submodule update
 npm install
 gulp
-</code></pre><h2 id="license">License</h2><p>This is released under <a href="http://narazaka.net/license/MIT?2014">MIT License</a>.</p>
+</code></pre><h2 id="license">License</h2><p>This is released under <a href="http://narazaka.net/license/MIT?2017">MIT License</a>.</p>
       </div>
     </div>
     <div id='footer'>

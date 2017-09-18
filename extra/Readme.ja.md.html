@@ -45,14 +45,100 @@
 <a href="https://codecov.io/github/Narazaka/shiorijk?branch=master"><img src="https://codecov.io/github/Narazaka/shiorijk/coverage.svg?branch=master" alt="codecov.io"></a>
 <a href="https://codeclimate.com/github/Narazaka/shiorijk"><img src="https://codeclimate.com/github/Narazaka/shiorijk/badges/gpa.svg" alt="Code Climate"></a></p><p><strong>つまるところ、栞はJKである</strong></p><h2 id="-">インストール</h2>
 <pre><code>npm install shiorijk
+</code></pre><p>or</p><pre><code>bower install shiorijk
+</code></pre><h2 id="shiorijk-">ShioriJKとは何か?</h2><p>伺かのSHIORIサブシステム構築のためのSHIORIプロトコルパーサとコンテナのJavaScript(CoffeeScript / TypeScript 型定義付き)による実装です。</p><p>JavaScriptで栞を組みたくなった場合にお使いください。</p><h2 id="shiorijk-">ShioriJKとは何でないか?</h2><p>ShioriJKはSHIORIプロトコルパーサとコンテナのみを実装しているライブラリであり、これ単体で栞とすることは出来ません。</p><h2 id="-">利用方法概要</h2><p>SHIORIリクエスト/レスポンスあるいはその断片を渡すとてきとうに解釈してコンテナに入れて返します。
+またコンテナからリクエスト/レスポンス文字列を生成することも出来ます。</p><p>現在のところSHIORI/3.xのみを扱えます。（SHIORI/2.xにも対応していますが、同一ヘッダが複数存在する一部リクエストを正しくパースできません。）</p><p><a href="example.ts">example.ts</a></p><pre><code class="lang-typescript">import * as ShioriJK from &quot;shiorijk&quot;;
+// const ShioriJK = require(&quot;shiorijk&quot;); // also OK
 
-bower install shiorijk
-</code></pre><h2 id="shiorijk-">ShioriJKとは何か?</h2><p>伺かのSHIORIサブシステム構築のためのSHIORIプロトコルパーサとコンテナのJavaScript(CoffeeScript)による実装です。</p><p>JavaScriptで栞を組みたくなった場合にお使いください。</p><h3 id="shiorijk-">ShioriJKとは何でないか?</h3><p>ShioriJKはSHIORIプロトコルパーサとコンテナのみを実装しているライブラリであり、これ単体で栞とすることは出来ません。</p><h3 id="-">なにそれおいしいの?</h3><p>この説明でピンと来ない人には縁遠いものです。</p><p>このライブラリを使用した栞の実装である<a href="https://github.com/Narazaka/miyojs">MiyoJS</a>や、ベースウェアの実装である<a href="https://github.com/Ikagaka/Ikagaka.demo">イカガカ</a>をまずはご参照ください。</p><h2 id="-">どんなかんじか</h2><p>SHIORIリクエストあるいはその断片を渡すとてきとうに解釈してコンテナに入れて返します。</p><p>現在のところSHIORI/3.0のみを扱えます。</p><h2 id="-">ドキュメント</h2><p><a href="http://narazaka.github.io/shiorijk/">http://narazaka.github.io/shiorijk/</a>か、src/にあるコメント付きのソースをご覧ください。</p><p>ドキュメントがルーズだと感じたら、ライブラリやテストコードの中身を読んでいただいたほうがわかりやすいかもしれません。</p><h2 id="-">ビルド</h2>
+// ---------- リクエストのパース ----------
+
+// 1つのトランザクションをパース
+const requestParser = new ShioriJK.Shiori.Request.Parser();
+const requestStr =
+  &quot;GET SHIORI/3.0\r\n&quot; +
+  &quot;Charset: UTF-8\r\n&quot; +
+  &quot;Sender: embryo\r\n&quot; +
+  &quot;ID: OnBIFFComplete\r\n&quot; +
+  &quot;Reference0: 2\r\n&quot; +
+  &quot;Reference1: 1024\r\n&quot; +
+  &quot;Reference2: mail.example.com\r\n&quot; +
+  &quot;Reference3: 1\r\n&quot; +
+  &quot;Reference4: Subject: foo\x01X-Mailer: sendmail\x02Subject: bar\x01X-Mailer: Sylpheed\r\n&quot; +
+  &quot;Reference5: 512\x01512\r\n&quot; +
+  &quot;Reference6: 123@example.com\x01456@example.com\r\n&quot; +
+  &quot;\r\n&quot;;
+const request = requestParser.parse(requestStr);
+console.log(request.request_line.method === &quot;GET&quot;); // リクエスト行の情報
+console.log(request.headers.get(&quot;ID&quot;) === &quot;OnBIFFComplete&quot;); // ヘッダ値を取得
+console.log(request.headers.ID === &quot;OnBIFFComplete&quot;); // よく使うヘッダへのショートカット
+console.log(request.headers.Reference(1) === &quot;1024&quot;); // Reference*へのショートカット
+console.log(request.headers.references().length === 7); // 全てのReference*の値を取得
+console.log(request.headers.get_separated(&quot;Reference6&quot;)[0] === &quot;123@example.com&quot;); // \x01で区切られた値の取得
+console.log(request.headers.get_separated2(&quot;Reference4&quot;)[1][0] === &quot;Subject: bar&quot;); // \x01と\x02で区切られた値の取得
+
+// チャンクを元にパース(HTTPのように)
+let parseResult;
+parseResult = requestParser.parse_chunk(&quot;GET SHIORI/3.0\r\nCharset: UTF-8\r\n&quot;);
+console.log(parseResult.state === &quot;continue&quot;);
+parseResult = requestParser.parse_chunk(&quot;ID: version\r\n\r\n&quot;);
+console.log(parseResult.state === &quot;end&quot;);
+console.log(parseResult.results.length === 1);
+console.log(parseResult.results[0].headers.ID === &quot;version&quot;);
+
+// 行ごとにパース
+parseResult = requestParser.parse_lines([&quot;GET SHIORI/3.0&quot;, &quot;Charset: UTF-8&quot;]);
+console.log(parseResult.state === &quot;continue&quot;);
+parseResult = requestParser.parse_lines([&quot;ID: version&quot;, &quot;&quot;]);
+console.log(parseResult.state === &quot;end&quot;);
+console.log(parseResult.results[0].headers.ID === &quot;version&quot;);
+
+// ---------- レスポンスのパース ----------
+
+const responseParser = new ShioriJK.Shiori.Response.Parser();
+const responseStr =
+  &quot;SHIORI/3.0 200 OK\r\n&quot; +
+  &quot;Sender: ikaga\r\n&quot; +
+  &quot;Charset: UTF-8\r\n&quot; +
+  &quot;Value: 8.2.8\r\n&quot; +
+  &quot;\r\n&quot;;
+const response = responseParser.parse(responseStr);
+console.log(response.headers.Value === &quot;8.2.8&quot;);
+
+// チャンクや行を元にしたパースも対応
+
+// ---------- リクエストのビルド ----------
+
+const request2 = new ShioriJK.Message.Request({
+  request_line: {method: &quot;GET&quot;, version: &quot;3.0&quot;},
+  headers: {
+    Charset: &quot;UTF-8&quot;,
+    Sender: &quot;embryo&quot;,
+  },
+});
+
+// 初期化後にも値をセット
+request2.headers.set(&quot;ID&quot;, &quot;version&quot;);
+
+console.log(request2.toString() === &quot;GET SHIORI/3.0\r\nCharset: UTF-8\r\nSender: embryo\r\nID: version\r\n\r\n&quot;);
+
+// ---------- レスポンスのビルド ----------
+
+const response2 = new ShioriJK.Message.Response({
+  status_line: {code: 200, version: &quot;3.0&quot;},
+  headers: {
+    Charset: &quot;UTF-8&quot;,
+    Sender: &quot;ikaga&quot;,
+    Value: &quot;8.2.8&quot;,
+  }
+});
+
+console.log(response2.toString() === &quot;SHIORI/3.0 200 OK\r\nCharset: UTF-8\r\nSender: ikaga\r\nValue: 8.2.8\r\n\r\n&quot;);
+</code></pre><p>さらに見る: このライブラリを使用した栞の実装である<a href="https://github.com/Narazaka/miyojs">MiyoJS</a>や、ベースウェアの実装である<a href="https://github.com/Ikagaka/Ikagaka.demo">イカガカ</a>をご参照ください。</p><h2 id="api-">APIドキュメント</h2><p><a href="http://narazaka.github.io/shiorijk/">http://narazaka.github.io/shiorijk/</a>か、src/にあるコメント付きのソースをご覧ください。</p><p>ドキュメントがルーズだと感じたら、ライブラリやテストコードの中身を読んでいただいたほうがわかりやすいかもしれません。</p><h2 id="-">ビルド</h2>
 <pre><code>git submodule init
 git submodule update
 npm install
 gulp
-</code></pre><h2 id="-">ライセンス</h2><p><a href="http://narazaka.net/license/MIT?2014">MITライセンス</a>の元で配布いたします。</p>
+</code></pre><h2 id="-">ライセンス</h2><p><a href="http://narazaka.net/license/MIT?2017">MITライセンス</a>の元で配布いたします。</p>
       </div>
     </div>
     <div id='footer'>
