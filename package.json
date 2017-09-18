@@ -1,6 +1,6 @@
 {
   "name": "shiorijk",
-  "version": "0.7.1",
+  "version": "0.8.0",
   "description": "SHIORI/3.x Parser/Container",
   "homepage": "http://narazaka.github.io/shiorijk/",
   "main": "index.js",
