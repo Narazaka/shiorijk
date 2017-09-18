@@ -67,7 +67,7 @@ gulp.task 'test-browser-cli', (done) ->
   new Server
     configFile: "#{__dirname}/karma.conf.coffee"
     singleRun: true
-    frameworks: [ 'mocha-debug', 'mocha' ]
+    frameworks: [ 'mocha' ]
     browsers: ['PhantomJS']
   , done
     .start()
