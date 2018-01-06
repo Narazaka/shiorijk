@@ -1,6 +1,8 @@
 ShioriJK - SHIORI/3.x Parser/Container
 =============================================
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/Narazaka/shiorijk.svg)](https://greenkeeper.io/)
+
 [![npm](https://img.shields.io/npm/v/shiorijk.svg)](https://www.npmjs.com/package/shiorijk)
 [![npm license](https://img.shields.io/npm/l/shiorijk.svg)](https://www.npmjs.com/package/shiorijk)
 [![npm download total](https://img.shields.io/npm/dt/shiorijk.svg)](https://www.npmjs.com/package/shiorijk)
