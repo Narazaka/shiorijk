@@ -131,8 +131,7 @@ export namespace Shiori{
     parse(transaction: string): Container;
     parse_chunk(chunk: string): {results: Container[], state: "continue" | "end" };
     parse_lines(lines: string[]): {results: Container[], state: "continue" | "end" };
-    parse_line(line: string): {result?: undefined, state: "continue"};
-    parse_line(line: string): {result: Container, state: "end"};
+    parse_line(line: string): {result?: undefined, state: "continue"} | {result: Container, state: "end"};
     parse_main(line: string): void;
   }
 
