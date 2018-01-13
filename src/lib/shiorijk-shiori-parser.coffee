@@ -129,12 +129,14 @@ class ShioriJK.Shiori.Header.Parser extends ShioriJK.Shiori.Parser
       state : 'end'
 
 class ShioriJK.Shiori.Header.Section extends ShioriJK.Shiori.Section
-  constructor : (@sections = ['idle', 'header', 'end']) ->
+  constructor : (sections = ['idle', 'header', 'end']) ->
+    super(sections)
     @index = 0
 
 # SHIORI Request parser
 class ShioriJK.Shiori.Request.Parser extends ShioriJK.Shiori.Parser
   constructor : () ->
+    super()
     @parsers = {
       request_line : new ShioriJK.Shiori.Request.RequestLine.Parser()
       headers : new ShioriJK.Shiori.Request.Header.Parser()
@@ -170,12 +172,14 @@ class ShioriJK.Shiori.Request.RequestLine.Parser
 
 class ShioriJK.Shiori.Request.Header.Parser extends ShioriJK.Shiori.Header.Parser
   constructor : () ->
+    super()
     @section = new ShioriJK.Shiori.Request.Header.Section()
   result_builder : ->
     new ShioriJK.Headers.Request()
 
 class ShioriJK.Shiori.Request.Section extends ShioriJK.Shiori.Section
-  constructor : (@sections = ['idle', 'request_line', 'headers', 'end']) ->
+  constructor : (sections = ['idle', 'request_line', 'headers', 'end']) ->
+    super(sections)
     @index = 0
 
 class ShioriJK.Shiori.Request.Header.Section extends ShioriJK.Shiori.Header.Section
@@ -183,6 +187,7 @@ class ShioriJK.Shiori.Request.Header.Section extends ShioriJK.Shiori.Header.Sect
 # SHIORI Response parser
 class ShioriJK.Shiori.Response.Parser extends ShioriJK.Shiori.Parser
   constructor : () ->
+    super()
     @parsers = {
       status_line : new ShioriJK.Shiori.Response.StatusLine.Parser()
       headers : new ShioriJK.Shiori.Response.Header.Parser()
@@ -218,12 +223,14 @@ class ShioriJK.Shiori.Response.StatusLine.Parser
 
 class ShioriJK.Shiori.Response.Header.Parser extends ShioriJK.Shiori.Header.Parser
   constructor : () ->
+    super()
     @section = new ShioriJK.Shiori.Response.Header.Section()
   result_builder : ->
     new ShioriJK.Headers.Response()
 
 class ShioriJK.Shiori.Response.Section extends ShioriJK.Shiori.Section
-  constructor : (@sections = ['idle', 'status_line', 'headers', 'end']) ->
+  constructor : (sections = ['idle', 'status_line', 'headers', 'end']) ->
+    super(sections)
     @index = 0
 
 class ShioriJK.Shiori.Response.Header.Section extends ShioriJK.Shiori.Header.Section

@@ -30,14 +30,8 @@ gulp.task 'js', ->
     .pipe $.sourcemaps.init()
     .pipe $.concat file
     .pipe $.coffee bare: true
-  coffeeu = coffee.pipe $.clone()
   merge [
     coffee
-      .pipe $.sourcemaps.write('.')
-      .pipe gulp.dest dirs.dst
-    coffeeu
-      .pipe $.uglify()
-      .pipe $.rename extname: '.min.js'
       .pipe $.sourcemaps.write('.')
       .pipe gulp.dest dirs.dst
   ]
