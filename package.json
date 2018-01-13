@@ -18,7 +18,7 @@
     "chai": "^4.1.2",
     "codecov.io": "^0.1.6",
     "codo": "^2.1.2",
-    "coffee-script": "^1.12.7",
+    "coffeescript": "^2.1.1",
     "espower-coffee": "^1.1.0",
     "gulp": "^3.9.1",
     "gulp-clone": "^1.0.0",
