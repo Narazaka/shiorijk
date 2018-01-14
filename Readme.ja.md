@@ -45,7 +45,7 @@ SHIORIリクエスト/レスポンスあるいはその断片を渡すとてき�
 
 現在のところSHIORI/3.xのみを扱えます。（SHIORI/2.xにも対応していますが、同一ヘッダが複数存在する一部リクエストを正しくパースできません。）
 
-[example.ts](example.ts)
+[example/example.ts](example/example.ts)
 ```typescript
 import * as ShioriJK from "shiorijk";
 // const ShioriJK = require("shiorijk"); // also OK

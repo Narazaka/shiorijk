@@ -34,7 +34,7 @@ ShioriJK is a library of SHIORI protocol parsers and containers implemented by J
 Usage overview
 --------------------------
 
-[example.ts](example.ts)
+[example/example.ts](example/example.ts)
 ```typescript
 import * as ShioriJK from "shiorijk";
 // const ShioriJK = require("shiorijk"); // also OK

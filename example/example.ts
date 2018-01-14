@@ -1,5 +1,5 @@
-import * as ShioriJK from "./lib/shiorijk";
-// const ShioriJK = require("./lib/shiorijk"); // also OK
+import * as ShioriJK from "../lib/shiorijk";
+// const ShioriJK = require("../lib/shiorijk"); // also OK
 
 // ---------- parse request ----------
 
