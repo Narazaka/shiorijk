@@ -6,23 +6,23 @@
 
 /** SHIORI/2.x/3.x method */
 export type Method =
-  'GET' |
-  'NOTIFY' |
-  'GET Version' |
-  'GET Sentence' |
-  'GET Word' |
-  'GET Status' |
-  'TEACH' |
-  'GET String' |
-  'NOTIFY OwnerGhostName' |
-  'NOTIFY OtherGhostName' |
-  'TRANSLATE Sentence';
+  "GET" |
+  "NOTIFY" |
+  "GET Version" |
+  "GET Sentence" |
+  "GET Word" |
+  "GET Status" |
+  "TEACH" |
+  "GET String" |
+  "NOTIFY OwnerGhostName" |
+  "NOTIFY OtherGhostName" |
+  "TRANSLATE Sentence";
 
 /** SHIORI protocol */
-export type Protocol = 'SHIORI';
+export type Protocol = "SHIORI";
 
 /** SHIORI version */
-export type Version = '2.0' | '2.2' | '2.3' | '2.4' | '2.5' | '2.6' | '3.0';
+export type Version = "2.0" | "2.2" | "2.3" | "2.4" | "2.5" | "2.6" | "3.0";
 
 /**
  * SHIORI Protocol Message Container
@@ -43,7 +43,11 @@ export namespace Message {
      * @param headers [Hash|ShioriJK.Headers.Request] request headers
      * @param no_prepare [Boolean] do not prepare default RequestLine and Headers by the constructor
      */
-    constructor(properties: {request_line?: RequestLine | {method?: Method | null, protocol?: Protocol | null, version?: Version | null}, headers?: Headers.Request | {[name: string]: string}, no_prepare?: boolean} = {}) {
+    constructor(properties: {
+      request_line?: RequestLine | {method?: Method | null; protocol?: Protocol | null; version?: Version | null};
+      headers?: Headers.Request | {[name: string]: string};
+      no_prepare?: boolean;
+    } = {}) {
       const {request_line, headers, no_prepare} = properties;
 
       if (request_line == null) {
@@ -72,7 +76,7 @@ export namespace Message {
      * @return [String] message string
      */
     toString() {
-      return this.request_line.toString() + '\r\n' + this.headers.toString() + '\r\n';
+      return `${this.request_line}\r\n${this.headers}\r\n`;
     }
 
   }
@@ -91,7 +95,11 @@ export namespace Message {
      * @param headers [Hash|ShioriJK.Headers.Response] response headers
      * @param no_prepare [Boolean] do not prepare default StatusLine and Headers by the constructor
      */
-    constructor(properties: {status_line?: StatusLine | {code?: number | null, protocol?: Protocol | null, version?: Version | null}, headers?: Headers.Response | {[name: string]: string}, no_prepare?: boolean} = {}) {
+    constructor(properties: {
+      status_line?: StatusLine | {code?: number | null; protocol?: Protocol | null; version?: Version | null};
+      headers?: Headers.Response | {[name: string]: string};
+      no_prepare?: boolean;
+    } = {}) {
       const {status_line, headers, no_prepare} = properties;
 
       if (status_line == null) {
@@ -120,14 +128,14 @@ export namespace Message {
      * @return [String] message string
      */
     toString() {
-      return this.status_line.toString() + '\r\n' + this.headers.toString() + '\r\n';
+      return `${this.status_line}\r\n${this.headers}\r\n`;
     }
   }
 }
 
 /** SHIORI Request Message's RequestLine Container */
 export class RequestLine {
-  private arguments: {method?: Method | null, protocol?: Protocol | null, version?: Version | null} = {};
+  private readonly arguments: {method?: Method | null; protocol?: Protocol | null; version?: Version | null} = {};
 
   /**
    * initialize request line
@@ -135,12 +143,12 @@ export class RequestLine {
    * @param protocol [string] protocol (default = 'SHIORI')
    * @param version [string] version
    */
-  constructor(properties: {method?: Method | null, protocol?: Protocol | null, version?: Version | null} = {}) {
+  constructor(properties: {method?: Method | null; protocol?: Protocol | null; version?: Version | null} = {}) {
     const {method, protocol, version} = properties;
     if (method != null) {
       this.method = method;
     }
-    this.protocol = protocol || 'SHIORI'; // for codo
+    this.protocol = protocol || "SHIORI"; // for codo
     if (version != null) {
       this.version = version;
     }
@@ -156,20 +164,20 @@ export class RequestLine {
       this.validate_method_version(method, this.version);
     } else if (method != null) {
       switch (method) {
-        case 'GET':
-        case 'NOTIFY':
-        case 'GET Version':
-        case 'GET Sentence':
-        case 'GET Word':
-        case 'GET Status':
-        case 'TEACH':
-        case 'GET String':
-        case 'NOTIFY OwnerGhostName':
-        case 'NOTIFY OtherGhostName':
-        case 'TRANSLATE Sentence':
+        case "GET":
+        case "NOTIFY":
+        case "GET Version":
+        case "GET Sentence":
+        case "GET Word":
+        case "GET Status":
+        case "TEACH":
+        case "GET String":
+        case "NOTIFY OwnerGhostName":
+        case "NOTIFY OtherGhostName":
+        case "TRANSLATE Sentence":
           break;
         default:
-          throw 'Invalid protocol method : ' + method;
+          throw `Invalid protocol method : ${method}`;
       }
     }
     this.arguments.method = method;
@@ -181,8 +189,8 @@ export class RequestLine {
   }
 
   set protocol(protocol) {
-    if ((protocol != null) && protocol !== 'SHIORI') {
-      throw 'Invalid protocol : ' + protocol;
+    if ((protocol != null) && protocol !== "SHIORI") {
+      throw `Invalid protocol : ${protocol}`;
     }
     this.arguments.protocol = protocol;
   }
@@ -197,16 +205,16 @@ export class RequestLine {
       this.validate_method_version(this.method, version);
     } else if (version != null) {
       switch (version) {
-        case '2.0':
-        case '2.2':
-        case '2.3':
-        case '2.4':
-        case '2.5':
-        case '2.6':
-        case '3.0':
+        case "2.0":
+        case "2.2":
+        case "2.3":
+        case "2.4":
+        case "2.5":
+        case "2.6":
+        case "3.0":
           break;
         default:
-          throw 'Invalid protocol version : ' + version;
+          throw `Invalid protocol version : ${version}`;
       }
     }
     this.arguments.version = version;
@@ -218,65 +226,67 @@ export class RequestLine {
    * @param version [Number] version
    * @throw [String] if invalid
    */
-  validate_method_version(method: Method, version: Version) {
+  validate_method_version(method: Method, version: Version) { // tslint:disable-line prefer-function-over-method
     let is_valid = false;
+    // tslint:disable switch-default
     switch (version) {
-      case '2.0':
+      case "2.0":
         switch (method) {
-          case 'GET Version':
-          case 'NOTIFY OwnerGhostName':
-          case 'GET Sentence':
-          case 'GET Word':
-          case 'GET Status':
+          case "GET Version":
+          case "NOTIFY OwnerGhostName":
+          case "GET Sentence":
+          case "GET Word":
+          case "GET Status":
             is_valid = true;
         }
         break;
-      case '2.2':
+      case "2.2":
         switch (method) {
-          case 'GET Sentence':
+          case "GET Sentence":
             is_valid = true;
         }
         break;
-      case '2.3':
+      case "2.3":
         switch (method) {
-          case 'NOTIFY OtherGhostName':
-          case 'GET Sentence':
+          case "NOTIFY OtherGhostName":
+          case "GET Sentence":
             is_valid = true;
         }
         break;
-      case '2.4':
+      case "2.4":
         switch (method) {
-          case 'TEACH':
+          case "TEACH":
             is_valid = true;
         }
         break;
-      case '2.5':
+      case "2.5":
         switch (method) {
-          case 'GET String':
+          case "GET String":
             is_valid = true;
         }
         break;
-      case '2.6': // spec is unknown
+      case "2.6": // spec is unknown
         switch (method) {
-          case 'GET Sentence':
-          case 'GET Status':
-          case 'GET String':
-          case 'NOTIFY OwnerGhostName':
-          case 'NOTIFY OtherGhostName':
-          case 'GET Version':
-          case 'TRANSLATE Sentence':
+          case "GET Sentence":
+          case "GET Status":
+          case "GET String":
+          case "NOTIFY OwnerGhostName":
+          case "NOTIFY OtherGhostName":
+          case "GET Version":
+          case "TRANSLATE Sentence":
             is_valid = true;
         }
         break;
-      case '3.0':
+      case "3.0":
         switch (method) {
-          case 'GET':
-          case 'NOTIFY':
+          case "GET":
+          case "NOTIFY":
             is_valid = true;
         }
     }
+    // tslint:enable switch-default
     if (!is_valid) {
-      throw 'Invalid protocol method and version : ' + method + ' SHIORI/' + version;
+      throw `Invalid protocol method and version : ${method} SHIORI/${version}`;
     }
   }
 
@@ -289,14 +299,14 @@ export class RequestLine {
   }
 }
 
-const RequestLineClass = RequestLine;
+const RequestLineClass = RequestLine; // tslint:disable-line variable-name
 
 /** SHIORI Response Message's StatusLine Container */
 export class StatusLine {
   /** status messages for status codes */
   message: {[code: number]: string};
 
-  private arguments: {code?: number | null, protocol?: Protocol | null, version?: Version | null} = {};
+  private readonly arguments: {code?: number | null; protocol?: Protocol | null; version?: Version | null} = {};
 
   /**
    * initialize status line
@@ -304,12 +314,12 @@ export class StatusLine {
    * @param protocol [string] protocol (default = 'SHIORI')
    * @param version [string] version
    */
-  constructor(properties: {code?: number | null, protocol?: Protocol | null, version?: Version | null} = {}) {
+  constructor(properties: {code?: number | null; protocol?: Protocol | null; version?: Version | null} = {}) {
     const {code, protocol, version} = properties;
     if (code != null) {
       this.code = code;
     }
-    this.protocol = protocol || 'SHIORI'; // for codo
+    this.protocol = protocol || "SHIORI"; // for codo
     if (version != null) {
       this.version = version;
     }
@@ -322,7 +332,7 @@ export class StatusLine {
 
   set code(code) {
     if ((code != null) && (this.message[code] == null)) {
-      throw 'Invalid response code : ' + code;
+      throw `Invalid response code : ${code}`;
     }
     this.arguments.code = code;
   }
@@ -333,8 +343,8 @@ export class StatusLine {
   }
 
   set protocol(protocol) {
-    if ((protocol != null) && protocol !== 'SHIORI') {
-      throw 'Invalid protocol : ' + protocol;
+    if ((protocol != null) && protocol !== "SHIORI") {
+      throw `Invalid protocol : ${protocol}`;
     }
     this.arguments.protocol = protocol;
   }
@@ -347,16 +357,16 @@ export class StatusLine {
   set version(version) {
     if (version != null) {
       switch (version) {
-        case '2.0':
-        case '2.2':
-        case '2.3':
-        case '2.4':
-        case '2.5':
-        case '2.6':
-        case '3.0':
+        case "2.0":
+        case "2.2":
+        case "2.3":
+        case "2.4":
+        case "2.5":
+        case "2.6":
+        case "3.0":
           break;
         default:
-          throw 'Invalid protocol version : ' + version;
+          throw `Invalid protocol version : ${version}`;
       }
     }
     this.arguments.version = version;
@@ -367,23 +377,23 @@ export class StatusLine {
    * @return [String] message string
    */
   toString() {
-    return `${this.protocol}/${this.version} ${this.code} ${this.message[this.code as any]}`;
+    return `${this.protocol}/${this.version} ${this.code} ${this.message[this.code as number]}`;
   }
 
 }
 
 StatusLine.prototype.message = {
-  200: 'OK',
-  204: 'No Content',
-  310: 'Communicate',
-  311: 'Not Enough',
-  312: 'Advice',
-  400: 'Bad Request',
+  200: "OK",
+  204: "No Content",
+  310: "Communicate",
+  311: "Not Enough",
+  312: "Advice",
+  400: "Bad Request",
   418: "I'm a tea pot",
-  500: 'Internal Server Error'
+  500: "Internal Server Error",
 };
 
-const StatusLineClass = StatusLine;
+const StatusLineClass = StatusLine; // tslint:disable-line variable-name
 
 /** SHIORI Message Headers Container */
 export class Headers {
@@ -423,7 +433,7 @@ export class Headers {
    * @param separator [String] separator characters
    * @return [Array<String>] header values
    */
-  get_separated(name: string, separator = '\x01') {
+  get_separated(name: string, separator = "\x01") {
     const value = this.header[name];
     if (value != null) {
       return value.split(separator);
@@ -439,7 +449,7 @@ export class Headers {
    * @param separator [String] separator characters
    * @return [String] header value
    */
-  set_separated(name: string, value: string[], separator = '\x01') {
+  set_separated(name: string, value: string[], separator = "\x01") {
     return this.header[name] = value.join(separator);
   }
 
@@ -450,7 +460,7 @@ export class Headers {
    * @param separator2 [String] second level separator characters
    * @return [Array<Array<String>>] header values
    */
-  get_separated2(name: string, separator1 = '\x02', separator2 = '\x01') {
+  get_separated2(name: string, separator1 = "\x02", separator2 = "\x01") {
     const value = this.header[name];
     if (value != null) {
       return value.split(separator1).map((value1) => value1.split(separator2));
@@ -467,7 +477,7 @@ export class Headers {
    * @param separator2 [String] second level separator characters
    * @return [String] header value
    */
-  set_separated2(name: string, value: string[][], separator1 = '\x02', separator2 = '\x01') {
+  set_separated2(name: string, value: string[][], separator1 = "\x02", separator2 = "\x01") {
     return this.header[name] = value.map((value1) => value1.join(separator2)).join(separator1);
   }
 
@@ -477,7 +487,8 @@ export class Headers {
    */
   references() {
     let reference_max_index = -1;
-    for (const name in this.header) {
+    // forin for compatibility
+    for (const name in this.header) { // tslint:disable-line forin
       const result = /^Reference(\d+)$/.exec(name);
       if (result && reference_max_index < Number(result[1])) {
         reference_max_index = Number(result[1]);
@@ -496,10 +507,11 @@ export class Headers {
    * @throw [String] if not
    */
   validate() {
-    for (const name in this.header) {
+    // forin for compatibility
+    for (const name in this.header) { // tslint:disable-line forin
       const value = this.header[name];
       if (`${value}`.match(/\n/)) {
-        throw 'Invalid header value - line feed found : [' + name + '] : ' + value;
+        throw `Invalid header value - line feed found : [${name}] : ${value}`;
       }
     }
   }
@@ -510,11 +522,13 @@ export class Headers {
    */
   toString() {
     this.validate();
-    let str = '';
-    for (const name in this.header) {
+    let str = "";
+    // forin for compatibility
+    for (const name in this.header) { // tslint:disable-line forin
       const value = this.header[name];
       str += `${name}: ${value}\r\n`;
     }
+
     return str;
   }
 
@@ -533,7 +547,7 @@ export class Headers {
    * @param separator [String] separator characters
    * @return [Array<String>] header values
    */
-  ReferenceSeparated(index: number, separator = '\x01') {
+  ReferenceSeparated(index: number, separator = "\x01") {
     return this.get_separated(`Reference${index}`, separator) || [];
   }
 
@@ -544,7 +558,7 @@ export class Headers {
    * @param separator2 [String] second level separator characters
    * @return [Array<Array<String>>] header values
    */
-  ReferenceSeparated2(index: number, separator1 = '\x02', separator2 = '\x01') {
+  ReferenceSeparated2(index: number, separator1 = "\x02", separator2 = "\x01") {
     return this.get_separated2(`Reference${index}`, separator1, separator2) || [];
   }
 
@@ -612,7 +626,7 @@ export namespace Headers {
 
     /** Surface header (SHIORI/2.3b) */
     get Surface() {
-      return (this.get_separated("Surface", ",") || []).map((value1) => Number(value1));
+      return (this.get_separated("Surface", ",") || []).map(Number);
     }
 
     /** Word header (TEACH SHIORI/2.4) */
@@ -628,7 +642,7 @@ export namespace Headers {
      * @param separator [String] separator characters
      * @return [Array<String>] header values
      */
-    StringSeparated(separator = '\x01') {
+    StringSeparated(separator = "\x01") {
       return this.get_separated("String", separator) || [];
     }
 
@@ -638,7 +652,7 @@ export namespace Headers {
      * @param separator2 [String] second level separator characters
      * @return [Array<Array<String>>] header values
      */
-    StringSeparated2(separator1 = '\x02', separator2 = '\x01') {
+    StringSeparated2(separator1 = "\x02", separator2 = "\x01") {
       return this.get_separated2("String", separator1, separator2) || [];
     }
 
@@ -647,7 +661,7 @@ export namespace Headers {
      * @param separator [String] separator characters
      * @return [Array<String>] header values
      */
-    ValueSeparated(separator = '\x01') {
+    ValueSeparated(separator = "\x01") {
       return this.get_separated("Value", separator) || [];
     }
 
@@ -657,18 +671,18 @@ export namespace Headers {
      * @param separator2 [String] second level separator characters
      * @return [Array<Array<String>>] header values
      */
-    ValueSeparated2(separator1 = '\x02', separator2 = '\x01') {
+    ValueSeparated2(separator1 = "\x02", separator2 = "\x01") {
       return this.get_separated2("Value", separator1, separator2) || [];
     }
 
     /** BalloonOffset header (SHIORI/2.0) */
     get BalloonOffset() {
-      return (this.get_separated2("BalloonOffset", ",") || []).map((value1) => value1.map((value2) => Number(value2)));
+      return (this.get_separated2("BalloonOffset", ",") || []).map((value1) => value1.map(Number));
     }
 
     /** Surface header (SHIORI/2.3b) */
     get Surface() {
-      return (this.get_separated("Surface", ",") || []).map((value1) => Number(value1));
+      return (this.get_separated("Surface", ",") || []).map(Number);
     }
 
     /** Sentence header (SHIORI/2.0,2.2,2.3b,2.4) */
@@ -683,7 +697,7 @@ export namespace Headers {
 
     /** Status header (GET Status SHIORI/2.0) */
     get Status() {
-      return (this.get_separated("Status", ",") || []).map((value1) => Number(value1));
+      return (this.get_separated("Status", ",") || []).map(Number);
     }
 
     /** String header (GET String SHIORI/2.5) */
@@ -707,12 +721,12 @@ export namespace Shiori {
 
     // @return [Boolean]
     is_parsing() {
-      return !this.section.is('idle');
+      return !this.section.is("idle");
     }
 
     // @return [Boolean]
     is_parsing_end() {
-      return !this.section.is('end');
+      return !this.section.is("end");
     }
 
     // get parser result
@@ -729,20 +743,22 @@ export namespace Shiori {
     // set section state to first section
     // @throw [String] if before section != 'idle'
     begin_parse() {
-      if (!this.section.is('idle')) {
-        throw 'cannot begin parsing because previous transaction is still working';
+      if (!this.section.is("idle")) {
+        throw "cannot begin parsing because previous transaction is still working";
       }
       this.result = this.result_builder();
+
       return this.section.next();
     }
 
     // set section state to begining section
     // @throw [String] if before section != 'end'
     end_parse() {
-      if (!this.section.is('end')) {
+      if (!this.section.is("end")) {
         this.abort_parse();
-        throw 'parsing was aborted';
+        throw "parsing was aborted";
       }
+
       return this.section.next();
     }
 
@@ -750,14 +766,16 @@ export namespace Shiori {
     // @note recursively abort parsing
     abort_parse() {
       if (this.parsers != null) {
-        for (const name in this.parsers) {
+        // forin for compatibility
+        for (const name in this.parsers) { // tslint:disable-line forin
           const parser = this.parsers[name];
           if (parser.abort_parse != null) {
             parser.abort_parse();
           }
         }
       }
-      return this.section.set('idle');
+
+      return this.section.set("idle");
     }
 
     // parse a transaction
@@ -768,11 +786,12 @@ export namespace Shiori {
       this.begin_parse();
       const result = this.parse_chunk(transaction);
       if (this.is_parsing()) {
-        throw 'transaction is not closed';
+        throw "transaction is not closed";
       }
       if (result.results.length !== 1) {
-        throw 'multiple transaction';
+        throw "multiple transaction";
       }
+
       return result.results[0];
     }
 
@@ -784,6 +803,7 @@ export namespace Shiori {
       if (chunk.match(/\r\n$/)) {
         lines.pop();
       }
+
       return this.parse_lines(lines);
     }
 
@@ -791,38 +811,40 @@ export namespace Shiori {
     // @param lines [Array<String>] transaction chunk separated by \r\n
     // @return [Hash] {results: parse_line()'s result, state: parser state}
     parse_lines(lines: string[]) {
-      let result: {result?: undefined, state: "continue"} | {result: Container, state: "end"} | undefined;
+      let result: {result?: undefined; state: "continue"} | {result: Container; state: "end"} | undefined;
       const results = [];
       for (const line of lines) {
         result = this.parse_line(line);
-        if (result.state === 'end') {
+        if (result.state === "end") {
           results.push(result.result);
         }
       }
       if (!result) throw "must provide at least one lines";
+
       return {
-        results: results,
-        state: result.state
+        results,
+        state: result.state,
       };
     }
 
     // parse line
     // @param line [String] transaction line separated by \r\n
     // @return [Hash] {results: result (if state is end), state: parser state}
-    parse_line(line: string): {result?: undefined, state: "continue"} | {result: Container, state: "end"} {
-      if (this.section.is('idle')) {
+    parse_line(line: string): {result?: undefined; state: "continue"} | {result: Container; state: "end"} {
+      if (this.section.is("idle")) {
         this.begin_parse();
       }
       this.parse_main(line);
-      if (this.section.is('end')) {
+      if (this.section.is("end")) {
         this.end_parse();
+
         return {
           result: this.get_result(),
-          state: 'end'
+          state: "end",
         };
       } else {
         return {
-          state: 'continue'
+          state: "continue",
         };
       }
     }
@@ -871,10 +893,11 @@ export namespace Shiori {
   }
 
   export namespace Header {
+    // tslint:disable-next-line no-shadowed-variable
     export abstract class Parser<Container extends Headers> extends Shiori.Parser<Container> {
       parse_main(line: string) {
         const result = this.parse_header(line);
-        if (result.state === 'end') {
+        if (result.state === "end") {
           this.section.next();
         }
       }
@@ -885,39 +908,42 @@ export namespace Shiori {
           if (result) {
             this.result.header[result[1]] = result[2];
           } else {
-            throw 'Invalid header line : ' + line;
+            throw `Invalid header line : ${line}`;
           }
+
           return {
-            state: 'continue'
+            state: "continue",
           };
         } else {
           return {
-            state: 'end'
+            state: "end",
           };
         }
       }
     }
 
+    // tslint:disable-next-line no-shadowed-variable
     export class Section extends Shiori.Section {
-      constructor(sections = ['idle', 'header', 'end']) {
+      constructor(sections = ["idle", "header", "end"]) {
         super(sections);
       }
     }
   }
 
   export namespace Request {
-    // SHIORI Request parser
+    /** SHIORI Request parser */
+    // tslint:disable-next-line no-shadowed-variable
     export  class Parser extends Shiori.Parser<Message.Request> {
       parsers = {
-        request_line: new Shiori.Request.RequestLine.Parser(),
-        headers: new Shiori.Request.Header.Parser()
+        request_line: new RequestLine.Parser(),
+        headers: new Header.Parser(),
       };
 
-      section = new Shiori.Request.Section();
+      section = new Section();
 
-      result_builder() {
+      result_builder() { // tslint:disable-line prefer-function-over-method
         return new Message.Request({
-          no_prepare: true
+          no_prepare: true,
         });
       }
 
@@ -925,18 +951,20 @@ export namespace Shiori {
         const section = this.section.get() as "request_line" | "headers";
         const parser = this.parsers[section];
         const parser_result = parser.parse_line(line);
-        if (parser_result.state === 'end') {
+        if (parser_result.state === "end") {
           this.result[section] = parser_result.result;
           this.section.next();
         }
       }
     }
 
+    // tslint:disable-next-line no-shadowed-variable
     export namespace RequestLine {
+      // tslint:disable-next-line no-shadowed-variable
       export class Parser {
         result: RequestLine;
 
-        result_builder() {
+        result_builder() { // tslint:disable-line prefer-function-over-method
           return new RequestLineClass();
         }
 
@@ -948,60 +976,66 @@ export namespace Shiori {
           return this.parse_line(chunk);
         }
 
-        parse_line(line: string): {result: RequestLine, state: "end"} {
+        parse_line(line: string): {result: RequestLine; state: "end"} {
           const result = line.match(/^([A-Za-z0-9 ]+) SHIORI\/([0-9.]+)/);
           if (!result) {
-            throw 'Invalid request line : ' + line;
+            throw `Invalid request line : ${line}`;
           }
           this.result = this.result_builder();
           this.result.method = result[1] as Method;
-          this.result.protocol = 'SHIORI';
+          this.result.protocol = "SHIORI";
           this.result.version = result[2] as Version;
+
           return {
             result: this.result,
-            state: 'end'
+            state: "end",
           };
         }
 
-        abort_parse() {}
+        abort_parse() {} // tslint:disable-line prefer-function-over-method no-empty
       }
     }
 
+      // tslint:disable-next-line no-shadowed-variable
     export namespace Header {
+      // tslint:disable-next-line no-shadowed-variable
       export class Parser extends Shiori.Header.Parser<Headers.Request> {
         constructor() {
           super();
-          this.section = new Shiori.Request.Header.Section();
+          this.section = new Section();
         }
 
-        result_builder() {
+        result_builder() { // tslint:disable-line prefer-function-over-method
           return new Headers.Request();
         }
       }
 
+      // tslint:disable-next-line no-shadowed-variable
       export class Section extends Shiori.Header.Section {}
     }
 
+    // tslint:disable-next-line no-shadowed-variable
     export class Section extends Shiori.Section {
-      constructor(sections = ['idle', 'request_line', 'headers', 'end']) {
+      constructor(sections = ["idle", "request_line", "headers", "end"]) {
         super(sections);
       }
     }
   }
 
   export namespace Response {
-    // SHIORI Response parser
+    /** SHIORI Response parser */
+    // tslint:disable-next-line no-shadowed-variable
     export class Parser extends Shiori.Parser<Message.Response> {
       parsers = {
-        status_line: new Shiori.Response.StatusLine.Parser(),
-        headers: new Shiori.Response.Header.Parser()
+        status_line: new StatusLine.Parser(),
+        headers: new Header.Parser(),
       };
 
-      section = new Shiori.Response.Section();
+      section = new Section();
 
-      result_builder() {
+      result_builder() { // tslint:disable-line prefer-function-over-method
         return new Message.Response({
-          no_prepare: true
+          no_prepare: true,
         });
       }
 
@@ -1009,18 +1043,20 @@ export namespace Shiori {
         const section = this.section.get() as "status_line" | "headers";
         const parser = this.parsers[section];
         const parser_result = parser.parse_line(line);
-        if (parser_result.state === 'end') {
+        if (parser_result.state === "end") {
           this.result[section] = parser_result.result;
           this.section.next();
         }
       }
     }
 
+    // tslint:disable-next-line no-shadowed-variable
     export namespace StatusLine {
+      // tslint:disable-next-line no-shadowed-variable
       export class Parser {
         result: StatusLine;
 
-        result_builder() {
+        result_builder() { // tslint:disable-line prefer-function-over-method
           return new StatusLineClass();
         }
 
@@ -1032,42 +1068,47 @@ export namespace Shiori {
           return this.parse_line(chunk);
         }
 
-        parse_line(line: string): {result: StatusLine, state: "end"} {
+        parse_line(line: string): {result: StatusLine; state: "end"} {
           const result = line.match(/^SHIORI\/([0-9.]+) (\d+) (.+)$/);
           if (!result) {
-            throw 'Invalid status line : ' + line;
+            throw `Invalid status line : ${line}`;
           }
           this.result = this.result_builder();
-          this.result.protocol = 'SHIORI';
+          this.result.protocol = "SHIORI";
           this.result.version = result[1] as Version;
           this.result.code = Number(result[2]);
+
           return {
             result: this.result,
-            state: 'end'
+            state: "end",
           };
         }
 
-        abort_parse() {}
+        abort_parse() {} // tslint:disable-line prefer-function-over-method no-empty
       }
     }
 
+    // tslint:disable-next-line no-shadowed-variable
     export namespace Header {
+      // tslint:disable-next-line no-shadowed-variable
       export class Parser extends Shiori.Header.Parser<Headers.Response> {
         constructor() {
           super();
-          this.section = new Shiori.Response.Header.Section();
+          this.section = new Section();
         }
 
-        result_builder() {
+        result_builder() { // tslint:disable-line prefer-function-over-method
           return new Headers.Response();
         }
       }
 
+    // tslint:disable-next-line no-shadowed-variable
       export class Section extends Shiori.Header.Section {}
     }
 
+    // tslint:disable-next-line no-shadowed-variable
     export class Section extends Shiori.Section {
-      constructor(sections = ['idle', 'status_line', 'headers', 'end']) {
+      constructor(sections = ["idle", "status_line", "headers", "end"]) {
         super(sections);
       }
     }

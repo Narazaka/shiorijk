@@ -1,3 +1,4 @@
+// tslint:disable no-console prefer-template max-line-length
 import * as ShioriJK from "../lib/shiorijk";
 // const ShioriJK = require("../lib/shiorijk"); // also OK
 
@@ -80,7 +81,7 @@ const response2 = new ShioriJK.Message.Response({
     Charset: "UTF-8",
     Sender: "ikaga",
     Value: "8.2.8",
-  }
+  },
 });
 
 console.log(response2.toString() === "SHIORI/3.0 200 OK\r\nCharset: UTF-8\r\nSender: ikaga\r\nValue: 8.2.8\r\n\r\n");
