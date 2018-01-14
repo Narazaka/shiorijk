@@ -1,0 +1,19 @@
+{
+  "include": [
+    "lib/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
+  "extension": [
+    ".js",
+    ".ts"
+  ],
+  "reporter": [
+    "lcov",
+    "html",
+    "text",
+    "text-summary"
+  ]
+}
