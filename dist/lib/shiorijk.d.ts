@@ -76,11 +76,11 @@ export declare namespace Message {
 /** SHIORI Request Message's RequestLine like data */
 export interface RequestLineLike {
     /** method */
-    method?: Method | null;
+    method?: Method;
     /** protocol (default = "SHIORI") */
-    protocol?: Protocol | null;
+    protocol?: Protocol;
     /** version */
-    version?: Version | null;
+    version?: Version;
 }
 /** SHIORI Request Message's RequestLine Container */
 export declare class RequestLine implements RequestLineLike {
@@ -91,11 +91,11 @@ export declare class RequestLine implements RequestLineLike {
      */
     constructor(data?: RequestLineLike);
     /** request method */
-    method: Method | null | undefined;
+    method: Method | undefined;
     /** protocol */
-    protocol: Protocol | null | undefined;
+    protocol: Protocol | undefined;
     /** version */
-    version: Version | null | undefined;
+    version: Version | undefined;
     /**
      * validate
      * @param method method
@@ -112,11 +112,11 @@ export declare class RequestLine implements RequestLineLike {
 /** SHIORI Response Message's StatusLine like data */
 export interface StatusLineLike {
     /** status code */
-    code?: number | null;
+    code?: number;
     /** protocol (default = "SHIORI") */
-    protocol?: Protocol | null;
+    protocol?: Protocol;
     /** version */
-    version?: Version | null;
+    version?: Version;
 }
 /** SHIORI Response Message's StatusLine Container */
 export declare class StatusLine implements StatusLineLike {
@@ -131,11 +131,11 @@ export declare class StatusLine implements StatusLineLike {
      */
     constructor(data?: StatusLineLike);
     /** status code */
-    code: number | null | undefined;
+    code: number | undefined;
     /** protocol */
-    protocol: Protocol | null | undefined;
+    protocol: Protocol | undefined;
     /** version */
-    version: Version | null | undefined;
+    version: Version | undefined;
     /**
      * Message to string
      * @return message string

@@ -704,7 +704,7 @@ exports.Headers = Headers;
             /** Age header (SHIORI/2.3b) */
             get: function () {
                 var age = this.get("Age");
-                return age == null ? undefined : Number(age);
+                return age == null ? undefined : Number(age); // tslint:disable-line no-null-keyword
             },
             enumerable: true,
             configurable: true
