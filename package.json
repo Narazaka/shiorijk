@@ -3,11 +3,8 @@
   "version": "0.8.4",
   "description": "SHIORI/3.x Parser/Container",
   "homepage": "http://narazaka.github.io/shiorijk/",
-  "main": "index.js",
-  "typings": "./lib/shiorijk.d.ts",
-  "typescript": {
-    "definition": "./lib/shiorijk.d.ts"
-  },
+  "main": "./dist/lib/shiorijk.js",
+  "types": "./dist/lib/shiorijk.d.ts",
   "scripts": {
     "test": "gulp test",
     "codecov": "gulp test-cli && cat coverage/lcov.info | codecov"
