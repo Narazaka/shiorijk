@@ -1,1 +1,3 @@
 extends: narazaka
+rules:
+  func-names: 0
