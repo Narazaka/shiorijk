@@ -194,7 +194,7 @@ export class RequestLine implements RequestLineLike {
         case "TRANSLATE Sentence":
           break;
         default:
-          throw `Invalid protocol method : ${method}`;
+          throw new RequestLine.InvalidValueError(`Invalid protocol method : ${method}`);
       }
     }
     this.arguments.method = method;
@@ -207,7 +207,7 @@ export class RequestLine implements RequestLineLike {
 
   set protocol(protocol: Protocol | undefined) {
     if ((protocol != null) && protocol !== "SHIORI") { // tslint:disable-line no-null-keyword
-      throw `Invalid protocol : ${protocol}`;
+      throw new RequestLine.InvalidValueError(`Invalid protocol : ${protocol}`);
     }
     this.arguments.protocol = protocol;
   }
@@ -231,7 +231,7 @@ export class RequestLine implements RequestLineLike {
         case "3.0":
           break;
         default:
-          throw `Invalid protocol version : ${version}`;
+          throw new RequestLine.InvalidValueError(`Invalid protocol version : ${version}`);
       }
     }
     this.arguments.version = version;
@@ -303,7 +303,7 @@ export class RequestLine implements RequestLineLike {
     }
     // tslint:enable switch-default
     if (!is_valid) {
-      throw `Invalid protocol method and version : ${method} SHIORI/${version}`;
+      throw new RequestLine.InvalidValueError(`Invalid protocol method and version : ${method} SHIORI/${version}`);
     }
   }
 
@@ -317,6 +317,11 @@ export class RequestLine implements RequestLineLike {
 }
 
 const RequestLineClass = RequestLine; // tslint:disable-line variable-name
+
+export namespace RequestLine {
+  /** Invalid value error */
+  export class InvalidValueError extends Error {}
+}
 
 /** SHIORI Response Message's StatusLine like data */
 export interface StatusLineLike {
@@ -357,7 +362,7 @@ export class StatusLine implements StatusLineLike {
 
   set code(code) {
     if ((code != null) && (this.message[code] == null)) { // tslint:disable-line no-null-keyword
-      throw `Invalid response code : ${code}`;
+      throw new StatusLine.InvalidValueError(`Invalid response code : ${code}`);
     }
     this.arguments.code = code;
   }
@@ -369,7 +374,7 @@ export class StatusLine implements StatusLineLike {
 
   set protocol(protocol: Protocol | undefined) {
     if ((protocol != null) && protocol !== "SHIORI") { // tslint:disable-line no-null-keyword
-      throw `Invalid protocol : ${protocol}`;
+      throw new StatusLine.InvalidValueError(`Invalid protocol : ${protocol}`);
     }
     this.arguments.protocol = protocol;
   }
@@ -391,7 +396,7 @@ export class StatusLine implements StatusLineLike {
         case "3.0":
           break;
         default:
-          throw `Invalid protocol version : ${version}`;
+          throw new StatusLine.InvalidValueError(`Invalid protocol version : ${version}`);
       }
     }
     this.arguments.version = version;
@@ -419,6 +424,11 @@ StatusLine.prototype.message = {
 };
 
 const StatusLineClass = StatusLine; // tslint:disable-line variable-name
+
+export namespace StatusLine {
+  /** Invalid value error */
+  export class InvalidValueError extends Error {}
+}
 
 /** SHIORI Message Headers Container */
 export class Headers {
@@ -536,7 +546,7 @@ export class Headers {
     for (const name in this.header) { // tslint:disable-line forin
       const value = this.header[name];
       if (`${value}`.match(/\n/)) {
-        throw `Invalid header value - line feed found : [${name}] : ${value}`;
+        throw new Headers.InvalidValueError(`Invalid header value - line feed found : [${name}] : ${value}`);
       }
     }
   }
@@ -586,10 +596,12 @@ export class Headers {
   ReferenceSeparated2(index: number, separator1 = "\x02", separator2 = "\x01") {
     return this.get_separated2(`Reference${index}`, separator1, separator2) || [];
   }
-
 }
 
 export namespace Headers {
+  /** Invalid value error */
+  export class InvalidValueError extends Error {}
+
   /** SHIORI Request Message Headers Container */
   export class Request extends Headers {
     /** Charset header */
@@ -738,6 +750,9 @@ export namespace Headers {
 }
 
 export namespace Shiori {
+  /** Parse error */
+  export class ParseError extends Error {}
+
   /** parser base class */
   export abstract class Parser<Container> {
     section: Section;
@@ -772,7 +787,7 @@ export namespace Shiori {
      */
     begin_parse() {
       if (!this.section.is("idle")) {
-        throw "cannot begin parsing because previous transaction is still working";
+        throw new ParseError("cannot begin parsing because previous transaction is still working");
       }
       this.result = this.result_builder();
 
@@ -786,7 +801,7 @@ export namespace Shiori {
     end_parse() {
       if (!this.section.is("end")) {
         this.abort_parse();
-        throw "parsing was aborted";
+        throw new ParseError("parsing was aborted");
       }
 
       return this.section.next();
@@ -821,10 +836,10 @@ export namespace Shiori {
       this.begin_parse();
       const result = this.parse_chunk(transaction);
       if (this.is_parsing()) {
-        throw "transaction is not closed";
+        throw new ParseError("transaction is not closed");
       }
       if (result.results.length !== 1) {
-        throw "multiple transaction";
+        throw new ParseError("multiple transaction");
       }
 
       return result.results[0];
@@ -858,7 +873,7 @@ export namespace Shiori {
           results.push(result.result);
         }
       }
-      if (!result) throw "must provide at least one lines";
+      if (!result) throw new ParseError("must provide at least one lines");
 
       return {
         results,
@@ -950,7 +965,7 @@ export namespace Shiori {
           if (result) {
             this.result.header[result[1]] = result[2];
           } else {
-            throw `Invalid header line : ${line}`;
+            throw new ParseError(`Invalid header line : ${line}`);
           }
 
           return {
@@ -1021,7 +1036,7 @@ export namespace Shiori {
         parse_line(line: string): {result: RequestLine; state: "end"} {
           const result = line.match(/^([A-Za-z0-9 ]+) SHIORI\/([0-9.]+)/);
           if (!result) {
-            throw `Invalid request line : ${line}`;
+            throw new ParseError(`Invalid request line : ${line}`);
           }
           this.result = this.result_builder();
           this.result.method = result[1] as Method;
@@ -1113,7 +1128,7 @@ export namespace Shiori {
         parse_line(line: string): {result: StatusLine; state: "end"} {
           const result = line.match(/^SHIORI\/([0-9.]+) (\d+) (.+)$/);
           if (!result) {
-            throw `Invalid status line : ${line}`;
+            throw new ParseError(`Invalid status line : ${line}`);
           }
           this.result = this.result_builder();
           this.result.protocol = "SHIORI";

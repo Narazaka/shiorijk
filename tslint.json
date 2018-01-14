@@ -21,7 +21,6 @@
         "no-use-before-declare": false,
         "return-undefined": false,
         "no-magic-numbers": false,
-        "no-string-throw": false,
         "completed-docs": false
     }
 }
