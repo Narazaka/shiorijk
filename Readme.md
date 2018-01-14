@@ -135,6 +135,17 @@ See [http://narazaka.github.io/shiorijk/](http://narazaka.github.io/shiorijk/) o
 
 Also you can found the code snippets in [test/](test).
 
+History
+--------------------------
+
+### v1.0.0
+
+- CoffeeScript -> TypeScript
+- Basic JavaScript API is not changed.
+- null-unioned type has been changed as : `Foo | null | undefined` -> `Foo | undefined`
+- The string throw that existed in some APIs has been changed to throw classes that inherited Error.
+- Needs >= ES5 (so IE <= 8 needs shims).
+
 License
 --------------------------
 
