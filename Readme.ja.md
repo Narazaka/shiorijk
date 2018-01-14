@@ -31,7 +31,7 @@ or
 ShioriJKとは何か?
 --------------------------
 
-伺かのSHIORIサブシステム構築のためのSHIORIプロトコルパーサとコンテナのJavaScript(CoffeeScript / TypeScript 型定義付き)による実装です。
+伺かのSHIORIサブシステム構築のためのSHIORIプロトコルパーサとコンテナのJavaScript(TypeScript)による実装です。
 
 JavaScriptで栞を組みたくなった場合にお使いください。
 
@@ -138,24 +138,16 @@ const response2 = new ShioriJK.Message.Response({
 console.log(response2.toString() === "SHIORI/3.0 200 OK\r\nCharset: UTF-8\r\nSender: ikaga\r\nValue: 8.2.8\r\n\r\n");
 ```
 
-さらに見る: このライブラリを使用した栞の実装である[MiyoJS](https://github.com/Narazaka/miyojs)や、ベースウェアの実装である[イカガカ](https://github.com/Ikagaka/Ikagaka.demo)をご参照ください。
+さらに見る: このライブラリを使用した栞の実装である[SanaJK](https://github.com/Narazaka/sanajk)や、ベースウェアの実装である[イカガカ](https://github.com/Ikagaka/Ikagaka.demo)をご参照ください。
 
 APIドキュメント
 --------------------------
 
-[http://narazaka.github.io/shiorijk/](http://narazaka.github.io/shiorijk/)か、src/にあるコメント付きのソースをご覧ください。
+[http://narazaka.github.io/shiorijk/](http://narazaka.github.io/shiorijk/)か、[lib/](lib)にあるコメント付きのソースをご覧ください。
 
-ドキュメントがルーズだと感じたら、ライブラリやテストコードの中身を読んでいただいたほうがわかりやすいかもしれません。
-
-ビルド
---------------------------
-
-    git submodule init
-    git submodule update
-    npm install
-    gulp
+ドキュメントがルーズだと感じたら、ライブラリや[テストコード](test)の中身を読んでいただいたほうがわかりやすいかもしれません。
 
 ライセンス
 --------------------------
 
-[MITライセンス](http://narazaka.net/license/MIT?2017)の元で配布いたします。
+[MITライセンス](http://narazaka.net/license/MIT?2018)の元で配布いたします。

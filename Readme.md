@@ -31,7 +31,7 @@ or
 What is ShioriJK ?
 --------------------------
 
-ShioriJK is a library of SHIORI protocol parsers and containers implemented by Javascript (CoffeeScript with TypeScript definition) for making SHIORI subsystem.
+ShioriJK is a library of SHIORI protocol parsers and containers implemented by Javascript (TypeScript) for making SHIORI subsystem.
 
 Usage overview
 --------------------------
@@ -126,24 +126,16 @@ const response2 = new ShioriJK.Message.Response({
 console.log(response2.toString() === "SHIORI/3.0 200 OK\r\nCharset: UTF-8\r\nSender: ikaga\r\nValue: 8.2.8\r\n\r\n");
 ```
 
-MORE: See the SHIORI implementation [MiyoJS](https://github.com/Narazaka/miyojs.git) that is using ShioriJK.
+MORE: See the SHIORI implementation [SanaJK](https://github.com/Narazaka/sanajk) and Ukagaka Baseware implementation [Ikagaka](https://github.com/Ikagaka/Ikagaka.demo) that is using ShioriJK.
 
 API Document
 --------------------------
 
-See [http://narazaka.github.io/shiorijk/](http://narazaka.github.io/shiorijk/) or the source in src/.
+See [http://narazaka.github.io/shiorijk/](http://narazaka.github.io/shiorijk/) or the source in [lib/](lib).
 
-Also you can found the code snippets in test/.
-
-Build
---------------------------
-
-    git submodule init
-    git submodule update
-    npm install
-    gulp
+Also you can found the code snippets in [test/](test).
 
 License
 --------------------------
 
-This is released under [MIT License](http://narazaka.net/license/MIT?2017).
+This is released under [MIT License](http://narazaka.net/license/MIT?2018).
