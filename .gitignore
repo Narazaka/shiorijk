@@ -9,3 +9,5 @@ coverage
 !.codeclimate.yml
 !.npmrc
 !.nycrc
+!.eslintrc.yml
+!.eslintignore
