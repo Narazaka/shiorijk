@@ -2,8 +2,14 @@
 node_modules
 bower_components
 npm-debug.log
+yarn.lock
 coverage
 !.gitignore
 !.travis.yml
 !.codeclimate.yml
 !.npmrc
+!.nycrc
+!.eslintrc.yml
+!.eslintignore
+dist/test
+dist/example

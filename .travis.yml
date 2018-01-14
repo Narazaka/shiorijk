@@ -1,14 +1,14 @@
 language: node_js
+dist: trusty # for chrome
+sudo: required # for chrome
 node_js:
-  - 6
+  - 8
 os:
   - linux
-  - osx
 before_script:
   - export DISPLAY=:99.0
-  - if [ "${TRAVIS_OS_NAME}" = "linux" ]; then export CHROME_BIN=chromium-browser ; fi
+  - if [ "${TRAVIS_OS_NAME}" = "linux" ]; then export CHROME_BIN=google-chrome ; fi
   - if [ "${TRAVIS_OS_NAME}" = "linux" ]; then sh -e /etc/init.d/xvfb start ; fi
-  - if [ "${TRAVIS_OS_NAME}" == "osx" ]; then brew cask install google-chrome; fi
   - sleep 3 # give xvfb some time to start
 after_success:
   - bash <(curl -s https://codecov.io/bash)
@@ -17,3 +17,4 @@ cache:
     - node_modules
 addons:
   firefox: latest-esr
+  chrome: stable

@@ -1,4 +1,0 @@
-languages:
-  CoffeeScript: true
-exclude_paths:
-  - "lib/*.js"

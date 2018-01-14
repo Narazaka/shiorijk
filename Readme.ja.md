@@ -8,11 +8,14 @@ ShioriJK - SHIORI/3.x パーサ/コンテナ
 [![Bower](https://img.shields.io/bower/v/shiorijk.svg)](https://github.com/Narazaka/shiorijk)
 [![Bower](https://img.shields.io/bower/l/shiorijk.svg)](https://github.com/Narazaka/shiorijk)
 
-[![Dependency Status](https://david-dm.org/Narazaka/shiorijk.svg)](https://david-dm.org/Narazaka/shiorijk)
-[![devDependency Status](https://david-dm.org/Narazaka/shiorijk/dev-status.svg)](https://david-dm.org/Narazaka/shiorijk#info=devDependencies)
-[![Build Status](https://travis-ci.org/Narazaka/shiorijk.svg)](https://travis-ci.org/Narazaka/shiorijk)
+[![Dependency Status](https://david-dm.org/Narazaka/shiorijk/status.svg)](https://david-dm.org/Narazaka/shiorijk)
+[![devDependency Status](https://david-dm.org/Narazaka/shiorijk/dev-status.svg)](https://david-dm.org/Narazaka/shiorijk?type=dev)
+[![Travis Build Status](https://travis-ci.org/Narazaka/shiorijk.svg?branch=master)](https://travis-ci.org/Narazaka/shiorijk)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/Narazaka/shiorijk?svg=true&branch=master)](https://ci.appveyor.com/project/Narazaka/shiorijk)
 [![codecov.io](https://codecov.io/github/Narazaka/shiorijk/coverage.svg?branch=master)](https://codecov.io/github/Narazaka/shiorijk?branch=master)
 [![Code Climate](https://codeclimate.com/github/Narazaka/shiorijk/badges/gpa.svg)](https://codeclimate.com/github/Narazaka/shiorijk)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/3e8aa6e24b6d47c29aa8ebb82b6a1e06)](https://www.codacy.com/app/narazaka/shiorijk?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Narazaka/shiorijk&amp;utm_campaign=Badge_Grade)
+[![Greenkeeper badge](https://badges.greenkeeper.io/Narazaka/single-file-worker.js.svg)](https://greenkeeper.io/)
 
 **つまるところ、栞はJKである**
 
@@ -28,7 +31,7 @@ or
 ShioriJKとは何か?
 --------------------------
 
-伺かのSHIORIサブシステム構築のためのSHIORIプロトコルパーサとコンテナのJavaScript(CoffeeScript / TypeScript 型定義付き)による実装です。
+伺かのSHIORIサブシステム構築のためのSHIORIプロトコルパーサとコンテナのJavaScript(TypeScript)による実装です。
 
 JavaScriptで栞を組みたくなった場合にお使いください。
 
@@ -45,7 +48,7 @@ SHIORIリクエスト/レスポンスあるいはその断片を渡すとてき�
 
 現在のところSHIORI/3.xのみを扱えます。（SHIORI/2.xにも対応していますが、同一ヘッダが複数存在する一部リクエストを正しくパースできません。）
 
-[example.ts](example.ts)
+[example/example.ts](example/example.ts)
 ```typescript
 import * as ShioriJK from "shiorijk";
 // const ShioriJK = require("shiorijk"); // also OK
@@ -73,8 +76,8 @@ console.log(request.headers.get("ID") === "OnBIFFComplete"); // ヘッダ値を�
 console.log(request.headers.ID === "OnBIFFComplete"); // よく使うヘッダへのショートカット
 console.log(request.headers.Reference(1) === "1024"); // Reference*へのショートカット
 console.log(request.headers.references().length === 7); // 全てのReference*の値を取得
-console.log(request.headers.get_separated("Reference6")[0] === "123@example.com"); // \x01で区切られた値の取得
-console.log(request.headers.get_separated2("Reference4")[1][0] === "Subject: bar"); // \x01と\x02で区切られた値の取得
+console.log((request.headers.get_separated("Reference6") || [])[0] === "123@example.com"); // \x01で区切られた値の取得
+console.log((request.headers.get_separated2("Reference4") || [])[1][0] === "Subject: bar"); // \x01と\x02で区切られた値の取得
 
 // チャンクを元にパース(HTTPのように)
 let parseResult;
@@ -135,24 +138,16 @@ const response2 = new ShioriJK.Message.Response({
 console.log(response2.toString() === "SHIORI/3.0 200 OK\r\nCharset: UTF-8\r\nSender: ikaga\r\nValue: 8.2.8\r\n\r\n");
 ```
 
-さらに見る: このライブラリを使用した栞の実装である[MiyoJS](https://github.com/Narazaka/miyojs)や、ベースウェアの実装である[イカガカ](https://github.com/Ikagaka/Ikagaka.demo)をご参照ください。
+さらに見る: このライブラリを使用した栞の実装である[SanaJK](https://github.com/Narazaka/sanajk)や、ベースウェアの実装である[イカガカ](https://github.com/Ikagaka/Ikagaka.demo)をご参照ください。
 
 APIドキュメント
 --------------------------
 
-[http://narazaka.github.io/shiorijk/](http://narazaka.github.io/shiorijk/)か、src/にあるコメント付きのソースをご覧ください。
+[http://narazaka.github.io/shiorijk/](http://narazaka.github.io/shiorijk/)か、[lib/](lib)にあるコメント付きのソースをご覧ください。
 
-ドキュメントがルーズだと感じたら、ライブラリやテストコードの中身を読んでいただいたほうがわかりやすいかもしれません。
-
-ビルド
---------------------------
-
-    git submodule init
-    git submodule update
-    npm install
-    gulp
+ドキュメントがルーズだと感じたら、ライブラリや[テストコード](test)の中身を読んでいただいたほうがわかりやすいかもしれません。
 
 ライセンス
 --------------------------
 
-[MITライセンス](http://narazaka.net/license/MIT?2017)の元で配布いたします。
+[MITライセンス](http://narazaka.net/license/MIT?2018)の元で配布いたします。
