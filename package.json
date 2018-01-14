@@ -29,7 +29,6 @@
   "devDependencies": {
     "@types/chai": "^4.1.0",
     "@types/mocha": "^2.2.46",
-    "bower": "^1.8.2",
     "chai": "^4.1.2",
     "copy": "^0.3.1",
     "cross-env": "^5.1.3",

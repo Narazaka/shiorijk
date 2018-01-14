@@ -76,11 +76,11 @@ export declare namespace Message {
 /** SHIORI Request Message's RequestLine like data */
 export interface RequestLineLike {
     /** method */
-    method?: Method | null;
+    method?: Method;
     /** protocol (default = "SHIORI") */
-    protocol?: Protocol | null;
+    protocol?: Protocol;
     /** version */
-    version?: Version | null;
+    version?: Version;
 }
 /** SHIORI Request Message's RequestLine Container */
 export declare class RequestLine implements RequestLineLike {
@@ -91,11 +91,11 @@ export declare class RequestLine implements RequestLineLike {
      */
     constructor(data?: RequestLineLike);
     /** request method */
-    method: Method | null | undefined;
+    method: Method | undefined;
     /** protocol */
-    protocol: Protocol | null | undefined;
+    protocol: Protocol | undefined;
     /** version */
-    version: Version | null | undefined;
+    version: Version | undefined;
     /**
      * validate
      * @param method method
@@ -109,14 +109,19 @@ export declare class RequestLine implements RequestLineLike {
      */
     toString(): string;
 }
+export declare namespace RequestLine {
+    /** Invalid value error */
+    class InvalidValueError extends Error {
+    }
+}
 /** SHIORI Response Message's StatusLine like data */
 export interface StatusLineLike {
     /** status code */
-    code?: number | null;
+    code?: number;
     /** protocol (default = "SHIORI") */
-    protocol?: Protocol | null;
+    protocol?: Protocol;
     /** version */
-    version?: Version | null;
+    version?: Version;
 }
 /** SHIORI Response Message's StatusLine Container */
 export declare class StatusLine implements StatusLineLike {
@@ -131,16 +136,21 @@ export declare class StatusLine implements StatusLineLike {
      */
     constructor(data?: StatusLineLike);
     /** status code */
-    code: number | null | undefined;
+    code: number | undefined;
     /** protocol */
-    protocol: Protocol | null | undefined;
+    protocol: Protocol | undefined;
     /** version */
-    version: Version | null | undefined;
+    version: Version | undefined;
     /**
      * Message to string
      * @return message string
      */
     toString(): string;
+}
+export declare namespace StatusLine {
+    /** Invalid value error */
+    class InvalidValueError extends Error {
+    }
 }
 /** SHIORI Message Headers Container */
 export declare class Headers {
@@ -238,6 +248,9 @@ export declare class Headers {
     ReferenceSeparated2(index: number, separator1?: string, separator2?: string): string[][];
 }
 export declare namespace Headers {
+    /** Invalid value error */
+    class InvalidValueError extends Error {
+    }
     /** SHIORI Request Message Headers Container */
     class Request extends Headers {
         /** Charset header */
@@ -312,6 +325,9 @@ export declare namespace Headers {
     }
 }
 export declare namespace Shiori {
+    /** Parse error */
+    class ParseError extends Error {
+    }
     /** parser base class */
     abstract class Parser<Container> {
         section: Section;

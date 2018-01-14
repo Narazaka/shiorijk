@@ -28,7 +28,7 @@ describe("request line", () => {
     mrl.protocol = "SHIORI";
     mrl.version = "2.0";
     `${mrl}`.should.to.be.equal("GET Version SHIORI/2.0");
-    mrl.method = null;
+    mrl.method = undefined;
     mrl.version = "3.0";
     mrl.method = "GET";
     `${mrl}`.should.to.be.equal("GET SHIORI/3.0");
