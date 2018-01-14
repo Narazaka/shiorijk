@@ -227,7 +227,7 @@ var RequestLine = /** @class */ (function () {
                     case "TRANSLATE Sentence":
                         break;
                     default:
-                        throw "Invalid protocol method : " + method;
+                        throw new RequestLine.InvalidValueError("Invalid protocol method : " + method);
                 }
             }
             this.arguments.method = method;
@@ -242,7 +242,7 @@ var RequestLine = /** @class */ (function () {
         },
         set: function (protocol) {
             if ((protocol != null) && protocol !== "SHIORI") {
-                throw "Invalid protocol : " + protocol;
+                throw new RequestLine.InvalidValueError("Invalid protocol : " + protocol);
             }
             this.arguments.protocol = protocol;
         },
@@ -269,7 +269,7 @@ var RequestLine = /** @class */ (function () {
                     case "3.0":
                         break;
                     default:
-                        throw "Invalid protocol version : " + version;
+                        throw new RequestLine.InvalidValueError("Invalid protocol version : " + version);
                 }
             }
             this.arguments.version = version;
@@ -343,7 +343,7 @@ var RequestLine = /** @class */ (function () {
         }
         // tslint:enable switch-default
         if (!is_valid) {
-            throw "Invalid protocol method and version : " + method + " SHIORI/" + version;
+            throw new RequestLine.InvalidValueError("Invalid protocol method and version : " + method + " SHIORI/" + version);
         }
     };
     /**
@@ -357,6 +357,18 @@ var RequestLine = /** @class */ (function () {
 }());
 exports.RequestLine = RequestLine;
 var RequestLineClass = RequestLine; // tslint:disable-line variable-name
+(function (RequestLine) {
+    /** Invalid value error */
+    var InvalidValueError = /** @class */ (function (_super) {
+        __extends(InvalidValueError, _super);
+        function InvalidValueError() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        return InvalidValueError;
+    }(Error));
+    RequestLine.InvalidValueError = InvalidValueError;
+})(RequestLine = exports.RequestLine || (exports.RequestLine = {}));
+exports.RequestLine = RequestLine;
 /** SHIORI Response Message's StatusLine Container */
 var StatusLine = /** @class */ (function () {
     /**
@@ -382,7 +394,7 @@ var StatusLine = /** @class */ (function () {
         },
         set: function (code) {
             if ((code != null) && (this.message[code] == null)) {
-                throw "Invalid response code : " + code;
+                throw new StatusLine.InvalidValueError("Invalid response code : " + code);
             }
             this.arguments.code = code;
         },
@@ -396,7 +408,7 @@ var StatusLine = /** @class */ (function () {
         },
         set: function (protocol) {
             if ((protocol != null) && protocol !== "SHIORI") {
-                throw "Invalid protocol : " + protocol;
+                throw new StatusLine.InvalidValueError("Invalid protocol : " + protocol);
             }
             this.arguments.protocol = protocol;
         },
@@ -420,7 +432,7 @@ var StatusLine = /** @class */ (function () {
                     case "3.0":
                         break;
                     default:
-                        throw "Invalid protocol version : " + version;
+                        throw new StatusLine.InvalidValueError("Invalid protocol version : " + version);
                 }
             }
             this.arguments.version = version;
@@ -449,6 +461,18 @@ StatusLine.prototype.message = {
     500: "Internal Server Error",
 };
 var StatusLineClass = StatusLine; // tslint:disable-line variable-name
+(function (StatusLine) {
+    /** Invalid value error */
+    var InvalidValueError = /** @class */ (function (_super) {
+        __extends(InvalidValueError, _super);
+        function InvalidValueError() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        return InvalidValueError;
+    }(Error));
+    StatusLine.InvalidValueError = InvalidValueError;
+})(StatusLine = exports.StatusLine || (exports.StatusLine = {}));
+exports.StatusLine = StatusLine;
 /** SHIORI Message Headers Container */
 var Headers = /** @class */ (function () {
     /**
@@ -562,7 +586,7 @@ var Headers = /** @class */ (function () {
         for (var name_2 in this.header) {
             var value = this.header[name_2];
             if (("" + value).match(/\n/)) {
-                throw "Invalid header value - line feed found : [" + name_2 + "] : " + value;
+                throw new Headers.InvalidValueError("Invalid header value - line feed found : [" + name_2 + "] : " + value);
             }
         }
     };
@@ -614,6 +638,15 @@ var Headers = /** @class */ (function () {
 }());
 exports.Headers = Headers;
 (function (Headers) {
+    /** Invalid value error */
+    var InvalidValueError = /** @class */ (function (_super) {
+        __extends(InvalidValueError, _super);
+        function InvalidValueError() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        return InvalidValueError;
+    }(Error));
+    Headers.InvalidValueError = InvalidValueError;
     /** SHIORI Request Message Headers Container */
     var Request = /** @class */ (function (_super) {
         __extends(Request, _super);
@@ -837,6 +870,15 @@ exports.Headers = Headers;
 exports.Headers = Headers;
 var Shiori;
 (function (Shiori) {
+    /** Parse error */
+    var ParseError = /** @class */ (function (_super) {
+        __extends(ParseError, _super);
+        function ParseError() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        return ParseError;
+    }(Error));
+    Shiori.ParseError = ParseError;
     /** parser base class */
     var Parser = /** @class */ (function () {
         function Parser() {
@@ -860,7 +902,7 @@ var Shiori;
          */
         Parser.prototype.begin_parse = function () {
             if (!this.section.is("idle")) {
-                throw "cannot begin parsing because previous transaction is still working";
+                throw new ParseError("cannot begin parsing because previous transaction is still working");
             }
             this.result = this.result_builder();
             return this.section.next();
@@ -872,7 +914,7 @@ var Shiori;
         Parser.prototype.end_parse = function () {
             if (!this.section.is("end")) {
                 this.abort_parse();
-                throw "parsing was aborted";
+                throw new ParseError("parsing was aborted");
             }
             return this.section.next();
         };
@@ -903,10 +945,10 @@ var Shiori;
             this.begin_parse();
             var result = this.parse_chunk(transaction);
             if (this.is_parsing()) {
-                throw "transaction is not closed";
+                throw new ParseError("transaction is not closed");
             }
             if (result.results.length !== 1) {
-                throw "multiple transaction";
+                throw new ParseError("multiple transaction");
             }
             return result.results[0];
         };
@@ -938,7 +980,7 @@ var Shiori;
                 }
             }
             if (!result)
-                throw "must provide at least one lines";
+                throw new ParseError("must provide at least one lines");
             return {
                 results: results,
                 state: result.state,
@@ -1025,7 +1067,7 @@ var Shiori;
                         this.result.header[result[1]] = result[2];
                     }
                     else {
-                        throw "Invalid header line : " + line;
+                        throw new ParseError("Invalid header line : " + line);
                     }
                     return {
                         state: "continue",
@@ -1102,7 +1144,7 @@ var Shiori;
                 Parser.prototype.parse_line = function (line) {
                     var result = line.match(/^([A-Za-z0-9 ]+) SHIORI\/([0-9.]+)/);
                     if (!result) {
-                        throw "Invalid request line : " + line;
+                        throw new ParseError("Invalid request line : " + line);
                     }
                     this.result = this.result_builder();
                     this.result.method = result[1];
@@ -1207,7 +1249,7 @@ var Shiori;
                 Parser.prototype.parse_line = function (line) {
                     var result = line.match(/^SHIORI\/([0-9.]+) (\d+) (.+)$/);
                     if (!result) {
-                        throw "Invalid status line : " + line;
+                        throw new ParseError("Invalid status line : " + line);
                     }
                     this.result = this.result_builder();
                     this.result.protocol = "SHIORI";
