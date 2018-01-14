@@ -11,3 +11,5 @@ coverage
 !.nycrc
 !.eslintrc.yml
 !.eslintignore
+dist/test
+dist/example
