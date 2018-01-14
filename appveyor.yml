@@ -14,5 +14,3 @@ deploy: off
 environment:
   matrix:
     - nodejs_version: 8
-cache:
-  - node_modules
