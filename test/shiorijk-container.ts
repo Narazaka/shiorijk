@@ -1,29 +1,26 @@
-var ShioriJK, chai;
-
-if (typeof require !== "undefined" && require !== null) {
-  chai = require('chai');
-  ShioriJK = require('../lib/shiorijk.js');
-}
+/// <reference types="mocha" />
+import * as chai from "chai";
+import * as ShioriJK from "../lib/shiorijk";
 
 chai.should();
 
 describe('request line', () => {
-  let mrl = null;
+  let mrl: ShioriJK.RequestLine;
   beforeEach(() => {
     mrl = new ShioriJK.RequestLine();
   });
   it('should throw on wrong input', () => {
-    (() => mrl.method = 'GETTTTT').should.throw(/Invalid/);
-    (() => mrl.protocol = 'SAORI').should.throw(/Invalid/);
-    (() => mrl.version = '2.9').should.throw(/Invalid/);
+    (() => mrl.method = 'GETTTTT' as any).should.throw(/Invalid/);
+    (() => mrl.protocol = 'SAORI' as any).should.throw(/Invalid/);
+    (() => mrl.version = '2.9' as any).should.throw(/Invalid/);
     (() => mrl.protocol = 'SHIORI').should.not.throw(/Invalid/);
     (() => mrl.version = '3.0').should.not.throw(/Invalid/);
     (() => mrl.method = 'GET Version').should.throw(/Invalid/);
     (() => mrl.method = 'GET').should.not.throw(/Invalid/);
-    (() => mrl.version = '2.9').should.throw(/Invalid/);
-    mrl.method.should.be.equal('GET');
-    mrl.protocol.should.be.equal('SHIORI');
-    mrl.version.should.be.equal('3.0');
+    (() => mrl.version = '2.9' as any).should.throw(/Invalid/);
+    mrl.method!.should.be.equal('GET');
+    mrl.protocol!.should.be.equal('SHIORI');
+    mrl.version!.should.be.equal('3.0');
   });
   it('should make request line string', () => {
     mrl.method = 'GET Version';
@@ -41,42 +38,42 @@ describe('request line', () => {
       protocol: 'SHIORI',
       version: '3.0'
     });
-    mrl.method.should.be.equal('GET');
-    mrl.protocol.should.be.equal('SHIORI');
-    mrl.version.should.be.equal('3.0');
+    mrl.method!.should.be.equal('GET');
+    mrl.protocol!.should.be.equal('SHIORI');
+    mrl.version!.should.be.equal('3.0');
   });
   it('should be able to initialize with default values', () => {
     mrl = new ShioriJK.RequestLine({
       method: 'GET',
       version: '3.0'
     });
-    mrl.method.should.be.equal('GET');
-    mrl.protocol.should.be.equal('SHIORI');
-    mrl.version.should.be.equal('3.0');
+    mrl.method!.should.be.equal('GET');
+    mrl.protocol!.should.be.equal('SHIORI');
+    mrl.version!.should.be.equal('3.0');
   });
   it('should throw on wrong initialize', () => {
-    (() => new ShioriJK.RequestLine({method: 'GETTT'})).should.throw(/Invalid/);
-    (() => new ShioriJK.RequestLine({protocol: 'SAORI'})).should.throw(/Invalid/);
-    (() => new ShioriJK.RequestLine({version: '2.9'})).should.throw(/Invalid/);
+    (() => new ShioriJK.RequestLine({method: 'GETTT' as any})).should.throw(/Invalid/);
+    (() => new ShioriJK.RequestLine({protocol: 'SAORI' as any})).should.throw(/Invalid/);
+    (() => new ShioriJK.RequestLine({version: '2.9' as any})).should.throw(/Invalid/);
     (() => new ShioriJK.RequestLine({method: 'GET', version: '2.6'})).should.throw(/Invalid/);
   });
 });
 
 describe('status line', () => {
-  let msl = null;
+  let msl: ShioriJK.StatusLine;
   beforeEach(() => {
     msl = new ShioriJK.StatusLine();
   });
   it('should throw on wrong input', () => {
     (() => msl.code = 501).should.throw(/Invalid/);
-    (() => msl.protocol = 'SAORI').should.throw(/Invalid/);
-    (() => msl.version = '2.9').should.throw(/Invalid/);
+    (() => msl.protocol = 'SAORI' as any).should.throw(/Invalid/);
+    (() => msl.version = '2.9' as any).should.throw(/Invalid/);
     (() => msl.code = 500).should.not.throw(/Invalid/);
     (() => msl.protocol = 'SHIORI').should.not.throw(/Invalid/);
     (() => msl.version = '3.0').should.not.throw(/Invalid/);
-    msl.code.should.be.equal(500);
-    msl.protocol.should.be.equal('SHIORI');
-    msl.version.should.be.equal('3.0');
+    msl.code!.should.be.equal(500);
+    msl.protocol!.should.be.equal('SHIORI');
+    msl.version!.should.be.equal('3.0');
   });
   it('should make status line string', () => {
     msl.code = 500;
@@ -85,7 +82,6 @@ describe('status line', () => {
     `${msl}`.should.to.be.equal('SHIORI/2.0 500 Internal Server Error');
     msl.code = 200;
     msl.version = '3.0';
-    msl.method = 'GET';
     `${msl}`.should.to.be.equal('SHIORI/3.0 200 OK');
   });
   it('should be able to initialize with values', () => {
@@ -95,9 +91,9 @@ describe('status line', () => {
       protocol: 'SHIORI',
       version: '3.0'
     });
-    mrl.code.should.be.equal(200);
-    mrl.protocol.should.be.equal('SHIORI');
-    mrl.version.should.be.equal('3.0');
+    mrl.code!.should.be.equal(200);
+    mrl.protocol!.should.be.equal('SHIORI');
+    mrl.version!.should.be.equal('3.0');
   });
   it('should be able to initialize with default values', () => {
     var mrl;
@@ -105,44 +101,43 @@ describe('status line', () => {
       code: 200,
       version: '3.0'
     });
-    mrl.code.should.be.equal(200);
-    mrl.protocol.should.be.equal('SHIORI');
-    mrl.version.should.be.equal('3.0');
+    mrl.code!.should.be.equal(200);
+    mrl.protocol!.should.be.equal('SHIORI');
+    mrl.version!.should.be.equal('3.0');
   });
   it('should throw on wrong initialize', () => {
     (() => new ShioriJK.StatusLine({code: 501})).should.throw(/Invalid/);
-    (() => new ShioriJK.StatusLine({protocol: 'SAORI'})).should.throw(/Invalid/);
-    (() => new ShioriJK.StatusLine({version: '2.9'})).should.throw(/Invalid/);
+    (() => new ShioriJK.StatusLine({protocol: 'SAORI' as any})).should.throw(/Invalid/);
+    (() => new ShioriJK.StatusLine({version: '2.9' as any})).should.throw(/Invalid/);
   });
 });
 
 describe('headers', () => {
-  var mh;
-  mh = null;
+  let mh: ShioriJK.Headers;
   beforeEach(() => {
     mh = new ShioriJK.Headers.Request();
   });
   it('should accessable', () => {
     mh.set('ID', 'OnBoot');
-    (mh.get('ID')).should.be.equal('OnBoot');
-    mh.header.ID.should.be.equal('OnBoot');
+    (mh.get('ID'))!.should.be.equal('OnBoot');
+    mh.header.ID!.should.be.equal('OnBoot');
     mh.header.Reference6 = 'halt';
-    (mh.get('Reference6')).should.be.equal('halt');
-    mh.header.Reference6.should.be.equal('halt');
+    (mh.get('Reference6'))!.should.be.equal('halt');
+    mh.header.Reference6!.should.be.equal('halt');
   });
   it('should handle \\x01', () => {
     mh.set('ID', 'otherghostname');
     mh.set_separated('Reference0', ['Sakura', '0', '10']);
-    (mh.get_separated('Reference0')).should.to.deep.equal(['Sakura', '0', '10']);
-    (mh.get('Reference0')).should.be.equal('Sakura\x010\x0110');
+    (mh.get_separated('Reference0'))!.should.to.deep.equal(['Sakura', '0', '10']);
+    (mh.get('Reference0'))!.should.be.equal('Sakura\x010\x0110');
   });
   it('should handle \\x02 and \\x01', () => {
     var sites;
     sites = [['home', 'http://narazaka.net/', 'narazaka.net.png', 'this is my home'], ['usada', 'http://usada.sakura.vg/', 'usada.png', 'materia']];
     mh.set_separated2('Value', sites);
-    (mh.get_separated2('Value')).should.to.deep.equal(sites);
-    (mh.get_separated('Value', '\x02')).should.to.deep.equal(['home\x01http://narazaka.net/\x01narazaka.net.png\x01this is my home', 'usada\x01http://usada.sakura.vg/\x01usada.png\x01materia']);
-    (mh.get('Value')).should.be.equal('home\x01http://narazaka.net/\x01narazaka.net.png\x01this is my home\x02usada\x01http://usada.sakura.vg/\x01usada.png\x01materia');
+    (mh.get_separated2('Value'))!.should.to.deep.equal(sites);
+    (mh.get_separated('Value', '\x02'))!.should.to.deep.equal(['home\x01http://narazaka.net/\x01narazaka.net.png\x01this is my home', 'usada\x01http://usada.sakura.vg/\x01usada.png\x01materia']);
+    (mh.get('Value'))!.should.be.equal('home\x01http://narazaka.net/\x01narazaka.net.png\x01this is my home\x02usada\x01http://usada.sakura.vg/\x01usada.png\x01materia');
   });
   it('should make headers string', () => {
     mh.header.ID = 'OnBoot';
@@ -161,8 +156,8 @@ describe('headers', () => {
       ID: 'OnBoot',
       Reference6: 'halt'
     });
-    mh.header.ID.should.be.equal('OnBoot');
-    mh.header.Reference6.should.be.equal('halt');
+    mh.header.ID!.should.be.equal('OnBoot');
+    mh.header.Reference6!.should.be.equal('halt');
   });
   it('should get references array', () => {
     mh = new ShioriJK.Headers({
@@ -175,7 +170,7 @@ describe('headers', () => {
   });
   it('reference header alias should work', () => {
     mh.header.Reference0 = 'ref0';
-    mh.Reference(0).should.be.equal('ref0');
+    mh.Reference(0)!.should.be.equal('ref0');
   });
   it('reference separated header alias should work', () => {
     mh.ReferenceSeparated(0).should.be.deep.equal([]);
@@ -184,14 +179,13 @@ describe('headers', () => {
   });
   it('reference separated2 header alias should work', () => {
     mh.ReferenceSeparated2(0).should.be.deep.equal([]);
-    mh.set_separated2('Reference0', [[0, 1], [2, 3]]);
+    mh.set_separated2('Reference0', [[0, 1], [2, 3]] as any);
     mh.ReferenceSeparated2(0).should.be.deep.equal([['0', '1'], ['2', '3']]);
   });
 });
 
 describe('request headers', () => {
-  var mh;
-  mh = null;
+  let mh: ShioriJK.Headers.Request;
   beforeEach(() => {
     mh = new ShioriJK.Headers.Request();
   });
@@ -211,25 +205,24 @@ describe('request headers', () => {
     mh.header.Age = '0';
     mh.header.Surface = '0,10';
     mh.header.Word = 'piyo';
-    mh.Charset.should.be.equal('UTF-8');
-    mh.Sender.should.be.equal('Ikagaka');
-    mh.SecurityLevel.should.be.equal('local');
-    mh.ID.should.be.equal('OnBoot');
-    mh.Event.should.be.equal('OnBoot');
-    mh.Type.should.be.equal('\\ms');
+    mh.Charset!.should.be.equal('UTF-8');
+    mh.Sender!.should.be.equal('Ikagaka');
+    mh.SecurityLevel!.should.be.equal('local');
+    mh.ID!.should.be.equal('OnBoot');
+    mh.Event!.should.be.equal('OnBoot');
+    mh.Type!.should.be.equal('\\ms');
     mh.Status.should.be.deep.equal(['talking', 'online']);
-    mh.Ghost.should.be.equal('ikaga');
-    mh.Sentence.should.be.equal('\\0\\e');
-    mh.To.should.be.equal('ikaga');
-    mh.Age.should.be.equal(0);
+    mh.Ghost!.should.be.equal('ikaga');
+    mh.Sentence!.should.be.equal('\\0\\e');
+    mh.To!.should.be.equal('ikaga');
+    mh.Age!.should.be.equal(0);
     mh.Surface.should.be.deep.equal([0, 10]);
-    mh.Word.should.be.equal('piyo');
+    mh.Word!.should.be.equal('piyo');
   });
 });
 
 describe('response headers', () => {
-  var mh;
-  mh = null;
+  let mh: ShioriJK.Headers.Response;
   beforeEach(() => {
     mh = new ShioriJK.Headers.Response();
   });
@@ -237,20 +230,20 @@ describe('response headers', () => {
     mh.BalloonOffset.should.be.deep.equal([]);
     mh.Surface.should.be.deep.equal([]);
     mh.Status.should.be.deep.equal([]);
-    mh.set_separated2('BalloonOffset', [[0, 0], [10, 10]], ',');
+    mh.set_separated2('BalloonOffset', [[0, 0], [10, 10]] as any, ',');
     mh.header.Surface = '0,10';
     mh.header.Sentence = '\\0\\e';
     mh.header.Word = 'piyo';
     mh.header.Status = '0,0,0,0,0,0';
     mh.BalloonOffset.should.be.deep.equal([[0, 0], [10, 10]]);
     mh.Surface.should.be.deep.equal([0, 10]);
-    mh.Sentence.should.be.equal('\\0\\e');
-    mh.Word.should.be.equal('piyo');
+    mh.Sentence!.should.be.equal('\\0\\e');
+    mh.Word!.should.be.equal('piyo');
     mh.Status.should.be.deep.equal([0, 0, 0, 0, 0, 0]);
   });
   it('String header alias should work', () => {
     mh.header.String = 'ref0';
-    mh.String.should.be.equal('ref0');
+    mh.String!.should.be.equal('ref0');
   });
   it('String separated header alias should work', () => {
     mh.StringSeparated().should.be.deep.equal([]);
@@ -259,12 +252,12 @@ describe('response headers', () => {
   });
   it('String separated2 header alias should work', () => {
     mh.StringSeparated2().should.be.deep.equal([]);
-    mh.set_separated2('String', [[0, 1], [2, 3]]);
+    mh.set_separated2('String', [[0, 1], [2, 3]] as any);
     mh.StringSeparated2().should.be.deep.equal([['0', '1'], ['2', '3']]);
   });
   it('Value header alias should work', () => {
     mh.header.Value = 'ref0';
-    mh.Value.should.be.equal('ref0');
+    mh.Value!.should.be.equal('ref0');
   });
   it('Value separated header alias should work', () => {
     mh.ValueSeparated().should.be.deep.equal([]);
@@ -273,16 +266,15 @@ describe('response headers', () => {
   });
   it('Value separated2 header alias should work', () => {
     mh.ValueSeparated2().should.be.deep.equal([]);
-    mh.set_separated2('Value', [[0, 1], [2, 3]]);
+    mh.set_separated2('Value', [[0, 1], [2, 3]] as any);
     mh.ValueSeparated2().should.be.deep.equal([['0', '1'], ['2', '3']]);
   });
 });
 
 describe('request message', () => {
-  var m, mh, mrl;
-  m = null;
-  mh = null;
-  mrl = null;
+  let m: ShioriJK.Message.Request;
+  let mrl: ShioriJK.RequestLine;
+  let mh: ShioriJK.Headers.Request;
   beforeEach(() => {
     m = new ShioriJK.Message.Request({
       no_prepare: true
@@ -312,9 +304,9 @@ describe('request message', () => {
         ID: 'OnBoot'
       }
     });
-    m.request_line.method.should.be.equal('NOTIFY');
-    m.request_line.version.should.be.equal('3.0');
-    m.headers.header.ID.should.be.equal('OnBoot');
+    m.request_line.method!.should.be.equal('NOTIFY');
+    m.request_line.version!.should.be.equal('3.0');
+    m.headers.header.ID!.should.be.equal('OnBoot');
   });
   it('should be able to initialize with class values', () => {
     mrl = new ShioriJK.RequestLine({
@@ -328,17 +320,16 @@ describe('request message', () => {
       request_line: mrl,
       headers: mh
     });
-    m.request_line.method.should.be.equal('NOTIFY');
-    m.request_line.version.should.be.equal('3.0');
-    m.headers.header.ID.should.be.equal('OnBoot');
+    m.request_line.method!.should.be.equal('NOTIFY');
+    m.request_line.version!.should.be.equal('3.0');
+    m.headers.header.ID!.should.be.equal('OnBoot');
   });
 });
 
 describe('response message', () => {
-  var m, mh, msl;
-  m = null;
-  mh = null;
-  msl = null;
+  let m: ShioriJK.Message.Response;
+  let msl: ShioriJK.StatusLine;
+  let mh: ShioriJK.Headers.Response;
   beforeEach(() => {
     m = new ShioriJK.Message.Response();
     msl = m.status_line;
@@ -363,9 +354,9 @@ describe('response message', () => {
         Value: 'value'
       }
     });
-    m.status_line.code.should.be.equal(204);
-    m.status_line.version.should.be.equal('3.0');
-    m.headers.header.Value.should.be.equal('value');
+    m.status_line.code!.should.be.equal(204);
+    m.status_line.version!.should.be.equal('3.0');
+    m.headers.header.Value!.should.be.equal('value');
   });
   it('should be able to initialize with class values', () => {
     msl = new ShioriJK.StatusLine({
@@ -379,8 +370,8 @@ describe('response message', () => {
       status_line: msl,
       headers: mh
     });
-    m.status_line.code.should.be.equal(204);
-    m.status_line.version.should.be.equal('3.0');
-    m.headers.header.Value.should.be.equal('value');
+    m.status_line.code!.should.be.equal(204);
+    m.status_line.version!.should.be.equal('3.0');
+    m.headers.header.Value!.should.be.equal('value');
   });
 });

@@ -1,16 +1,12 @@
-var ShioriJK, chai;
-
-if (typeof require !== "undefined" && require !== null) {
-  chai = require('chai');
-  ShioriJK = require('../lib/shiorijk.js');
-}
+/// <reference types="mocha" />
+import * as chai from "chai";
+import * as ShioriJK from "../lib/shiorijk";
 
 chai.should();
 
 describe('ShioriJK.Shiori.Request.RequestLine.Parser', () => {
-  var mrl, p;
-  p = null;
-  mrl = null;
+  let p: ShioriJK.Shiori.Request.RequestLine.Parser;
+  let mrl: ShioriJK.RequestLine;
   beforeEach(() => {
     p = new ShioriJK.Shiori.Request.RequestLine.Parser();
     mrl = new ShioriJK.RequestLine();
@@ -40,9 +36,8 @@ describe('ShioriJK.Shiori.Request.RequestLine.Parser', () => {
 });
 
 describe('ShioriJK.Shiori.Request.Header.Parser', () => {
-  var mh, p;
-  p = null;
-  mh = null;
+  let p: ShioriJK.Shiori.Request.Header.Parser;
+  let mh: ShioriJK.Headers.Request;
   beforeEach(() => {
     p = new ShioriJK.Shiori.Request.Header.Parser();
     mh = new ShioriJK.Headers.Request();
@@ -66,11 +61,10 @@ describe('ShioriJK.Shiori.Request.Header.Parser', () => {
 });
 
 describe('ShioriJK.Shiori.Request.Parser', () => {
-  var m, mh, mrl, p;
-  p = null;
-  m = null;
-  mrl = null;
-  mh = null;
+  let p: ShioriJK.Shiori.Request.Parser;
+  let m: ShioriJK.Message.Request;
+  let mrl: ShioriJK.RequestLine;
+  let mh: ShioriJK.Headers.Request;
   beforeEach(() => {
     p = new ShioriJK.Shiori.Request.Parser();
     m = new ShioriJK.Message.Request();
@@ -110,9 +104,8 @@ describe('ShioriJK.Shiori.Request.Parser', () => {
 });
 
 describe('ShioriJK.Shiori.Response.StatusLine.Parser', () => {
-  var msl, p;
-  p = null;
-  msl = null;
+  let p: ShioriJK.Shiori.Response.StatusLine.Parser;
+  let msl: ShioriJK.StatusLine;
   beforeEach(() => {
     p = new ShioriJK.Shiori.Response.StatusLine.Parser();
     msl = new ShioriJK.StatusLine();
@@ -142,18 +135,17 @@ describe('ShioriJK.Shiori.Response.StatusLine.Parser', () => {
 });
 
 describe('ShioriJK.Shiori.Response.Parser', () => {
-  var m, mh, msl, p;
-  p = null;
-  m = null;
-  msl = null;
-  mh = null;
+  let p: ShioriJK.Shiori.Response.Parser;
+  let m: ShioriJK.Message.Response;
+  let msl: ShioriJK.StatusLine;
+  let mh: ShioriJK.Headers.Response;
   beforeEach(() => {
     p = new ShioriJK.Shiori.Response.Parser();
     m = new ShioriJK.Message.Response();
     msl = new ShioriJK.StatusLine();
     mh = new ShioriJK.Headers.Response();
     m.status_line = msl;
-    return m.headers = mh;
+    m.headers = mh;
   });
   it('should throw on wrong input', () => {
     (() => p.parse_line('')).should.throw(/Invalid/);
@@ -163,7 +155,7 @@ describe('ShioriJK.Shiori.Response.Parser', () => {
     (() => p.end_parse()).should.throw(/abort/);
     (() => p.parse_line('aaa')).should.throw(/Invalid/);
   });
-  return it('should parse headers', () => {
+  it('should parse headers', () => {
     msl.protocol = 'SHIORI';
     msl.version = '3.0';
     msl.code = 200;
