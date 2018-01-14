@@ -39,9 +39,9 @@ export namespace Message {
 
     /**
      * initialize inner containers
-     * @param request_line [Hash|ShioriJK.Requestline] request line
-     * @param headers [Hash|ShioriJK.Headers.Request] request headers
-     * @param no_prepare [Boolean] do not prepare default RequestLine and Headers by the constructor
+     * @param request_line request line
+     * @param headers request headers
+     * @param no_prepare do not prepare default RequestLine and Headers by the constructor
      */
     constructor(properties: {
       request_line?: RequestLine | {method?: Method | null; protocol?: Protocol | null; version?: Version | null};
@@ -73,7 +73,7 @@ export namespace Message {
 
     /**
      * Message to string
-     * @return [String] message string
+     * @return message string
      */
     toString() {
       return `${this.request_line}\r\n${this.headers}\r\n`;
@@ -86,14 +86,14 @@ export namespace Message {
     /** StatusLine Container */
     status_line: StatusLine;
 
-    /** [ShioriJK.Headers.Request] Headers Container */
+    /** Headers Container */
     headers: Headers.Response;
 
     /**
      * initialize inner containers
-     * @param status_line [Hash|ShioriJK.Statusline] status line
-     * @param headers [Hash|ShioriJK.Headers.Response] response headers
-     * @param no_prepare [Boolean] do not prepare default StatusLine and Headers by the constructor
+     * @param status_line status line
+     * @param headers response headers
+     * @param no_prepare do not prepare default StatusLine and Headers by the constructor
      */
     constructor(properties: {
       status_line?: StatusLine | {code?: number | null; protocol?: Protocol | null; version?: Version | null};
@@ -125,7 +125,7 @@ export namespace Message {
 
     /**
      * Message to string
-     * @return [String] message string
+     * @return message string
      */
     toString() {
       return `${this.status_line}\r\n${this.headers}\r\n`;
@@ -139,9 +139,9 @@ export class RequestLine {
 
   /**
    * initialize request line
-   * @param method [string] method
-   * @param protocol [string] protocol (default = 'SHIORI')
-   * @param version [string] version
+   * @param method method
+   * @param protocol protocol (default = 'SHIORI')
+   * @param version version
    */
   constructor(properties: {method?: Method | null; protocol?: Protocol | null; version?: Version | null} = {}) {
     const {method, protocol, version} = properties;
@@ -159,7 +159,7 @@ export class RequestLine {
     return this.arguments.method;
   }
 
-  set method(method) {
+  set method(method: Method | null | undefined) {
     if ((method != null) && (this.version != null)) {
       this.validate_method_version(method, this.version);
     } else if (method != null) {
@@ -188,7 +188,7 @@ export class RequestLine {
     return this.arguments.protocol;
   }
 
-  set protocol(protocol) {
+  set protocol(protocol: Protocol | null | undefined) {
     if ((protocol != null) && protocol !== "SHIORI") {
       throw `Invalid protocol : ${protocol}`;
     }
@@ -200,7 +200,7 @@ export class RequestLine {
     return this.arguments.version;
   }
 
-  set version(version) {
+  set version(version: Version | null | undefined) {
     if ((this.method != null) && (version != null)) {
       this.validate_method_version(this.method, version);
     } else if (version != null) {
@@ -222,9 +222,9 @@ export class RequestLine {
 
   /**
    * validate
-   * @param method [String] method name == 'SHIORI'
-   * @param version [Number] version
-   * @throw [String] if invalid
+   * @param method method name == 'SHIORI'
+   * @param version version
+   * @throw if invalid
    */
   validate_method_version(method: Method, version: Version) { // tslint:disable-line prefer-function-over-method
     let is_valid = false;
@@ -292,7 +292,7 @@ export class RequestLine {
 
   /**
    * Message to string
-   * @return [String] message string
+   * @return message string
    */
   toString() {
     return `${this.method} ${this.protocol}/${this.version}`;
@@ -310,9 +310,9 @@ export class StatusLine {
 
   /**
    * initialize status line
-   * @param code [number] status code
-   * @param protocol [string] protocol (default = 'SHIORI')
-   * @param version [string] version
+   * @param code status code
+   * @param protocol protocol (default = 'SHIORI')
+   * @param version version
    */
   constructor(properties: {code?: number | null; protocol?: Protocol | null; version?: Version | null} = {}) {
     const {code, protocol, version} = properties;
@@ -342,7 +342,7 @@ export class StatusLine {
     return this.arguments.protocol;
   }
 
-  set protocol(protocol) {
+  set protocol(protocol: Protocol | null | undefined) {
     if ((protocol != null) && protocol !== "SHIORI") {
       throw `Invalid protocol : ${protocol}`;
     }
@@ -354,7 +354,7 @@ export class StatusLine {
     return this.arguments.version;
   }
 
-  set version(version) {
+  set version(version: Version | null | undefined) {
     if (version != null) {
       switch (version) {
         case "2.0":
@@ -374,7 +374,7 @@ export class StatusLine {
 
   /**
    * Message to string
-   * @return [String] message string
+   * @return message string
    */
   toString() {
     return `${this.protocol}/${this.version} ${this.code} ${this.message[this.code as number]}`;
@@ -402,7 +402,7 @@ export class Headers {
 
   /**
    * initialize headers
-   * @param header [Hash<String, String>] headers
+   * @param header headers
    */
   constructor(header: {[name: string]: string} = {}) {
     this.header = header;
@@ -410,8 +410,8 @@ export class Headers {
 
   /**
    * get header
-   * @param name [String] header name
-   * @return [String] header value
+   * @param name header name
+   * @return header value
    */
   get(name: string) {
     return this.header[name];
@@ -419,9 +419,9 @@ export class Headers {
 
   /**
    * set header
-   * @param name [String] header name
-   * @param value [String] header value
-   * @return [String] header value
+   * @param name header name
+   * @param value header value
+   * @return header value
    */
   set(name: string, value: string) {
     return this.header[name] = value;
@@ -429,9 +429,9 @@ export class Headers {
 
   /**
    * get header separated by \x01 or some as an array
-   * @param name [String] header name
-   * @param separator [String] separator characters
-   * @return [Array<String>] header values
+   * @param name header name
+   * @param separator separator characters
+   * @return header values
    */
   get_separated(name: string, separator = "\x01") {
     const value = this.header[name];
@@ -444,10 +444,10 @@ export class Headers {
 
   /**
    * set header separated by \x01 or some as an array
-   * @param name [String] header name
-   * @param value [Array<String>] header values
-   * @param separator [String] separator characters
-   * @return [String] header value
+   * @param name header name
+   * @param value header values
+   * @param separator separator characters
+   * @return header value
    */
   set_separated(name: string, value: string[], separator = "\x01") {
     return this.header[name] = value.join(separator);
@@ -455,10 +455,10 @@ export class Headers {
 
   /**
    * get header separated by \x02 and \x01 or some as an array
-   * @param name [String] header name
-   * @param separator1 [String] first level separator characters
-   * @param separator2 [String] second level separator characters
-   * @return [Array<Array<String>>] header values
+   * @param name header name
+   * @param separator1 first level separator characters
+   * @param separator2 second level separator characters
+   * @return header values
    */
   get_separated2(name: string, separator1 = "\x02", separator2 = "\x01") {
     const value = this.header[name];
@@ -471,11 +471,11 @@ export class Headers {
 
   /**
    * set header separated by \x02 and \x01 or some as an array
-   * @param name [String] header name
-   * @param value [Array<Array<String>>] header values
-   * @param separator1 [String] first level separator characters
-   * @param separator2 [String] second level separator characters
-   * @return [String] header value
+   * @param name header name
+   * @param value header values
+   * @param separator1 first level separator characters
+   * @param separator2 second level separator characters
+   * @return header value
    */
   set_separated2(name: string, value: string[][], separator1 = "\x02", separator2 = "\x01") {
     return this.header[name] = value.map((value1) => value1.join(separator2)).join(separator1);
@@ -483,7 +483,7 @@ export class Headers {
 
   /**
    * get Reference* headers
-   * @return [Array<String | undefined>] Reference* header values
+   * @return Reference* header values
    */
   references() {
     let reference_max_index = -1;
@@ -504,7 +504,7 @@ export class Headers {
 
   /**
    * check that headers are line feed free
-   * @throw [String] if not
+   * @throw if not
    */
   validate() {
     // forin for compatibility
@@ -518,7 +518,7 @@ export class Headers {
 
   /**
    * Message to string
-   * @return [String] message string
+   * @return message string
    */
   toString() {
     this.validate();
@@ -534,8 +534,8 @@ export class Headers {
 
   /**
    * Reference* header (SHIORI/2.2-2.6,3.x)
-   * @param index [Number] reference index
-   * @return [String] header value
+   * @param index reference index
+   * @return header value
    */
   Reference(index: number) {
     return this.get(`Reference${index}`);
@@ -543,9 +543,9 @@ export class Headers {
 
   /**
    * Reference* header (SHIORI/2.2-2.6,3.x)
-   * @param index [Number] reference index
-   * @param separator [String] separator characters
-   * @return [Array<String>] header values
+   * @param index reference index
+   * @param separator separator characters
+   * @return header values
    */
   ReferenceSeparated(index: number, separator = "\x01") {
     return this.get_separated(`Reference${index}`, separator) || [];
@@ -553,10 +553,10 @@ export class Headers {
 
   /**
    * Reference* header (SHIORI/2.2-2.6,3.x)
-   * @param index [Number] reference index
-   * @param separator1 [String] first level separator characters
-   * @param separator2 [String] second level separator characters
-   * @return [Array<Array<String>>] header values
+   * @param index reference index
+   * @param separator1 first level separator characters
+   * @param separator2 second level separator characters
+   * @return header values
    */
   ReferenceSeparated2(index: number, separator1 = "\x02", separator2 = "\x01") {
     return this.get_separated2(`Reference${index}`, separator1, separator2) || [];
@@ -639,8 +639,8 @@ export namespace Headers {
   export class Response extends Headers {
     /**
      * String header (GET String SHIORI/2.5)
-     * @param separator [String] separator characters
-     * @return [Array<String>] header values
+     * @param separator separator characters
+     * @return header values
      */
     StringSeparated(separator = "\x01") {
       return this.get_separated("String", separator) || [];
@@ -648,9 +648,9 @@ export namespace Headers {
 
     /**
      * String header (GET String SHIORI/2.5)
-     * @param separator1 [String] first level separator characters
-     * @param separator2 [String] second level separator characters
-     * @return [Array<Array<String>>] header values
+     * @param separator1 first level separator characters
+     * @param separator2 second level separator characters
+     * @return header values
      */
     StringSeparated2(separator1 = "\x02", separator2 = "\x01") {
       return this.get_separated2("String", separator1, separator2) || [];
@@ -658,8 +658,8 @@ export namespace Headers {
 
     /**
      * Value header (GET SHIORI/3.0)
-     * @param separator [String] separator characters
-     * @return [Array<String>] header values
+     * @param separator separator characters
+     * @return header values
      */
     ValueSeparated(separator = "\x01") {
       return this.get_separated("Value", separator) || [];
@@ -667,9 +667,9 @@ export namespace Headers {
 
     /**
      * Value header (GET SHIORI/3.0)
-     * @param separator1 [String] first level separator characters
-     * @param separator2 [String] second level separator characters
-     * @return [Array<Array<String>>] header values
+     * @param separator1 first level separator characters
+     * @param separator2 second level separator characters
+     * @return header values
      */
     ValueSeparated2(separator1 = "\x02", separator2 = "\x01") {
       return this.get_separated2("Value", separator1, separator2) || [];
@@ -719,29 +719,32 @@ export namespace Shiori {
     result: Container;
     parsers: {[name: string]: {abort_parse?(): void}};
 
-    // @return [Boolean]
     is_parsing() {
       return !this.section.is("idle");
     }
 
-    // @return [Boolean]
     is_parsing_end() {
       return !this.section.is("end");
     }
 
-    // get parser result
-    // @return result
+    /**
+     * get parser result
+     * @return result
+     */
     get_result() {
       return this.result;
     }
 
-    // build result container
-    // @abstract used by subclasses
-    // @return empty result container
+    /**
+     * build result container
+     * @return empty result container
+     */
     abstract result_builder(): Container;
 
-    // set section state to first section
-    // @throw [String] if before section != 'idle'
+    /**
+     * set section state to first section
+     * @throw if before section != 'idle'
+     */
     begin_parse() {
       if (!this.section.is("idle")) {
         throw "cannot begin parsing because previous transaction is still working";
@@ -751,8 +754,10 @@ export namespace Shiori {
       return this.section.next();
     }
 
-    // set section state to begining section
-    // @throw [String] if before section != 'end'
+    /**
+     * set section state to begining section
+     * @throw if before section != 'end'
+     */
     end_parse() {
       if (!this.section.is("end")) {
         this.abort_parse();
@@ -762,8 +767,11 @@ export namespace Shiori {
       return this.section.next();
     }
 
-    // set section state to begining section FORCE!
-    // @note recursively abort parsing
+    /**
+     * set section state to begining section FORCE!
+     *
+     * @note recursively abort parsing
+     */
     abort_parse() {
       if (this.parsers != null) {
         // forin for compatibility
@@ -778,10 +786,12 @@ export namespace Shiori {
       return this.section.set("idle");
     }
 
-    // parse a transaction
-    // @param transaction [String] complete transaction
-    // @return parse_chunk()'s one result
-    // @throw [String] if transaction is not complete
+    /**
+     * parse a transaction
+     * @param transaction complete transaction
+     * @return parse_chunk()'s one result
+     * @throw if transaction is not complete
+     */
     parse(transaction: string) {
       this.begin_parse();
       const result = this.parse_chunk(transaction);
@@ -795,9 +805,11 @@ export namespace Shiori {
       return result.results[0];
     }
 
-    // parse transaction chunk
-    // @param chunk [String] transaction chunk
-    // @return [Hash] parse_lines()'s results
+    /**
+     * parse transaction chunk
+     * @param chunk transaction chunk
+     * @return parse_lines()'s results
+     */
     parse_chunk(chunk: string) {
       const lines = chunk.split(/\r\n/);
       if (chunk.match(/\r\n$/)) {
@@ -807,9 +819,11 @@ export namespace Shiori {
       return this.parse_lines(lines);
     }
 
-    // parse chunk lines
-    // @param lines [Array<String>] transaction chunk separated by \r\n
-    // @return [Hash] {results: parse_line()'s result, state: parser state}
+    /**
+     * parse chunk lines
+     * @param lines transaction chunk separated by \r\n
+     * @return results: parse_line()'s result, state: parser state
+     */
     parse_lines(lines: string[]) {
       let result: {result?: undefined; state: "continue"} | {result: Container; state: "end"} | undefined;
       const results = [];
@@ -827,9 +841,11 @@ export namespace Shiori {
       };
     }
 
-    // parse line
-    // @param line [String] transaction line separated by \r\n
-    // @return [Hash] {results: result (if state is end), state: parser state}
+    /**
+     * parse line
+     * @param line transaction line separated by \r\n
+     * @return results: result (if state is end), state: parser state
+     */
     parse_line(line: string): {result?: undefined; state: "continue"} | {result: Container; state: "end"} {
       if (this.section.is("idle")) {
         this.begin_parse();
@@ -849,8 +865,9 @@ export namespace Shiori {
       }
     }
 
-    // parser main routine
-    // @abstract implemented by subclasses
+    /**
+     * parser main routine
+     */
     abstract parse_main(line: string): void;
   }
 
@@ -996,7 +1013,7 @@ export namespace Shiori {
       }
     }
 
-      // tslint:disable-next-line no-shadowed-variable
+    // tslint:disable-next-line no-shadowed-variable
     export namespace Header {
       // tslint:disable-next-line no-shadowed-variable
       export class Parser extends Shiori.Header.Parser<Headers.Request> {
