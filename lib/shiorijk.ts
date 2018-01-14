@@ -28,8 +28,22 @@ export type Version = "2.0" | "2.2" | "2.3" | "2.4" | "2.5" | "2.6" | "3.0";
  * SHIORI Protocol Message Container
  */
 export namespace Message {
+  /** Message Containers' option */
+  export interface Options {
+    /** do not prepare default data by the constructor */
+    no_prepare?: boolean;
+  }
+
+  /** SHIORI Request Message like data */
+  export interface RequestLike {
+    /** request line */
+    request_line?: RequestLine | RequestLineLike;
+    /** request headers */
+    headers?: Headers.Request | {[name: string]: string};
+  }
+
   /** SHIORI Request Message Container */
-  export class Request {
+  export class Request implements RequestLike {
     /**
      * RequestLine Container (ex. GET SHIORI/3.x)
      */
@@ -38,17 +52,11 @@ export namespace Message {
     headers: Headers.Request;
 
     /**
-     * initialize inner containers
-     * @param request_line request line
-     * @param headers request headers
-     * @param no_prepare do not prepare default RequestLine and Headers by the constructor
+     * initialize request
+     * @param data request like data and options
      */
-    constructor(properties: {
-      request_line?: RequestLine | {method?: Method | null; protocol?: Protocol | null; version?: Version | null};
-      headers?: Headers.Request | {[name: string]: string};
-      no_prepare?: boolean;
-    } = {}) {
-      const {request_line, headers, no_prepare} = properties;
+    constructor(data: RequestLike & Options = {}) {
+      const {request_line, headers, no_prepare} = data;
 
       if (request_line == null) {
         if (!no_prepare) this.request_line = new RequestLine();
@@ -78,11 +86,18 @@ export namespace Message {
     toString() {
       return `${this.request_line}\r\n${this.headers}\r\n`;
     }
+  }
 
+  /** SHIORI Response Message like data */
+  export interface ResponseLike {
+    /** status line */
+    status_line?: StatusLine | StatusLineLike;
+    /** response headers */
+    headers?: Headers.Response | {[name: string]: string};
   }
 
   /** SHIORI Response Message Container */
-  export class Response {
+  export class Response implements ResponseLike {
     /** StatusLine Container */
     status_line: StatusLine;
 
@@ -90,17 +105,11 @@ export namespace Message {
     headers: Headers.Response;
 
     /**
-     * initialize inner containers
-     * @param status_line status line
-     * @param headers response headers
-     * @param no_prepare do not prepare default StatusLine and Headers by the constructor
+     * initialize response
+     * @param data response like data and options
      */
-    constructor(properties: {
-      status_line?: StatusLine | {code?: number | null; protocol?: Protocol | null; version?: Version | null};
-      headers?: Headers.Response | {[name: string]: string};
-      no_prepare?: boolean;
-    } = {}) {
-      const {status_line, headers, no_prepare} = properties;
+    constructor(data: ResponseLike & Options = {}) {
+      const {status_line, headers, no_prepare} = data;
 
       if (status_line == null) {
         if (!no_prepare) this.status_line = new StatusLine();
@@ -133,22 +142,30 @@ export namespace Message {
   }
 }
 
+/** SHIORI Request Message's RequestLine like data */
+export interface RequestLineLike {
+  /** method */
+  method?: Method | null;
+  /** protocol (default = "SHIORI") */
+  protocol?: Protocol | null;
+  /** version */
+  version?: Version | null;
+}
+
 /** SHIORI Request Message's RequestLine Container */
-export class RequestLine {
-  private readonly arguments: {method?: Method | null; protocol?: Protocol | null; version?: Version | null} = {};
+export class RequestLine implements RequestLineLike {
+  private readonly arguments: RequestLineLike = {};
 
   /**
    * initialize request line
-   * @param method method
-   * @param protocol protocol (default = 'SHIORI')
-   * @param version version
+   * @param data request line like data
    */
-  constructor(properties: {method?: Method | null; protocol?: Protocol | null; version?: Version | null} = {}) {
-    const {method, protocol, version} = properties;
+  constructor(data: RequestLineLike = {}) {
+    const {method, protocol, version} = data;
     if (method != null) {
       this.method = method;
     }
-    this.protocol = protocol || "SHIORI"; // for codo
+    this.protocol = protocol || "SHIORI";
     if (version != null) {
       this.version = version;
     }
@@ -222,7 +239,7 @@ export class RequestLine {
 
   /**
    * validate
-   * @param method method name == 'SHIORI'
+   * @param method method
    * @param version version
    * @throw if invalid
    */
@@ -301,25 +318,33 @@ export class RequestLine {
 
 const RequestLineClass = RequestLine; // tslint:disable-line variable-name
 
+/** SHIORI Response Message's StatusLine like data */
+export interface StatusLineLike {
+  /** status code */
+  code?: number | null;
+  /** protocol (default = "SHIORI") */
+  protocol?: Protocol | null;
+  /** version */
+  version?: Version | null;
+}
+
 /** SHIORI Response Message's StatusLine Container */
-export class StatusLine {
+export class StatusLine implements StatusLineLike {
   /** status messages for status codes */
   message: {[code: number]: string};
 
-  private readonly arguments: {code?: number | null; protocol?: Protocol | null; version?: Version | null} = {};
+  private readonly arguments: StatusLineLike = {};
 
   /**
    * initialize status line
-   * @param code status code
-   * @param protocol protocol (default = 'SHIORI')
-   * @param version version
+   * @param data status line like data
    */
-  constructor(properties: {code?: number | null; protocol?: Protocol | null; version?: Version | null} = {}) {
-    const {code, protocol, version} = properties;
+  constructor(data: StatusLineLike = {}) {
+    const {code, protocol, version} = data;
     if (code != null) {
       this.code = code;
     }
-    this.protocol = protocol || "SHIORI"; // for codo
+    this.protocol = protocol || "SHIORI";
     if (version != null) {
       this.version = version;
     }
