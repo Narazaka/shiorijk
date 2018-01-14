@@ -73,8 +73,8 @@ console.log(request.headers.get("ID") === "OnBIFFComplete"); // ヘッダ値を�
 console.log(request.headers.ID === "OnBIFFComplete"); // よく使うヘッダへのショートカット
 console.log(request.headers.Reference(1) === "1024"); // Reference*へのショートカット
 console.log(request.headers.references().length === 7); // 全てのReference*の値を取得
-console.log(request.headers.get_separated("Reference6")[0] === "123@example.com"); // \x01で区切られた値の取得
-console.log(request.headers.get_separated2("Reference4")[1][0] === "Subject: bar"); // \x01と\x02で区切られた値の取得
+console.log((request.headers.get_separated("Reference6") || [])[0] === "123@example.com"); // \x01で区切られた値の取得
+console.log((request.headers.get_separated2("Reference4") || [])[1][0] === "Subject: bar"); // \x01と\x02で区切られた値の取得
 
 // チャンクを元にパース(HTTPのように)
 let parseResult;

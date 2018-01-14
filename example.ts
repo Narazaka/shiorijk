@@ -24,8 +24,8 @@ console.log(request.headers.get("ID") === "OnBIFFComplete"); // gets header valu
 console.log(request.headers.ID === "OnBIFFComplete"); // shortcut for common headers
 console.log(request.headers.Reference(1) === "1024"); // shortcut for Reference*
 console.log(request.headers.references().length === 7); // get all references
-console.log(request.headers.get_separated("Reference6")[0] === "123@example.com"); // separated by \x01
-console.log(request.headers.get_separated2("Reference4")[1][0] === "Subject: bar"); // separated by \x01 and \x02
+console.log((request.headers.get_separated("Reference6") || [])[0] === "123@example.com"); // separated by \x01
+console.log((request.headers.get_separated2("Reference4") || [])[1][0] === "Subject: bar"); // separated by \x01 and \x02
 
 // parse chunks like HTTP
 let parseResult;
