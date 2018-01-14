@@ -3,7 +3,12 @@
   "description": "SHIORI/3.x Parser/Container",
   "dependencies": {
   },
-  "main": "lib/shiorijk.js",
+  "main": "dist/lib/shiorijk.js",
+  "moduleType": [
+    "globals",
+    "amd",
+    "node"
+  ],
   "ignore": [
     "**/.*",
     "bower_components",
