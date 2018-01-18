@@ -1,13 +1,13 @@
 ShioriJK - SHIORI/3.x Parser/Container
 =============================================
 
-[![npm](https://img.shields.io/npm/v/shiorijk.svg)](https://www.npmjs.com/package/shiorijk)[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FNarazaka%2Fshiorijk.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FNarazaka%2Fshiorijk?ref=badge_shield)
-
+[![npm](https://img.shields.io/npm/v/shiorijk.svg)](https://www.npmjs.com/package/shiorijk)
 [![npm license](https://img.shields.io/npm/l/shiorijk.svg)](https://www.npmjs.com/package/shiorijk)
 [![npm download total](https://img.shields.io/npm/dt/shiorijk.svg)](https://www.npmjs.com/package/shiorijk)
 [![npm download by month](https://img.shields.io/npm/dm/shiorijk.svg)](https://www.npmjs.com/package/shiorijk)
 [![Bower](https://img.shields.io/bower/v/shiorijk.svg)](https://github.com/Narazaka/shiorijk)
 [![Bower](https://img.shields.io/bower/l/shiorijk.svg)](https://github.com/Narazaka/shiorijk)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FNarazaka%2Fshiorijk.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FNarazaka%2Fshiorijk?ref=badge_shield)
 
 [![Dependency Status](https://david-dm.org/Narazaka/shiorijk/status.svg)](https://david-dm.org/Narazaka/shiorijk)
 [![devDependency Status](https://david-dm.org/Narazaka/shiorijk/dev-status.svg)](https://david-dm.org/Narazaka/shiorijk?type=dev)
@@ -152,6 +152,4 @@ License
 
 This is released under [MIT License](http://narazaka.net/license/MIT?2018).
 
-
-## License
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FNarazaka%2Fshiorijk.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FNarazaka%2Fshiorijk?ref=badge_large)
