@@ -122,7 +122,7 @@ describe("headers", () => {
     mh.header.ID!.should.be.equal("OnBoot");
     mh.header.Reference6 = "halt";
     (mh.get("Reference6"))!.should.be.equal("halt");
-    mh.header.Reference6!.should.be.equal("halt");
+    mh.header.Reference6.should.be.equal("halt");
   });
   it("should handle \\x01", () => {
     mh.set("ID", "otherghostname");
