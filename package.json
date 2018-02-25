@@ -59,7 +59,7 @@
     "tslint": "^5.9.1",
     "typedoc": "^0.10.0",
     "typescript": "^2.7.2",
-    "webpack": "^3.10.0"
+    "webpack": "^4.0.0"
   },
   "author": {
     "name": "narazaka",
