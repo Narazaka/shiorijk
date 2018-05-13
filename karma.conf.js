@@ -1,12 +1,15 @@
 /* eslint no-process-env: 0, no-magic-numbers: 0, max-statements: 0 */
 const webpack = require("./webpack.config");
+const nodeResolve = require("rollup-plugin-node-resolve");
+const commonjs = require("rollup-plugin-commonjs");
+const typescript = require("rollup-plugin-typescript2");
 
 module.exports = function(config) {
   config.set({
     mime:           {"text/x-typescript": ["ts", "tsx"]}, // fix typescript serving video/mp2t mime type
     frameworks:     ["mocha"].concat(process.env.NO_DETECT ? [] : ["detectBrowsers"]),
     files:          ["test/**/*.ts"],
-    preprocessors:  {"test/**/*.ts": ["webpack", "sourcemap", "espower"]},
+    preprocessors:  {"test/**/*.ts": ["rollup", "sourcemap", "espower"]},
     reporters:      ["mocha"],
     webpack,
     detectBrowsers: {
@@ -24,6 +27,17 @@ module.exports = function(config) {
         }
         return result;
       },
+    },
+    rollupPreprocessor: {
+      plugins: [
+        nodeResolve({extensions: [".js", ".ts"]}),
+        typescript({tsconfigOverride: {compilerOptions: {module: "es2015"}}}),
+        commonjs({
+          extensions:   [".js", ".ts"],
+          namedExports: {"node_modules/chai/index.js": ["should"]},
+        }),
+      ],
+      output: {format: "umd"},
     },
   });
 };
