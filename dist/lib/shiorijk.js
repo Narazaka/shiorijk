@@ -7,7 +7,7 @@
 		exports["ShioriJK"] = factory();
 	else
 		root["ShioriJK"] = factory();
-})(typeof self !== 'undefined' ? self : this, function() {
+})(window, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -54,6 +54,11 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 		}
 /******/ 	};
 /******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
 /******/ 	__webpack_require__.n = function(module) {
 /******/ 		var getter = module && module.__esModule ?
@@ -68,6 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
+/******/
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(__webpack_require__.s = 0);
@@ -107,7 +113,7 @@ var Message;
         function Request(data) {
             if (data === void 0) { data = {}; }
             var request_line = data.request_line, headers = data.headers, no_prepare = data.no_prepare;
-            if (request_line == null) {
+            if (request_line == null) { // tslint:disable-line no-null-keyword
                 if (!no_prepare)
                     this.request_line = new RequestLine();
             }
@@ -119,7 +125,7 @@ var Message;
                     this.request_line = new RequestLine(request_line);
                 }
             }
-            if (headers == null) {
+            if (headers == null) { // tslint:disable-line no-null-keyword
                 this.headers = new Headers.Request();
             }
             else {
@@ -150,7 +156,7 @@ var Message;
         function Response(data) {
             if (data === void 0) { data = {}; }
             var status_line = data.status_line, headers = data.headers, no_prepare = data.no_prepare;
-            if (status_line == null) {
+            if (status_line == null) { // tslint:disable-line no-null-keyword
                 if (!no_prepare)
                     this.status_line = new StatusLine();
             }
@@ -162,7 +168,7 @@ var Message;
                     this.status_line = new StatusLine(status_line);
                 }
             }
-            if (headers == null) {
+            if (headers == null) { // tslint:disable-line no-null-keyword
                 this.headers = new Headers.Response();
             }
             else {
@@ -195,11 +201,11 @@ var RequestLine = /** @class */ (function () {
         if (data === void 0) { data = {}; }
         this.arguments = {};
         var method = data.method, protocol = data.protocol, version = data.version;
-        if (method != null) {
+        if (method != null) { // tslint:disable-line no-null-keyword
             this.method = method;
         }
         this.protocol = protocol || "SHIORI";
-        if (version != null) {
+        if (version != null) { // tslint:disable-line no-null-keyword
             this.version = version;
         }
     }
@@ -209,10 +215,10 @@ var RequestLine = /** @class */ (function () {
             return this.arguments.method;
         },
         set: function (method) {
-            if ((method != null) && (this.version != null)) {
+            if ((method != null) && (this.version != null)) { // tslint:disable-line no-null-keyword
                 this.validate_method_version(method, this.version);
             }
-            else if (method != null) {
+            else if (method != null) { // tslint:disable-line no-null-keyword
                 switch (method) {
                     case "GET":
                     case "NOTIFY":
@@ -241,7 +247,7 @@ var RequestLine = /** @class */ (function () {
             return this.arguments.protocol;
         },
         set: function (protocol) {
-            if ((protocol != null) && protocol !== "SHIORI") {
+            if ((protocol != null) && protocol !== "SHIORI") { // tslint:disable-line no-null-keyword
                 throw new RequestLine.InvalidValueError("Invalid protocol : " + protocol);
             }
             this.arguments.protocol = protocol;
@@ -255,10 +261,10 @@ var RequestLine = /** @class */ (function () {
             return this.arguments.version;
         },
         set: function (version) {
-            if ((this.method != null) && (version != null)) {
+            if ((this.method != null) && (version != null)) { // tslint:disable-line no-null-keyword
                 this.validate_method_version(this.method, version);
             }
-            else if (version != null) {
+            else if (version != null) { // tslint:disable-line no-null-keyword
                 switch (version) {
                     case "2.0":
                     case "2.2":
@@ -322,7 +328,7 @@ var RequestLine = /** @class */ (function () {
                         is_valid = true;
                 }
                 break;
-            case "2.6":// spec is unknown
+            case "2.6": // spec is unknown
                 switch (method) {
                     case "GET Sentence":
                     case "GET Status":
@@ -379,11 +385,11 @@ var StatusLine = /** @class */ (function () {
         if (data === void 0) { data = {}; }
         this.arguments = {};
         var code = data.code, protocol = data.protocol, version = data.version;
-        if (code != null) {
+        if (code != null) { // tslint:disable-line no-null-keyword
             this.code = code;
         }
         this.protocol = protocol || "SHIORI";
-        if (version != null) {
+        if (version != null) { // tslint:disable-line no-null-keyword
             this.version = version;
         }
     }
@@ -393,7 +399,7 @@ var StatusLine = /** @class */ (function () {
             return this.arguments.code;
         },
         set: function (code) {
-            if ((code != null) && (this.message[code] == null)) {
+            if ((code != null) && (this.message[code] == null)) { // tslint:disable-line no-null-keyword
                 throw new StatusLine.InvalidValueError("Invalid response code : " + code);
             }
             this.arguments.code = code;
@@ -407,7 +413,7 @@ var StatusLine = /** @class */ (function () {
             return this.arguments.protocol;
         },
         set: function (protocol) {
-            if ((protocol != null) && protocol !== "SHIORI") {
+            if ((protocol != null) && protocol !== "SHIORI") { // tslint:disable-line no-null-keyword
                 throw new StatusLine.InvalidValueError("Invalid protocol : " + protocol);
             }
             this.arguments.protocol = protocol;
@@ -421,7 +427,7 @@ var StatusLine = /** @class */ (function () {
             return this.arguments.version;
         },
         set: function (version) {
-            if (version != null) {
+            if (version != null) { // tslint:disable-line no-null-keyword
                 switch (version) {
                     case "2.0":
                     case "2.2":
@@ -509,7 +515,7 @@ var Headers = /** @class */ (function () {
     Headers.prototype.get_separated = function (name, separator) {
         if (separator === void 0) { separator = "\x01"; }
         var value = this.header[name];
-        if (value != null) {
+        if (value != null) { // tslint:disable-line no-null-keyword
             return value.split(separator);
         }
         else {
@@ -538,7 +544,7 @@ var Headers = /** @class */ (function () {
         if (separator1 === void 0) { separator1 = "\x02"; }
         if (separator2 === void 0) { separator2 = "\x01"; }
         var value = this.header[name];
-        if (value != null) {
+        if (value != null) { // tslint:disable-line no-null-keyword
             return value.split(separator1).map(function (value1) { return value1.split(separator2); });
         }
         else {
@@ -565,7 +571,7 @@ var Headers = /** @class */ (function () {
     Headers.prototype.references = function () {
         var reference_max_index = -1;
         // forin for compatibility
-        for (var name_1 in this.header) {
+        for (var name_1 in this.header) { // tslint:disable-line forin
             var result = /^Reference(\d+)$/.exec(name_1);
             if (result && reference_max_index < Number(result[1])) {
                 reference_max_index = Number(result[1]);
@@ -583,7 +589,7 @@ var Headers = /** @class */ (function () {
      */
     Headers.prototype.validate = function () {
         // forin for compatibility
-        for (var name_2 in this.header) {
+        for (var name_2 in this.header) { // tslint:disable-line forin
             var value = this.header[name_2];
             if (("" + value).match(/\n/)) {
                 throw new Headers.InvalidValueError("Invalid header value - line feed found : [" + name_2 + "] : " + value);
@@ -598,7 +604,7 @@ var Headers = /** @class */ (function () {
         this.validate();
         var str = "";
         // forin for compatibility
-        for (var name_3 in this.header) {
+        for (var name_3 in this.header) { // tslint:disable-line forin
             var value = this.header[name_3];
             str += name_3 + ": " + value + "\r\n";
         }
@@ -924,11 +930,11 @@ var Shiori;
          * @note recursively abort parsing
          */
         Parser.prototype.abort_parse = function () {
-            if (this.parsers != null) {
+            if (this.parsers != null) { // tslint:disable-line no-null-keyword
                 // forin for compatibility
-                for (var name_4 in this.parsers) {
+                for (var name_4 in this.parsers) { // tslint:disable-line forin
                     var parser = this.parsers[name_4];
-                    if (parser.abort_parse != null) {
+                    if (parser.abort_parse != null) { // tslint:disable-line no-null-keyword
                         parser.abort_parse();
                     }
                 }

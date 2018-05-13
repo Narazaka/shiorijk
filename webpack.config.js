@@ -2,6 +2,7 @@ const path = require("path");
 const tsconfig = require("./tsconfig.json");
 
 module.exports = {
+  mode:   "none",
   entry:  {shiorijk: "./lib/shiorijk.ts"},
   output: {
     library:       "ShioriJK",
