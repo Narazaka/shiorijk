@@ -9,6 +9,7 @@ module.exports = {
     libraryTarget: "umd",
     path:          path.resolve("."),
     filename:      "dist/lib/[name].js",
+    globalObject:  "typeof self !== 'undefined' ? self : this",
   },
   module: {
     rules: [
