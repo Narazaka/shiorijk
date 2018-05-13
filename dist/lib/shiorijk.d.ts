@@ -173,11 +173,13 @@ export declare class Headers {
     get(name: string): string | undefined;
     /**
      * set header
+     *
+     * header will be deleted if value == undefined
      * @param name header name
      * @param value header value
      * @return header value
      */
-    set(name: string, value: string): string;
+    set(name: string, value: string | undefined): string | undefined;
     /**
      * get header separated by \x01 or some as an array
      * @param name header name
@@ -254,31 +256,31 @@ export declare namespace Headers {
     /** SHIORI Request Message Headers Container */
     class Request extends Headers {
         /** Charset header */
-        readonly Charset: string | undefined;
+        Charset: string | undefined;
         /** Sender header */
-        readonly Sender: string | undefined;
+        Sender: string | undefined;
         /** SecurityLevel header (SHIORI/2.2,2.6,3.x) */
-        readonly SecurityLevel: string | undefined;
+        SecurityLevel: string | undefined;
         /** ID header (SHIORI/2.5,3.x) */
-        readonly ID: string | undefined;
+        ID: string | undefined;
         /** Event header (SHIORI/2.2) */
-        readonly Event: string | undefined;
+        Event: string | undefined;
         /** Type header (GET Word SHIORI/2.0) */
-        readonly Type: string | undefined;
+        Type: string | undefined;
         /** Status header (SHIORI/3.1) */
-        readonly Status: string[];
+        Status: string[];
         /** Ghost header (NOTIFY OwnerGhostName SHIORI/2.0,2.3) */
-        readonly Ghost: string | undefined;
+        Ghost: string | undefined;
         /** Sentence header (SHIORI/2.0,2.3b) */
-        readonly Sentence: string | undefined;
+        Sentence: string | undefined;
         /** To header (SHIORI/2.3b) */
-        readonly To: string | undefined;
+        To: string | undefined;
         /** Age header (SHIORI/2.3b) */
-        readonly Age: number | undefined;
+        Age: number | undefined;
         /** Surface header (SHIORI/2.3b) */
-        readonly Surface: number[];
+        Surface: number[];
         /** Word header (TEACH SHIORI/2.4) */
-        readonly Word: string | undefined;
+        Word: string | undefined;
     }
     /** SHIORI Response Message Headers Container */
     class Response extends Headers {
@@ -289,6 +291,13 @@ export declare namespace Headers {
          */
         StringSeparated(separator?: string): string[];
         /**
+         * set String header (GET String SHIORI/2.5)
+         * @param value header values
+         * @param separator separator characters
+         * @return header value
+         */
+        setStringSeparated(value: string[], separator?: string): string;
+        /**
          * String header (GET String SHIORI/2.5)
          * @param separator1 first level separator characters
          * @param separator2 second level separator characters
@@ -296,11 +305,26 @@ export declare namespace Headers {
          */
         StringSeparated2(separator1?: string, separator2?: string): string[][];
         /**
+         * set String header (GET String SHIORI/2.5)
+         * @param value header values
+         * @param separator1 first level separator characters
+         * @param separator2 second level separator characters
+         * @return header value
+         */
+        setStringSeparated2(value: string[][], separator1?: string, separator2?: string): string;
+        /**
          * Value header (GET SHIORI/3.0)
          * @param separator separator characters
          * @return header values
          */
         ValueSeparated(separator?: string): string[];
+        /**
+         * set Value header (GET SHIORI/3.0)
+         * @param value header values
+         * @param separator separator characters
+         * @return header value
+         */
+        setValueSeparated(value: string[], separator?: string): string;
         /**
          * Value header (GET SHIORI/3.0)
          * @param separator1 first level separator characters
@@ -308,20 +332,28 @@ export declare namespace Headers {
          * @return header values
          */
         ValueSeparated2(separator1?: string, separator2?: string): string[][];
+        /**
+         * set Value header (GET SHIORI/3.0)
+         * @param value header values
+         * @param separator1 first level separator characters
+         * @param separator2 second level separator characters
+         * @return header values
+         */
+        setValueSeparated2(value: string[][], separator1?: string, separator2?: string): string;
         /** BalloonOffset header (SHIORI/2.0) */
-        readonly BalloonOffset: number[][];
+        BalloonOffset: number[][];
         /** Surface header (SHIORI/2.3b) */
-        readonly Surface: number[];
+        Surface: number[];
         /** Sentence header (SHIORI/2.0,2.2,2.3b,2.4) */
-        readonly Sentence: string | undefined;
+        Sentence: string | undefined;
         /** Word header (GET Word SHIORI/2.0) */
-        readonly Word: string | undefined;
+        Word: string | undefined;
         /** Status header (GET Status SHIORI/2.0) */
-        readonly Status: number[];
+        Status: number[];
         /** String header (GET String SHIORI/2.5) */
-        readonly String: string | undefined;
+        String: string | undefined;
         /** Value header (GET SHIORI/3.0) */
-        readonly Value: string | undefined;
+        Value: string | undefined;
     }
 }
 export declare namespace Shiori {
