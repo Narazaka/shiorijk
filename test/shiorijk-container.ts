@@ -124,6 +124,13 @@ describe("headers", () => {
     (mh.get("Reference6"))!.should.be.equal("halt");
     mh.header.Reference6.should.be.equal("halt");
   });
+  it("should be deleted when set undefined", () => {
+    mh.set("ID", "OnBoot");
+    (mh.get("ID"))!.should.be.equal("OnBoot");
+    mh.set("ID", undefined);
+    (typeof mh.get("ID")).should.be.equal("undefined");
+    ("ID" in mh.header).should.be.equal(false);
+  });
   it("should handle \\x01", () => {
     mh.set("ID", "otherghostname");
     mh.set_separated("Reference0", ["Sakura", "0", "10"]);

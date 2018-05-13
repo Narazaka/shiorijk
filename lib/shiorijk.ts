@@ -454,12 +454,20 @@ export class Headers {
 
   /**
    * set header
+   *
+   * header will be deleted if value == undefined
    * @param name header name
    * @param value header value
    * @return header value
    */
-  set(name: string, value: string) {
-    return this.header[name] = value;
+  set(name: string, value: string | undefined) {
+    if (value === undefined) {
+      delete this.header[name]; // tslint:disable-line no-dynamic-delete
+    } else {
+      this.header[name] = value;
+    }
+
+    return value;
   }
 
   /**
