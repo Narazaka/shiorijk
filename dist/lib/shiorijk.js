@@ -499,12 +499,20 @@ var Headers = /** @class */ (function () {
     };
     /**
      * set header
+     *
+     * header will be deleted if value == undefined
      * @param name header name
      * @param value header value
      * @return header value
      */
     Headers.prototype.set = function (name, value) {
-        return this.header[name] = value;
+        if (value === undefined) {
+            delete this.header[name]; // tslint:disable-line no-dynamic-delete
+        }
+        else {
+            this.header[name] = value;
+        }
+        return value;
     };
     /**
      * get header separated by \x01 or some as an array
@@ -664,6 +672,9 @@ exports.Headers = Headers;
             get: function () {
                 return this.get("Charset");
             },
+            set: function (value) {
+                this.set("Charset", value);
+            },
             enumerable: true,
             configurable: true
         });
@@ -671,6 +682,9 @@ exports.Headers = Headers;
             /** Sender header */
             get: function () {
                 return this.get("Sender");
+            },
+            set: function (value) {
+                this.set("Sender", value);
             },
             enumerable: true,
             configurable: true
@@ -680,6 +694,9 @@ exports.Headers = Headers;
             get: function () {
                 return this.get("SecurityLevel");
             },
+            set: function (value) {
+                this.set("SecurityLevel", value);
+            },
             enumerable: true,
             configurable: true
         });
@@ -687,6 +704,9 @@ exports.Headers = Headers;
             /** ID header (SHIORI/2.5,3.x) */
             get: function () {
                 return this.get("ID");
+            },
+            set: function (value) {
+                this.set("ID", value);
             },
             enumerable: true,
             configurable: true
@@ -696,6 +716,9 @@ exports.Headers = Headers;
             get: function () {
                 return this.get("Event");
             },
+            set: function (value) {
+                this.set("Event", value);
+            },
             enumerable: true,
             configurable: true
         });
@@ -703,6 +726,9 @@ exports.Headers = Headers;
             /** Type header (GET Word SHIORI/2.0) */
             get: function () {
                 return this.get("Type");
+            },
+            set: function (value) {
+                this.set("Type", value);
             },
             enumerable: true,
             configurable: true
@@ -712,6 +738,9 @@ exports.Headers = Headers;
             get: function () {
                 return (this.get_separated("Status", ",")) || [];
             },
+            set: function (value) {
+                this.set_separated("Status", value, ",");
+            },
             enumerable: true,
             configurable: true
         });
@@ -719,6 +748,9 @@ exports.Headers = Headers;
             /** Ghost header (NOTIFY OwnerGhostName SHIORI/2.0,2.3) */
             get: function () {
                 return this.get("Ghost");
+            },
+            set: function (value) {
+                this.set("Ghost", value);
             },
             enumerable: true,
             configurable: true
@@ -728,6 +760,9 @@ exports.Headers = Headers;
             get: function () {
                 return this.get("Sentence");
             },
+            set: function (value) {
+                this.set("Sentence", value);
+            },
             enumerable: true,
             configurable: true
         });
@@ -735,6 +770,9 @@ exports.Headers = Headers;
             /** To header (SHIORI/2.3b) */
             get: function () {
                 return this.get("To");
+            },
+            set: function (value) {
+                this.set("To", value);
             },
             enumerable: true,
             configurable: true
@@ -745,6 +783,9 @@ exports.Headers = Headers;
                 var age = this.get("Age");
                 return age == null ? undefined : Number(age); // tslint:disable-line no-null-keyword
             },
+            set: function (value) {
+                this.set("Age", value == null ? undefined : value.toString()); // tslint:disable-line no-null-keyword
+            },
             enumerable: true,
             configurable: true
         });
@@ -753,6 +794,9 @@ exports.Headers = Headers;
             get: function () {
                 return (this.get_separated("Surface", ",") || []).map(Number);
             },
+            set: function (value) {
+                this.set_separated("Surface", value.map(function (elem) { return elem.toString(); }), ",");
+            },
             enumerable: true,
             configurable: true
         });
@@ -760,6 +804,9 @@ exports.Headers = Headers;
             /** Word header (TEACH SHIORI/2.4) */
             get: function () {
                 return this.get("Word");
+            },
+            set: function (value) {
+                this.set("Word", value);
             },
             enumerable: true,
             configurable: true
@@ -783,6 +830,16 @@ exports.Headers = Headers;
             return this.get_separated("String", separator) || [];
         };
         /**
+         * set String header (GET String SHIORI/2.5)
+         * @param value header values
+         * @param separator separator characters
+         * @return header value
+         */
+        Response.prototype.setStringSeparated = function (value, separator) {
+            if (separator === void 0) { separator = "\x01"; }
+            return this.set_separated("String", value, separator);
+        };
+        /**
          * String header (GET String SHIORI/2.5)
          * @param separator1 first level separator characters
          * @param separator2 second level separator characters
@@ -794,6 +851,18 @@ exports.Headers = Headers;
             return this.get_separated2("String", separator1, separator2) || [];
         };
         /**
+         * set String header (GET String SHIORI/2.5)
+         * @param value header values
+         * @param separator1 first level separator characters
+         * @param separator2 second level separator characters
+         * @return header value
+         */
+        Response.prototype.setStringSeparated2 = function (value, separator1, separator2) {
+            if (separator1 === void 0) { separator1 = "\x02"; }
+            if (separator2 === void 0) { separator2 = "\x01"; }
+            return this.set_separated2("String", value, separator1, separator2);
+        };
+        /**
          * Value header (GET SHIORI/3.0)
          * @param separator separator characters
          * @return header values
@@ -801,6 +870,16 @@ exports.Headers = Headers;
         Response.prototype.ValueSeparated = function (separator) {
             if (separator === void 0) { separator = "\x01"; }
             return this.get_separated("Value", separator) || [];
+        };
+        /**
+         * set Value header (GET SHIORI/3.0)
+         * @param value header values
+         * @param separator separator characters
+         * @return header value
+         */
+        Response.prototype.setValueSeparated = function (value, separator) {
+            if (separator === void 0) { separator = "\x01"; }
+            return this.set_separated("Value", value, separator);
         };
         /**
          * Value header (GET SHIORI/3.0)
@@ -813,10 +892,25 @@ exports.Headers = Headers;
             if (separator2 === void 0) { separator2 = "\x01"; }
             return this.get_separated2("Value", separator1, separator2) || [];
         };
+        /**
+         * set Value header (GET SHIORI/3.0)
+         * @param value header values
+         * @param separator1 first level separator characters
+         * @param separator2 second level separator characters
+         * @return header values
+         */
+        Response.prototype.setValueSeparated2 = function (value, separator1, separator2) {
+            if (separator1 === void 0) { separator1 = "\x02"; }
+            if (separator2 === void 0) { separator2 = "\x01"; }
+            return this.set_separated2("Value", value, separator1, separator2);
+        };
         Object.defineProperty(Response.prototype, "BalloonOffset", {
             /** BalloonOffset header (SHIORI/2.0) */
             get: function () {
-                return (this.get_separated2("BalloonOffset", ",") || []).map(function (value1) { return value1.map(Number); });
+                return (this.get_separated2("BalloonOffset", "\x01", ",") || []).map(function (value1) { return value1.map(Number); });
+            },
+            set: function (value) {
+                this.set_separated2("BalloonOffset", value.map(function (elems) { return elems.map(function (elem) { return elem.toString(); }); }), "\x01", ",");
             },
             enumerable: true,
             configurable: true
@@ -826,6 +920,9 @@ exports.Headers = Headers;
             get: function () {
                 return (this.get_separated("Surface", ",") || []).map(Number);
             },
+            set: function (value) {
+                this.set_separated("Surface", value.map(function (elem) { return elem.toString(); }), ",");
+            },
             enumerable: true,
             configurable: true
         });
@@ -833,6 +930,9 @@ exports.Headers = Headers;
             /** Sentence header (SHIORI/2.0,2.2,2.3b,2.4) */
             get: function () {
                 return this.get("Sentence");
+            },
+            set: function (value) {
+                this.set("Sentence", value);
             },
             enumerable: true,
             configurable: true
@@ -842,6 +942,9 @@ exports.Headers = Headers;
             get: function () {
                 return this.get("Word");
             },
+            set: function (value) {
+                this.set("Word", value);
+            },
             enumerable: true,
             configurable: true
         });
@@ -849,6 +952,9 @@ exports.Headers = Headers;
             /** Status header (GET Status SHIORI/2.0) */
             get: function () {
                 return (this.get_separated("Status", ",") || []).map(Number);
+            },
+            set: function (value) {
+                this.set_separated("Status", value.map(function (elem) { return elem.toString(); }), ",");
             },
             enumerable: true,
             configurable: true
@@ -858,6 +964,9 @@ exports.Headers = Headers;
             get: function () {
                 return this.get("String");
             },
+            set: function (value) {
+                this.set("String", value);
+            },
             enumerable: true,
             configurable: true
         });
@@ -865,6 +974,9 @@ exports.Headers = Headers;
             /** Value header (GET SHIORI/3.0) */
             get: function () {
                 return this.get("Value");
+            },
+            set: function (value) {
+                this.set("Value", value);
             },
             enumerable: true,
             configurable: true
