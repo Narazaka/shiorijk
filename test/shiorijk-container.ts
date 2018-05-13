@@ -206,7 +206,7 @@ describe("request headers", () => {
   beforeEach(() => {
     mh = new ShioriJK.Headers.Request();
   });
-  it("header aliases should work", () => {
+  it("header reader aliases should work", () => {
     mh.Status.should.be.deep.equal([]);
     mh.Surface.should.be.deep.equal([]);
     mh.header.Charset = "UTF-8";
@@ -236,6 +236,36 @@ describe("request headers", () => {
     mh.Surface.should.be.deep.equal([0, 10]);
     mh.Word!.should.be.equal("piyo");
   });
+  it("header writer aliases should work", () => {
+    mh.Status.should.be.deep.equal([]);
+    mh.Surface.should.be.deep.equal([]);
+    mh.Charset = "UTF-8";
+    mh.Sender = "Ikagaka";
+    mh.SecurityLevel = "local";
+    mh.ID = "OnBoot";
+    mh.Event = "OnBoot";
+    mh.Type = "\\ms";
+    mh.Status = ["talking", "online"];
+    mh.Ghost = "ikaga";
+    mh.Sentence = "\\0\\e";
+    mh.To = "ikaga";
+    mh.Age = 0;
+    mh.Surface = [0, 10];
+    mh.Word = "piyo";
+    mh.header.Charset!.should.be.equal("UTF-8");
+    mh.header.Sender!.should.be.equal("Ikagaka");
+    mh.header.SecurityLevel!.should.be.equal("local");
+    mh.header.ID!.should.be.equal("OnBoot");
+    mh.header.Event!.should.be.equal("OnBoot");
+    mh.header.Type!.should.be.equal("\\ms");
+    mh.header.Status!.should.be.deep.equal("talking,online");
+    mh.header.Ghost!.should.be.equal("ikaga");
+    mh.header.Sentence!.should.be.equal("\\0\\e");
+    mh.header.To!.should.be.equal("ikaga");
+    mh.header.Age!.should.be.equal("0");
+    mh.header.Surface!.should.be.deep.equal("0,10");
+    mh.header.Word!.should.be.equal("piyo");
+  });
 });
 
 describe("response headers", () => {
@@ -243,11 +273,11 @@ describe("response headers", () => {
   beforeEach(() => {
     mh = new ShioriJK.Headers.Response();
   });
-  it("header aliases should work", () => {
+  it("header reader aliases should work", () => {
     mh.BalloonOffset.should.be.deep.equal([]);
     mh.Surface.should.be.deep.equal([]);
     mh.Status.should.be.deep.equal([]);
-    mh.set_separated2("BalloonOffset", [[0, 0], [10, 10]] as any, ",");
+    mh.header.BalloonOffset = "0,0\x0110,10";
     mh.header.Surface = "0,10";
     mh.header.Sentence = "\\0\\e";
     mh.header.Word = "piyo";
@@ -257,6 +287,18 @@ describe("response headers", () => {
     mh.Sentence!.should.be.equal("\\0\\e");
     mh.Word!.should.be.equal("piyo");
     mh.Status.should.be.deep.equal([0, 0, 0, 0, 0, 0]);
+  });
+  it("header writer aliases should work", () => {
+    mh.BalloonOffset = [[0, 0], [10, 10]];
+    mh.Surface = [0, 10];
+    mh.Sentence = "\\0\\e";
+    mh.Word = "piyo";
+    mh.Status = [0, 0, 0, 0, 0, 0];
+    mh.header.BalloonOffset!.should.be.equal("0,0\x0110,10");
+    mh.header.Surface!.should.be.equal("0,10");
+    mh.header.Sentence!.should.be.equal("\\0\\e");
+    mh.header.Word!.should.be.equal("piyo");
+    mh.header.Status!.should.be.equal("0,0,0,0,0,0");
   });
   it("String header alias should work", () => {
     mh.header.String = "ref0";

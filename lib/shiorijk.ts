@@ -617,9 +617,17 @@ export namespace Headers {
       return this.get("Charset");
     }
 
+    set Charset(value) {
+      this.set("Charset", value);
+    }
+
     /** Sender header */
     get Sender() {
       return this.get("Sender");
+    }
+
+    set Sender(value) {
+      this.set("Sender", value);
     }
 
     /** SecurityLevel header (SHIORI/2.2,2.6,3.x) */
@@ -627,9 +635,17 @@ export namespace Headers {
       return this.get("SecurityLevel");
     }
 
+    set SecurityLevel(value) {
+      this.set("SecurityLevel", value);
+    }
+
     /** ID header (SHIORI/2.5,3.x) */
     get ID() {
       return this.get("ID");
+    }
+
+    set ID(value) {
+      this.set("ID", value);
     }
 
     /** Event header (SHIORI/2.2) */
@@ -637,9 +653,17 @@ export namespace Headers {
       return this.get("Event");
     }
 
+    set Event(value) {
+      this.set("Event", value);
+    }
+
     /** Type header (GET Word SHIORI/2.0) */
     get Type() {
       return this.get("Type");
+    }
+
+    set Type(value) {
+      this.set("Type", value);
     }
 
     /** Status header (SHIORI/3.1) */
@@ -647,9 +671,17 @@ export namespace Headers {
       return (this.get_separated("Status", ",")) || [];
     }
 
+    set Status(value) {
+      this.set_separated("Status", value, ",");
+    }
+
     /** Ghost header (NOTIFY OwnerGhostName SHIORI/2.0,2.3) */
     get Ghost() {
       return this.get("Ghost");
+    }
+
+    set Ghost(value) {
+      this.set("Ghost", value);
     }
 
     /** Sentence header (SHIORI/2.0,2.3b) */
@@ -657,9 +689,17 @@ export namespace Headers {
       return this.get("Sentence");
     }
 
+    set Sentence(value) {
+      this.set("Sentence", value);
+    }
+
     /** To header (SHIORI/2.3b) */
     get To() {
       return this.get("To");
+    }
+
+    set To(value) {
+      this.set("To", value);
     }
 
     /** Age header (SHIORI/2.3b) */
@@ -669,14 +709,26 @@ export namespace Headers {
       return age == null ? undefined : Number(age); // tslint:disable-line no-null-keyword
     }
 
+    set Age(value) {
+      this.set("Age", value == null ? undefined : value.toString()); // tslint:disable-line no-null-keyword
+    }
+
     /** Surface header (SHIORI/2.3b) */
     get Surface() {
       return (this.get_separated("Surface", ",") || []).map(Number);
     }
 
+    set Surface(value) {
+      this.set_separated("Surface", value.map((elem) => elem.toString()), ",");
+    }
+
     /** Word header (TEACH SHIORI/2.4) */
     get Word() {
       return this.get("Word");
+    }
+
+    set Word(value) {
+      this.set("Word", value);
     }
   }
 
@@ -722,7 +774,11 @@ export namespace Headers {
 
     /** BalloonOffset header (SHIORI/2.0) */
     get BalloonOffset() {
-      return (this.get_separated2("BalloonOffset", ",") || []).map((value1) => value1.map(Number));
+      return (this.get_separated2("BalloonOffset", "\x01", ",") || []).map((value1) => value1.map(Number));
+    }
+
+    set BalloonOffset(value) {
+      this.set_separated2("BalloonOffset", value.map((elems) => elems.map((elem) => elem.toString())), "\x01", ",");
     }
 
     /** Surface header (SHIORI/2.3b) */
@@ -730,9 +786,17 @@ export namespace Headers {
       return (this.get_separated("Surface", ",") || []).map(Number);
     }
 
+    set Surface(value) {
+      this.set_separated("Surface", value.map((elem) => elem.toString()), ",");
+    }
+
     /** Sentence header (SHIORI/2.0,2.2,2.3b,2.4) */
     get Sentence() {
       return this.get("Sentence");
+    }
+
+    set Sentence(value) {
+      this.set("Sentence", value);
     }
 
     /** Word header (GET Word SHIORI/2.0) */
@@ -740,9 +804,17 @@ export namespace Headers {
       return this.get("Word");
     }
 
+    set Word(value) {
+      this.set("Word", value);
+    }
+
     /** Status header (GET Status SHIORI/2.0) */
     get Status() {
       return (this.get_separated("Status", ",") || []).map(Number);
+    }
+
+    set Status(value) {
+      this.set_separated("Status", value.map((elem) => elem.toString()), ",");
     }
 
     /** String header (GET String SHIORI/2.5) */
@@ -750,9 +822,17 @@ export namespace Headers {
       return this.get("String");
     }
 
+    set String(value) {
+      this.set("String", value);
+    }
+
     /** Value header (GET SHIORI/3.0) */
     get Value() {
       return this.get("Value");
+    }
+
+    set Value(value) {
+      this.set("Value", value);
     }
   }
 }
