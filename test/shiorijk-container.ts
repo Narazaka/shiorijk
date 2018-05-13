@@ -300,33 +300,57 @@ describe("response headers", () => {
     mh.header.Word!.should.be.equal("piyo");
     mh.header.Status!.should.be.equal("0,0,0,0,0,0");
   });
-  it("String header alias should work", () => {
+  it("String header reader alias should work", () => {
     mh.header.String = "ref0";
     mh.String!.should.be.equal("ref0");
   });
-  it("String separated header alias should work", () => {
+  it("String separated header reader alias should work", () => {
     mh.StringSeparated().should.be.deep.equal([]);
     mh.header.String = "0,1";
     mh.StringSeparated(",").should.be.deep.equal(["0", "1"]);
   });
-  it("String separated2 header alias should work", () => {
+  it("String separated2 header reader alias should work", () => {
     mh.StringSeparated2().should.be.deep.equal([]);
     mh.set_separated2("String", [[0, 1], [2, 3]] as any);
     mh.StringSeparated2().should.be.deep.equal([["0", "1"], ["2", "3"]]);
   });
-  it("Value header alias should work", () => {
+  it("String header writer alias should work", () => {
+    mh.String = "ref0";
+    mh.header.String!.should.be.equal("ref0");
+  });
+  it("String separated header writer alias should work", () => {
+    mh.setStringSeparated(["0", "1"]);
+    mh.header.String!.should.be.deep.equal("0\x011");
+  });
+  it("String separated2 header writer alias should work", () => {
+    mh.setStringSeparated2([["0", "1"], ["2", "3"]], "@");
+    mh.header.String!.should.be.deep.equal("0\x011@2\x013");
+  });
+  it("Value header reader alias should work", () => {
     mh.header.Value = "ref0";
     mh.Value!.should.be.equal("ref0");
   });
-  it("Value separated header alias should work", () => {
+  it("Value separated header reader alias should work", () => {
     mh.ValueSeparated().should.be.deep.equal([]);
     mh.header.Value = "0,1";
     mh.ValueSeparated(",").should.be.deep.equal(["0", "1"]);
   });
-  it("Value separated2 header alias should work", () => {
+  it("Value separated2 header reader alias should work", () => {
     mh.ValueSeparated2().should.be.deep.equal([]);
     mh.set_separated2("Value", [[0, 1], [2, 3]] as any);
     mh.ValueSeparated2().should.be.deep.equal([["0", "1"], ["2", "3"]]);
+  });
+  it("Value header writer alias should work", () => {
+    mh.Value = "ref0";
+    mh.header.Value!.should.be.equal("ref0");
+  });
+  it("Value separated header writer alias should work", () => {
+    mh.setValueSeparated(["0", "1"]);
+    mh.header.Value!.should.be.deep.equal("0\x011");
+  });
+  it("Value separated2 header writer alias should work", () => {
+    mh.setValueSeparated2([["0", "1"], ["2", "3"]], "@");
+    mh.header.Value!.should.be.deep.equal("0\x011@2\x013");
   });
 });
 

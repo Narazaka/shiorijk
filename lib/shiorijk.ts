@@ -744,6 +744,16 @@ export namespace Headers {
     }
 
     /**
+     * set String header (GET String SHIORI/2.5)
+     * @param value header values
+     * @param separator separator characters
+     * @return header value
+     */
+    setStringSeparated(value: string[], separator = "\x01") {
+      return this.set_separated("String", value, separator);
+    }
+
+    /**
      * String header (GET String SHIORI/2.5)
      * @param separator1 first level separator characters
      * @param separator2 second level separator characters
@@ -751,6 +761,17 @@ export namespace Headers {
      */
     StringSeparated2(separator1 = "\x02", separator2 = "\x01") {
       return this.get_separated2("String", separator1, separator2) || [];
+    }
+
+    /**
+     * set String header (GET String SHIORI/2.5)
+     * @param value header values
+     * @param separator1 first level separator characters
+     * @param separator2 second level separator characters
+     * @return header value
+     */
+    setStringSeparated2(value: string[][], separator1 = "\x02", separator2 = "\x01") {
+      return this.set_separated2("String", value, separator1, separator2);
     }
 
     /**
@@ -763,6 +784,16 @@ export namespace Headers {
     }
 
     /**
+     * set Value header (GET SHIORI/3.0)
+     * @param value header values
+     * @param separator separator characters
+     * @return header value
+     */
+    setValueSeparated(value: string[], separator = "\x01") {
+      return this.set_separated("Value", value, separator);
+    }
+
+    /**
      * Value header (GET SHIORI/3.0)
      * @param separator1 first level separator characters
      * @param separator2 second level separator characters
@@ -770,6 +801,17 @@ export namespace Headers {
      */
     ValueSeparated2(separator1 = "\x02", separator2 = "\x01") {
       return this.get_separated2("Value", separator1, separator2) || [];
+    }
+
+    /**
+     * set Value header (GET SHIORI/3.0)
+     * @param value header values
+     * @param separator1 first level separator characters
+     * @param separator2 second level separator characters
+     * @return header values
+     */
+    setValueSeparated2(value: string[][], separator1 = "\x02", separator2 = "\x01") {
+      return this.set_separated2("Value", value, separator1, separator2);
     }
 
     /** BalloonOffset header (SHIORI/2.0) */
