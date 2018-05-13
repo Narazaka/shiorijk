@@ -161,4 +161,4 @@ APIドキュメント
 ライセンス
 --------------------------
 
-[MITライセンス](http://narazaka.net/license/MIT?2018)の元で配布いたします。
+[Zlibライセンス](https://narazaka.net/license/Zlib?2014-2018)の元で配布いたします。
