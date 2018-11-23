@@ -1,5 +1,5 @@
 /* eslint no-process-env: 0, no-magic-numbers: 0, max-statements: 0 */
-const webpack = require("./webpack.config");
+const webpack = require("./webpack.config.test");
 
 module.exports = function(config) {
   config.set({
