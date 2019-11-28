@@ -202,6 +202,7 @@ var Message;
     Message.Response = Response;
 })(Message = exports.Message || (exports.Message = {}));
 /** SHIORI Request Message's RequestLine Container */
+// eslint-disable-next-line import/export
 var RequestLine = /** @class */ (function () {
     /**
      * initialize request line
@@ -225,7 +226,7 @@ var RequestLine = /** @class */ (function () {
             return this.arguments.method;
         },
         set: function (method) {
-            if ((method != null) && (this.version != null)) {
+            if (method != null && this.version != null) {
                 this.validate_method_version(method, this.version);
             }
             else if (method != null) {
@@ -257,7 +258,7 @@ var RequestLine = /** @class */ (function () {
             return this.arguments.protocol;
         },
         set: function (protocol) {
-            if ((protocol != null) && protocol !== "SHIORI") {
+            if (protocol != null && protocol !== "SHIORI") {
                 throw new RequestLine.InvalidValueError("Invalid protocol : " + protocol);
             }
             this.arguments.protocol = protocol;
@@ -271,7 +272,7 @@ var RequestLine = /** @class */ (function () {
             return this.arguments.version;
         },
         set: function (version) {
-            if ((this.method != null) && (version != null)) {
+            if (this.method != null && version != null) {
                 this.validate_method_version(this.method, version);
             }
             else if (version != null) {
@@ -299,6 +300,7 @@ var RequestLine = /** @class */ (function () {
      * @param version version
      * @throw if invalid
      */
+    // eslint-disable-next-line class-methods-use-this, complexity
     RequestLine.prototype.validate_method_version = function (method, version) {
         var is_valid = false;
         switch (version) {
@@ -371,6 +373,7 @@ var RequestLine = /** @class */ (function () {
 }());
 exports.RequestLine = RequestLine;
 var RequestLineClass = RequestLine;
+// eslint-disable-next-line import/export, no-redeclare
 (function (RequestLine) {
     /** Invalid value error */
     var InvalidValueError = /** @class */ (function (_super) {
@@ -384,6 +387,7 @@ var RequestLineClass = RequestLine;
 })(RequestLine = exports.RequestLine || (exports.RequestLine = {}));
 exports.RequestLine = RequestLine;
 /** SHIORI Response Message's StatusLine Container */
+// eslint-disable-next-line import/export
 var StatusLine = /** @class */ (function () {
     /**
      * initialize status line
@@ -407,7 +411,7 @@ var StatusLine = /** @class */ (function () {
             return this.arguments.code;
         },
         set: function (code) {
-            if ((code != null) && (this.message[code] == null)) {
+            if (code != null && this.message[code] == null) {
                 throw new StatusLine.InvalidValueError("Invalid response code : " + code);
             }
             this.arguments.code = code;
@@ -421,7 +425,7 @@ var StatusLine = /** @class */ (function () {
             return this.arguments.protocol;
         },
         set: function (protocol) {
-            if ((protocol != null) && protocol !== "SHIORI") {
+            if (protocol != null && protocol !== "SHIORI") {
                 throw new StatusLine.InvalidValueError("Invalid protocol : " + protocol);
             }
             this.arguments.protocol = protocol;
@@ -475,6 +479,7 @@ StatusLine.prototype.message = {
     500: "Internal Server Error",
 };
 var StatusLineClass = StatusLine;
+// eslint-disable-next-line no-redeclare, import/export
 (function (StatusLine) {
     /** Invalid value error */
     var InvalidValueError = /** @class */ (function (_super) {
@@ -488,6 +493,7 @@ var StatusLineClass = StatusLine;
 })(StatusLine = exports.StatusLine || (exports.StatusLine = {}));
 exports.StatusLine = StatusLine;
 /** SHIORI Message Headers Container */
+// eslint-disable-next-line import/export
 var Headers = /** @class */ (function () {
     /**
      * initialize headers
@@ -531,12 +537,11 @@ var Headers = /** @class */ (function () {
     Headers.prototype.get_separated = function (name, separator) {
         if (separator === void 0) { separator = "\x01"; }
         var value = this.header[name];
-        if (value != null) { // eslint-disable-line no-negated-condition
+        // eslint-disable-next-line no-negated-condition
+        if (value != null) {
             return value.split(separator);
         }
-        else {
-            return; // eslint-disable-line consistent-return
-        }
+        return undefined;
     };
     /**
      * set header separated by \x01 or some as an array
@@ -547,6 +552,7 @@ var Headers = /** @class */ (function () {
      */
     Headers.prototype.set_separated = function (name, value, separator) {
         if (separator === void 0) { separator = "\x01"; }
+        // eslint-disable-next-line no-return-assign
         return (this.header[name] = value.join(separator));
     };
     /**
@@ -560,12 +566,11 @@ var Headers = /** @class */ (function () {
         if (separator1 === void 0) { separator1 = "\x02"; }
         if (separator2 === void 0) { separator2 = "\x01"; }
         var value = this.header[name];
-        if (value != null) { // eslint-disable-line no-negated-condition
+        // eslint-disable-next-line no-negated-condition
+        if (value != null) {
             return value.split(separator1).map(function (value1) { return value1.split(separator2); });
         }
-        else {
-            return; // eslint-disable-line consistent-return
-        }
+        return undefined;
     };
     /**
      * set header separated by \x02 and \x01 or some as an array
@@ -578,6 +583,7 @@ var Headers = /** @class */ (function () {
     Headers.prototype.set_separated2 = function (name, value, separator1, separator2) {
         if (separator1 === void 0) { separator1 = "\x02"; }
         if (separator2 === void 0) { separator2 = "\x01"; }
+        // eslint-disable-next-line no-return-assign
         return (this.header[name] = value.map(function (value1) { return value1.join(separator2); }).join(separator1));
     };
     /**
@@ -587,7 +593,8 @@ var Headers = /** @class */ (function () {
     Headers.prototype.references = function () {
         var reference_max_index = -1;
         // forin for compatibility
-        for (var name_1 in this.header) { // eslint-disable-line guard-for-in
+        // eslint-disable-next-line guard-for-in, no-restricted-syntax
+        for (var name_1 in this.header) {
             var result = /^Reference(\d+)$/.exec(name_1);
             if (result && reference_max_index < Number(result[1])) {
                 reference_max_index = Number(result[1]);
@@ -605,7 +612,8 @@ var Headers = /** @class */ (function () {
      */
     Headers.prototype.validate = function () {
         // forin for compatibility
-        for (var name_2 in this.header) { // eslint-disable-line guard-for-in
+        // eslint-disable-next-line guard-for-in, no-restricted-syntax
+        for (var name_2 in this.header) {
             var value = this.header[name_2];
             if (("" + value).match(/\n/)) {
                 throw new Headers.InvalidValueError("Invalid header value - line feed found : [" + name_2 + "] : " + value);
@@ -620,7 +628,8 @@ var Headers = /** @class */ (function () {
         this.validate();
         var str = "";
         // forin for compatibility
-        for (var name_3 in this.header) { // eslint-disable-line guard-for-in
+        // eslint-disable-next-line guard-for-in, no-restricted-syntax
+        for (var name_3 in this.header) {
             var value = this.header[name_3];
             str += name_3 + ": " + value + "\r\n";
         }
@@ -659,6 +668,7 @@ var Headers = /** @class */ (function () {
     return Headers;
 }());
 exports.Headers = Headers;
+// eslint-disable-next-line no-redeclare, import/export
 (function (Headers) {
     /** Invalid value error */
     var InvalidValueError = /** @class */ (function (_super) {
@@ -1055,7 +1065,8 @@ var Shiori;
         Parser.prototype.abort_parse = function () {
             if (this.parsers != null) {
                 // forin for compatibility
-                for (var name_4 in this.parsers) { // eslint-disable-line guard-for-in
+                // eslint-disable-next-line guard-for-in, no-restricted-syntax
+                for (var name_4 in this.parsers) {
                     var parser = this.parsers[name_4];
                     if (parser.abort_parse != null) {
                         parser.abort_parse();
@@ -1101,6 +1112,7 @@ var Shiori;
         Parser.prototype.parse_lines = function (lines) {
             var result;
             var results = [];
+            // eslint-disable-next-line no-restricted-syntax
             for (var _i = 0, lines_1 = lines; _i < lines_1.length; _i++) {
                 var line = lines_1[_i];
                 result = this.parse_line(line);
@@ -1132,11 +1144,9 @@ var Shiori;
                     state: "end",
                 };
             }
-            else {
-                return {
-                    state: "continue",
-                };
-            }
+            return {
+                state: "continue",
+            };
         };
         return Parser;
     }());
@@ -1152,21 +1162,20 @@ var Shiori;
         };
         Section.prototype.next = function () {
             if (this.index === this.sections.length - 1) {
+                // eslint-disable-next-line no-return-assign
                 return (this.index = 0);
             }
-            else {
-                return this.index++;
-            }
+            return this.index++;
         };
         Section.prototype.previous = function () {
             if (this.index === 0) {
+                // eslint-disable-next-line no-return-assign
                 return (this.index = this.sections.length - 1);
             }
-            else {
-                return this.index--;
-            }
+            return this.index--;
         };
         Section.prototype.set = function (section) {
+            // eslint-disable-next-line no-return-assign
             return (this.index = this.sections.indexOf(section));
         };
         Section.prototype.get = function () {
@@ -1193,6 +1202,7 @@ var Shiori;
                 if (line.length) {
                     var result = line.match(/^(.+?): (.*)$/);
                     if (result) {
+                        // eslint-disable-next-line prefer-destructuring
                         this.result.header[result[1]] = result[2];
                     }
                     else {
@@ -1202,11 +1212,9 @@ var Shiori;
                         state: "continue",
                     };
                 }
-                else {
-                    return {
-                        state: "end",
-                    };
-                }
+                return {
+                    state: "end",
+                };
             };
             return Parser;
         }(Shiori.Parser));
@@ -1237,6 +1245,7 @@ var Shiori;
                 _this.section = new Section();
                 return _this;
             }
+            // eslint-disable-next-line class-methods-use-this
             Parser.prototype.result_builder = function () {
                 return new Message.Request({
                     no_prepare: true,
@@ -1261,6 +1270,7 @@ var Shiori;
             var Parser = /** @class */ (function () {
                 function Parser() {
                 }
+                // eslint-disable-next-line class-methods-use-this
                 Parser.prototype.result_builder = function () {
                     return new RequestLineClass();
                 };
@@ -1301,6 +1311,7 @@ var Shiori;
                     _this.section = new Section();
                     return _this;
                 }
+                // eslint-disable-next-line class-methods-use-this
                 Parser.prototype.result_builder = function () {
                     return new Headers.Request();
                 };
@@ -1342,6 +1353,7 @@ var Shiori;
                 _this.section = new Section();
                 return _this;
             }
+            // eslint-disable-next-line class-methods-use-this
             Parser.prototype.result_builder = function () {
                 return new Message.Response({
                     no_prepare: true,
@@ -1366,6 +1378,7 @@ var Shiori;
             var Parser = /** @class */ (function () {
                 function Parser() {
                 }
+                // eslint-disable-next-line class-methods-use-this
                 Parser.prototype.result_builder = function () {
                     return new StatusLineClass();
                 };
@@ -1406,6 +1419,7 @@ var Shiori;
                     _this.section = new Section();
                     return _this;
                 }
+                // eslint-disable-next-line class-methods-use-this
                 Parser.prototype.result_builder = function () {
                     return new Headers.Response();
                 };

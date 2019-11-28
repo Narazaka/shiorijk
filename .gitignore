@@ -9,7 +9,8 @@ coverage
 !.codeclimate.yml
 !.npmrc
 !.nycrc
-!.eslintrc.yml
+!.eslintrc.json
 !.eslintignore
+!.prettierrc.json
 dist/test
 dist/example
