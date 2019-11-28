@@ -470,9 +470,9 @@ export declare namespace Shiori {
     }
     /** parser section state manager */
     class Section<S extends string> {
-        readonly sections: readonly S[];
+        readonly sections: S[];
         private index;
-        constructor(sections: readonly S[]);
+        constructor(sections: S[]);
         is(section: S): boolean;
         next(): number;
         previous(): number;
@@ -487,7 +487,7 @@ export declare namespace Shiori {
             };
         }
         class Section extends Shiori.Section<"idle" | "header" | "end"> {
-            constructor(sections?: readonly ["idle", "header", "end"]);
+            constructor(sections?: ["idle", "header", "end"]);
         }
     }
     namespace Request {
@@ -529,7 +529,7 @@ export declare namespace Shiori {
             }
         }
         class Section extends Shiori.Section<"idle" | "request_line" | "headers" | "end"> {
-            constructor(sections?: readonly ["idle", "request_line", "headers", "end"]);
+            constructor(sections?: ["idle", "request_line", "headers", "end"]);
         }
     }
     namespace Response {
@@ -571,7 +571,7 @@ export declare namespace Shiori {
             }
         }
         class Section extends Shiori.Section<"idle" | "status_line" | "headers" | "end"> {
-            constructor(sections?: readonly ["idle", "status_line", "headers", "end"]);
+            constructor(sections?: ["idle", "status_line", "headers", "end"]);
         }
     }
 }

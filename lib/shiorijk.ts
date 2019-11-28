@@ -1052,10 +1052,10 @@ export namespace Shiori {
 
   /** parser section state manager */
   export class Section<S extends string> {
-    readonly sections: readonly S[];
+    readonly sections: S[];
     private index = 0;
 
-    constructor(sections: readonly S[]) {
+    constructor(sections: S[]) {
       this.sections = sections;
     }
 
@@ -1120,7 +1120,7 @@ export namespace Shiori {
 
     // eslint-disable-next-line no-shadow
     export class Section extends Shiori.Section<"idle" | "header" | "end"> {
-      constructor(sections = ["idle", "header", "end"] as const) {
+      constructor(sections = ["idle", "header", "end"] as ["idle", "header", "end"]) {
         super(sections);
       }
     }
@@ -1213,7 +1213,7 @@ export namespace Shiori {
 
     // eslint-disable-next-line no-shadow
     export class Section extends Shiori.Section<"idle" | "request_line" | "headers" | "end"> {
-      constructor(sections = ["idle", "request_line", "headers", "end"] as const) {
+      constructor(sections = ["idle", "request_line", "headers", "end"] as ["idle", "request_line", "headers", "end"]) {
         super(sections);
       }
     }
@@ -1306,7 +1306,7 @@ export namespace Shiori {
 
     // eslint-disable-next-line no-shadow
     export class Section extends Shiori.Section<"idle" | "status_line" | "headers" | "end"> {
-      constructor(sections = ["idle", "status_line", "headers", "end"] as const) {
+      constructor(sections = ["idle", "status_line", "headers", "end"] as ["idle", "status_line", "headers", "end"]) {
         super(sections);
       }
     }
