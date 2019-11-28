@@ -62,7 +62,9 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<h1 id="shiorijk-shiori-3-x-parser-container">ShioriJK - SHIORI/3.x Parser/Container</h1>
+				<a href="#shiorijk---shiori3x-parsercontainer" id="shiorijk---shiori3x-parsercontainer" style="color: inherit; text-decoration: none;">
+					<h1>ShioriJK - SHIORI/3.x Parser/Container</h1>
+				</a>
 				<p><a href="https://www.npmjs.com/package/shiorijk"><img src="https://img.shields.io/npm/v/shiorijk.svg" alt="npm"></a>
 					<a href="https://www.npmjs.com/package/shiorijk"><img src="https://img.shields.io/npm/l/shiorijk.svg" alt="npm license"></a>
 					<a href="https://www.npmjs.com/package/shiorijk"><img src="https://img.shields.io/npm/dt/shiorijk.svg" alt="npm download total"></a>
@@ -73,21 +75,26 @@
 				<p><a href="https://david-dm.org/Narazaka/shiorijk"><img src="https://david-dm.org/Narazaka/shiorijk/status.svg" alt="Dependency Status"></a>
 					<a href="https://david-dm.org/Narazaka/shiorijk?type=dev"><img src="https://david-dm.org/Narazaka/shiorijk/dev-status.svg" alt="devDependency Status"></a>
 					<a href="https://travis-ci.org/Narazaka/shiorijk"><img src="https://travis-ci.org/Narazaka/shiorijk.svg?branch=master" alt="Travis Build Status"></a>
-					<a href="https://ci.appveyor.com/project/Narazaka/shiorijk"><img src="https://ci.appveyor.com/api/projects/status/github/Narazaka/shiorijk?svg=true&amp;branch=master" alt="AppVeyor Build Status"></a>
+					<a href="https://ci.appveyor.com/project/Narazaka/shiorijk"><img src="https://ci.appveyor.com/api/projects/status/github/Narazaka/shiorijk?svg=true&branch=master" alt="AppVeyor Build Status"></a>
 					<a href="https://codecov.io/github/Narazaka/shiorijk?branch=master"><img src="https://codecov.io/github/Narazaka/shiorijk/coverage.svg?branch=master" alt="codecov.io"></a>
 					<a href="https://codeclimate.com/github/Narazaka/shiorijk"><img src="https://codeclimate.com/github/Narazaka/shiorijk/badges/gpa.svg" alt="Code Climate"></a>
 					<a href="https://www.codacy.com/app/narazaka/shiorijk?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Narazaka/shiorijk&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/3e8aa6e24b6d47c29aa8ebb82b6a1e06" alt="Codacy Badge"></a>
 				<a href="https://greenkeeper.io/"><img src="https://badges.greenkeeper.io/Narazaka/shiorijk.svg" alt="Greenkeeper badge"></a></p>
 				<p><strong>Do you know that SHIORI is not JS but JK ?</strong></p>
-				<h2 id="installation">Installation</h2>
-				<pre><code>npm <span class="hljs-keyword">install</span> shiorijk
-</code></pre><p>or</p>
-				<pre><code><span class="hljs-keyword">bower </span><span class="hljs-keyword">install </span><span class="hljs-keyword">shiorijk</span>
-</code></pre><h2 id="what-is-shiorijk-">What is ShioriJK ?</h2>
+				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+					<h2>Installation</h2>
+				</a>
+				<pre><code>npm <span class="hljs-keyword">install</span> shiorijk</code></pre><p>or</p>
+				<pre><code><span class="hljs-keyword">bower </span><span class="hljs-keyword">install </span><span class="hljs-keyword">shiorijk</span></code></pre>
+				<a href="#what-is-shiorijk-" id="what-is-shiorijk-" style="color: inherit; text-decoration: none;">
+					<h2>What is ShioriJK ?</h2>
+				</a>
 				<p>ShioriJK is a library of SHIORI protocol parsers and containers implemented by Javascript (TypeScript) for making SHIORI subsystem.</p>
-				<h2 id="usage-overview">Usage overview</h2>
+				<a href="#usage-overview" id="usage-overview" style="color: inherit; text-decoration: none;">
+					<h2>Usage overview</h2>
+				</a>
 				<p><a href="example/example.ts">example/example.ts</a></p>
-				<pre><code class="lang-typescript"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> ShioriJK <span class="hljs-keyword">from</span> <span class="hljs-string">"shiorijk"</span>;
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> ShioriJK <span class="hljs-keyword">from</span> <span class="hljs-string">"shiorijk"</span>;
 <span class="hljs-comment">// const ShioriJK = require("shiorijk"); // also OK</span>
 
 <span class="hljs-comment">// ---------- parse request ----------</span>
@@ -172,14 +179,19 @@ request2.headers.set(<span class="hljs-string">"ID"</span>, <span class="hljs-st
   }
 });
 
-<span class="hljs-built_in">console</span>.log(response2.toString() === <span class="hljs-string">"SHIORI/3.0 200 OK\r\nCharset: UTF-8\r\nSender: ikaga\r\nValue: 8.2.8\r\n\r\n"</span>);
-</code></pre>
+<span class="hljs-built_in">console</span>.log(response2.toString() === <span class="hljs-string">"SHIORI/3.0 200 OK\r\nCharset: UTF-8\r\nSender: ikaga\r\nValue: 8.2.8\r\n\r\n"</span>);</code></pre>
 				<p>MORE: See the SHIORI implementation <a href="https://github.com/Narazaka/sanajk">SanaJK</a> and Ukagaka Baseware implementation <a href="https://github.com/Ikagaka/Ikagaka.demo">Ikagaka</a> that is using ShioriJK.</p>
-				<h2 id="api-document">API Document</h2>
+				<a href="#api-document" id="api-document" style="color: inherit; text-decoration: none;">
+					<h2>API Document</h2>
+				</a>
 				<p>See <a href="http://narazaka.github.io/shiorijk/">http://narazaka.github.io/shiorijk/</a> or the source in <a href="lib">lib/</a>.</p>
 				<p>Also you can found the code snippets in <a href="test">test/</a>.</p>
-				<h2 id="history">History</h2>
-				<h3 id="v1-0-0">v1.0.0</h3>
+				<a href="#history" id="history" style="color: inherit; text-decoration: none;">
+					<h2>History</h2>
+				</a>
+				<a href="#v100" id="v100" style="color: inherit; text-decoration: none;">
+					<h3>v1.0.0</h3>
+				</a>
 				<ul>
 					<li>CoffeeScript -&gt; TypeScript</li>
 					<li>Basic JavaScript API is not changed.</li>
@@ -187,7 +199,9 @@ request2.headers.set(<span class="hljs-string">"ID"</span>, <span class="hljs-st
 					<li>The string throw that existed in some APIs has been changed to throw classes that inherited Error.</li>
 					<li>Needs &gt;= ES5 (so IE &lt;= 8 needs shims).</li>
 				</ul>
-				<h2 id="license">License</h2>
+				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+					<h2>License</h2>
+				</a>
 				<p>This is released under <a href="https://narazaka.net/license/Zlib?2014-2018">Zlib License</a>.</p>
 				<p><a href="https://app.fossa.io/projects/git%2Bgithub.com%2FNarazaka%2Fshiorijk?ref=badge_large"><img src="https://app.fossa.io/api/projects/git%2Bgithub.com%2FNarazaka%2Fshiorijk.svg?type=large" alt="FOSSA Status"></a></p>
 			</div>
@@ -270,6 +284,7 @@ request2.headers.set(<span class="hljs-string">"ID"</span>, <span class="hljs-st
 				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
 				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
@@ -318,7 +333,7 @@ request2.headers.set(<span class="hljs-string">"ID"</span>, <span class="hljs-st
 	</div>
 </footer>
 <div class="container tsd-generator">
-	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
 </div>
 <div class="overlay"></div>
 <script src="assets/js/main.js"></script>
