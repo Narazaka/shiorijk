@@ -1,3 +1,23 @@
-extends: narazaka
+parser: "@typescript-eslint/parser"
+plugins:
+  - "@typescript-eslint"
+extends:
+  - narazaka
+  - "plugin:@typescript-eslint/recommended"
+overrides:
+  - files: ["*.js"]
+    rules:
+      "@typescript-eslint/no-var-requires": 0
 rules:
   func-names: 0
+  camelcase: 0
+  "@typescript-eslint/camelcase": 0
+  valid-jsdoc: [error, { requireParamType: false, requireReturnType: false, requireReturn: false }]
+  no-use-before-define: 0
+  "@typescript-eslint/no-use-before-define": 0
+  no-magic-numbers: 0
+  max-lines: 0
+  init-declarations: 0
+  "@typescript-eslint/no-namespace": 0
+  "@typescript-eslint/explicit-function-return-type": 0
+  "@typescript-eslint/no-dynamic-delete": [error]

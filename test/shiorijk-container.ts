@@ -1,5 +1,6 @@
 /// <reference types="mocha" />
-// tslint:disable no-implicit-dependencies no-any no-non-null-assertion
+/* eslint-disable max-statements, no-return-assign, no-undef, new-cap */
+/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-non-null-assertion */
 import * as chai from "chai";
 import * as ShioriJK from "../lib/shiorijk";
 
@@ -11,14 +12,14 @@ describe("request line", () => {
     mrl = new ShioriJK.RequestLine();
   });
   it("should throw on wrong input", () => {
-    (() => mrl.method = "GETTTTT" as any).should.throw(/Invalid/); // tslint:disable-line no-unsafe-any
-    (() => mrl.protocol = "SAORI" as any).should.throw(/Invalid/); // tslint:disable-line no-unsafe-any
-    (() => mrl.version = "2.9" as any).should.throw(/Invalid/); // tslint:disable-line no-unsafe-any
+    (() => mrl.method = "GETTTTT" as any).should.throw(/Invalid/);
+    (() => mrl.protocol = "SAORI" as any).should.throw(/Invalid/);
+    (() => mrl.version = "2.9" as any).should.throw(/Invalid/);
     (() => mrl.protocol = "SHIORI").should.not.throw(/Invalid/);
     (() => mrl.version = "3.0").should.not.throw(/Invalid/);
     (() => mrl.method = "GET Version").should.throw(/Invalid/);
     (() => mrl.method = "GET").should.not.throw(/Invalid/);
-    (() => mrl.version = "2.9" as any).should.throw(/Invalid/); // tslint:disable-line no-unsafe-any
+    (() => mrl.version = "2.9" as any).should.throw(/Invalid/);
     mrl.method!.should.be.equal("GET");
     mrl.protocol!.should.be.equal("SHIORI");
     mrl.version!.should.be.equal("3.0");
@@ -35,9 +36,9 @@ describe("request line", () => {
   });
   it("should be able to initialize with values", () => {
     mrl = new ShioriJK.RequestLine({
-      method: "GET",
+      method:   "GET",
       protocol: "SHIORI",
-      version: "3.0",
+      version:  "3.0",
     });
     mrl.method!.should.be.equal("GET");
     mrl.protocol!.should.be.equal("SHIORI");
@@ -45,7 +46,7 @@ describe("request line", () => {
   });
   it("should be able to initialize with default values", () => {
     mrl = new ShioriJK.RequestLine({
-      method: "GET",
+      method:  "GET",
       version: "3.0",
     });
     mrl.method!.should.be.equal("GET");
@@ -67,8 +68,8 @@ describe("status line", () => {
   });
   it("should throw on wrong input", () => {
     (() => msl.code = 501).should.throw(/Invalid/);
-    (() => msl.protocol = "SAORI" as any).should.throw(/Invalid/); // tslint:disable-line no-unsafe-any
-    (() => msl.version = "2.9" as any).should.throw(/Invalid/); // tslint:disable-line no-unsafe-any
+    (() => msl.protocol = "SAORI" as any).should.throw(/Invalid/);
+    (() => msl.version = "2.9" as any).should.throw(/Invalid/);
     (() => msl.code = 500).should.not.throw(/Invalid/);
     (() => msl.protocol = "SHIORI").should.not.throw(/Invalid/);
     (() => msl.version = "3.0").should.not.throw(/Invalid/);
@@ -87,9 +88,9 @@ describe("status line", () => {
   });
   it("should be able to initialize with values", () => {
     const mrl = new ShioriJK.StatusLine({
-      code: 200,
+      code:     200,
       protocol: "SHIORI",
-      version: "3.0",
+      version:  "3.0",
     });
     mrl.code!.should.be.equal(200);
     mrl.protocol!.should.be.equal("SHIORI");
@@ -97,7 +98,7 @@ describe("status line", () => {
   });
   it("should be able to initialize with default values", () => {
     const mrl = new ShioriJK.StatusLine({
-      code: 200,
+      code:    200,
       version: "3.0",
     });
     mrl.code!.should.be.equal(200);
@@ -138,8 +139,7 @@ describe("headers", () => {
     (mh.get("Reference0"))!.should.be.equal("Sakura\x010\x0110");
   });
   it("should handle \\x02 and \\x01", () => {
-    let sites;
-    sites = [
+    const sites = [
       ["home", "http://narazaka.net/", "narazaka.net.png", "this is my home"],
       ["usada", "http://usada.sakura.vg/", "usada.png", "materia"],
     ];
@@ -150,7 +150,7 @@ describe("headers", () => {
       "usada\x01http://usada.sakura.vg/\x01usada.png\x01materia",
     ]);
     (mh.get("Value"))!.should.be.equal(
-      // tslint:disable-next-line max-line-length
+      // eslint-disable-next-line max-len
       "home\x01http://narazaka.net/\x01narazaka.net.png\x01this is my home\x02usada\x01http://usada.sakura.vg/\x01usada.png\x01materia",
     );
   });
@@ -170,7 +170,7 @@ describe("headers", () => {
   });
   it("should be able to initialize with values", () => {
     mh = new ShioriJK.Headers({
-      ID: "OnBoot",
+      ID:         "OnBoot",
       Reference6: "halt",
     });
     mh.header.ID!.should.be.equal("OnBoot");
@@ -178,12 +178,12 @@ describe("headers", () => {
   });
   it("should get references array", () => {
     mh = new ShioriJK.Headers({
-      ID: "OnBoot",
+      ID:         "OnBoot",
       Reference0: "master",
       Reference6: "",
       Reference7: "",
     });
-    mh.references().should.be.deep.equal(["master", void 0, void 0, void 0, void 0, void 0, "", ""]);
+    mh.references().should.be.deep.equal(["master", undefined, undefined, undefined, undefined, undefined, "", ""]);
   });
   it("reference header alias should work", () => {
     mh.header.Reference0 = "ref0";
@@ -382,7 +382,7 @@ describe("request message", () => {
   it("should be able to initialize with hash values", () => {
     m = new ShioriJK.Message.Request({
       request_line: {
-        method: "NOTIFY",
+        method:  "NOTIFY",
         version: "3.0",
       },
       headers: {
@@ -395,7 +395,7 @@ describe("request message", () => {
   });
   it("should be able to initialize with class values", () => {
     mrl = new ShioriJK.RequestLine({
-      method: "NOTIFY",
+      method:  "NOTIFY",
       version: "3.0",
     });
     mh = new ShioriJK.Headers.Request({
@@ -403,7 +403,7 @@ describe("request message", () => {
     });
     m = new ShioriJK.Message.Request({
       request_line: mrl,
-      headers: mh,
+      headers:      mh,
     });
     m.request_line.method!.should.be.equal("NOTIFY");
     m.request_line.version!.should.be.equal("3.0");
@@ -434,7 +434,7 @@ describe("response message", () => {
   it("should be able to initialize with hash values", () => {
     m = new ShioriJK.Message.Response({
       status_line: {
-        code: 204,
+        code:    204,
         version: "3.0",
       },
       headers: {
@@ -447,7 +447,7 @@ describe("response message", () => {
   });
   it("should be able to initialize with class values", () => {
     msl = new ShioriJK.StatusLine({
-      code: 204,
+      code:    204,
       version: "3.0",
     });
     mh = new ShioriJK.Headers.Response({
@@ -455,7 +455,7 @@ describe("response message", () => {
     });
     m = new ShioriJK.Message.Response({
       status_line: msl,
-      headers: mh,
+      headers:     mh,
     });
     m.status_line.code!.should.be.equal(204);
     m.status_line.version!.should.be.equal("3.0");

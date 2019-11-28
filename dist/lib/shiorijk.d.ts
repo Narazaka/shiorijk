@@ -410,17 +410,20 @@ export declare namespace Shiori {
         /**
          * set section state to first section
          * @throw if before section != 'idle'
+         * @return section index
          */
         begin_parse(): number;
         /**
          * set section state to begining section
          * @throw if before section != 'end'
+         * @return section index
          */
         end_parse(): number;
         /**
          * set section state to begining section FORCE!
          *
          * @note recursively abort parsing
+         * @return section index
          */
         abort_parse(): number;
         /**

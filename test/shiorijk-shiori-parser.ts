@@ -1,5 +1,6 @@
 /// <reference types="mocha" />
-// tslint:disable no-implicit-dependencies
+/* eslint-disable max-statements, no-return-assign, no-undef, new-cap */
+/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-non-null-assertion */
 import * as chai from "chai";
 import * as ShioriJK from "../lib/shiorijk";
 
@@ -22,7 +23,7 @@ describe("ShioriJK.Shiori.Request.RequestLine.Parser", () => {
     mrl.version = "3.0";
     p.parse_line(mrl.toString()).should.to.be.deep.equal({
       result: mrl,
-      state: "end",
+      state:  "end",
     });
   });
   it("should parse old request line", () => {
@@ -31,7 +32,7 @@ describe("ShioriJK.Shiori.Request.RequestLine.Parser", () => {
     mrl.version = "2.0";
     p.parse_line(mrl.toString()).should.to.be.deep.equal({
       result: mrl,
-      state: "end",
+      state:  "end",
     });
   });
 });
@@ -55,7 +56,7 @@ describe("ShioriJK.Shiori.Request.Header.Parser", () => {
     mh.header.Reference7 = "さくら";
     p.parse_chunk(`${mh}\r\n`).should.to.be.deep.equal({
       results: [mh],
-      state: "end",
+      state:   "end",
     });
     p.parse(`${mh}\r\n`).should.to.be.deep.equal(mh);
   });
@@ -92,7 +93,7 @@ describe("ShioriJK.Shiori.Request.Parser", () => {
     mh.header.Reference7 = "さくら";
     p.parse_chunk(`${m}`).should.be.deep.equal({
       results: [m],
-      state: "end",
+      state:   "end",
     });
     p.parse(`${m}`).should.be.deep.equal(m);
   });
@@ -121,7 +122,7 @@ describe("ShioriJK.Shiori.Response.StatusLine.Parser", () => {
     msl.code = 200;
     p.parse_line(msl.toString()).should.to.be.deep.equal({
       result: msl,
-      state: "end",
+      state:  "end",
     });
   });
   it("should parse old request line", () => {
@@ -130,7 +131,7 @@ describe("ShioriJK.Shiori.Response.StatusLine.Parser", () => {
     msl.code = 204;
     p.parse_line(msl.toString()).should.to.be.deep.equal({
       result: msl,
-      state: "end",
+      state:  "end",
     });
   });
 });
@@ -164,7 +165,7 @@ describe("ShioriJK.Shiori.Response.Parser", () => {
     mh.header.Reference0 = "さくら";
     p.parse_chunk(`${m}`).should.be.deep.equal({
       results: [m],
-      state: "end",
+      state:   "end",
     });
     p.parse(`${m}`).should.be.deep.equal(m);
   });

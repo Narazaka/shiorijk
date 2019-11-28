@@ -1,4 +1,4 @@
-// tslint:disable no-console prefer-template max-line-length
+/* eslint-disable max-len, new-cap */
 import * as ShioriJK from "../lib/shiorijk";
 // const ShioriJK = require("../lib/shiorijk"); // also OK
 
@@ -62,9 +62,9 @@ console.log(response.headers.Value === "8.2.8");
 
 const request2 = new ShioriJK.Message.Request({
   request_line: {method: "GET", version: "3.0"},
-  headers: {
+  headers:      {
     Charset: "UTF-8",
-    Sender: "embryo",
+    Sender:  "embryo",
   },
 });
 
@@ -77,10 +77,10 @@ console.log(request2.toString() === "GET SHIORI/3.0\r\nCharset: UTF-8\r\nSender:
 
 const response2 = new ShioriJK.Message.Response({
   status_line: {code: 200, version: "3.0"},
-  headers: {
+  headers:     {
     Charset: "UTF-8",
-    Sender: "ikaga",
-    Value: "8.2.8",
+    Sender:  "ikaga",
+    Value:   "8.2.8",
   },
 });
 
