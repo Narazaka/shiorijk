@@ -91,11 +91,14 @@ export declare class RequestLine implements RequestLineLike {
      */
     constructor(data?: RequestLineLike);
     /** request method */
-    method: Method | undefined;
+    get method(): Method | undefined;
+    set method(method: Method | undefined);
     /** protocol */
-    protocol: Protocol | undefined;
+    get protocol(): Protocol | undefined;
+    set protocol(protocol: Protocol | undefined);
     /** version */
-    version: Version | undefined;
+    get version(): Version | undefined;
+    set version(version: Version | undefined);
     /**
      * validate
      * @param method method
@@ -136,11 +139,14 @@ export declare class StatusLine implements StatusLineLike {
      */
     constructor(data?: StatusLineLike);
     /** status code */
-    code: number | undefined;
+    get code(): number | undefined;
+    set code(code: number | undefined);
     /** protocol */
-    protocol: Protocol | undefined;
+    get protocol(): Protocol | undefined;
+    set protocol(protocol: Protocol | undefined);
     /** version */
-    version: Version | undefined;
+    get version(): Version | undefined;
+    set version(version: Version | undefined);
     /**
      * Message to string
      * @return message string
@@ -256,31 +262,44 @@ export declare namespace Headers {
     /** SHIORI Request Message Headers Container */
     class Request extends Headers {
         /** Charset header */
-        Charset: string | undefined;
+        get Charset(): string | undefined;
+        set Charset(value: string | undefined);
         /** Sender header */
-        Sender: string | undefined;
+        get Sender(): string | undefined;
+        set Sender(value: string | undefined);
         /** SecurityLevel header (SHIORI/2.2,2.6,3.x) */
-        SecurityLevel: string | undefined;
+        get SecurityLevel(): string | undefined;
+        set SecurityLevel(value: string | undefined);
         /** ID header (SHIORI/2.5,3.x) */
-        ID: string | undefined;
+        get ID(): string | undefined;
+        set ID(value: string | undefined);
         /** Event header (SHIORI/2.2) */
-        Event: string | undefined;
+        get Event(): string | undefined;
+        set Event(value: string | undefined);
         /** Type header (GET Word SHIORI/2.0) */
-        Type: string | undefined;
+        get Type(): string | undefined;
+        set Type(value: string | undefined);
         /** Status header (SHIORI/3.1) */
-        Status: string[];
+        get Status(): string[];
+        set Status(value: string[]);
         /** Ghost header (NOTIFY OwnerGhostName SHIORI/2.0,2.3) */
-        Ghost: string | undefined;
+        get Ghost(): string | undefined;
+        set Ghost(value: string | undefined);
         /** Sentence header (SHIORI/2.0,2.3b) */
-        Sentence: string | undefined;
+        get Sentence(): string | undefined;
+        set Sentence(value: string | undefined);
         /** To header (SHIORI/2.3b) */
-        To: string | undefined;
+        get To(): string | undefined;
+        set To(value: string | undefined);
         /** Age header (SHIORI/2.3b) */
-        Age: number | undefined;
+        get Age(): number | undefined;
+        set Age(value: number | undefined);
         /** Surface header (SHIORI/2.3b) */
-        Surface: number[];
+        get Surface(): number[];
+        set Surface(value: number[]);
         /** Word header (TEACH SHIORI/2.4) */
-        Word: string | undefined;
+        get Word(): string | undefined;
+        set Word(value: string | undefined);
     }
     /** SHIORI Response Message Headers Container */
     class Response extends Headers {
@@ -341,19 +360,26 @@ export declare namespace Headers {
          */
         setValueSeparated2(value: string[][], separator1?: string, separator2?: string): string;
         /** BalloonOffset header (SHIORI/2.0) */
-        BalloonOffset: number[][];
+        get BalloonOffset(): number[][];
+        set BalloonOffset(value: number[][]);
         /** Surface header (SHIORI/2.3b) */
-        Surface: number[];
+        get Surface(): number[];
+        set Surface(value: number[]);
         /** Sentence header (SHIORI/2.0,2.2,2.3b,2.4) */
-        Sentence: string | undefined;
+        get Sentence(): string | undefined;
+        set Sentence(value: string | undefined);
         /** Word header (GET Word SHIORI/2.0) */
-        Word: string | undefined;
+        get Word(): string | undefined;
+        set Word(value: string | undefined);
         /** Status header (GET Status SHIORI/2.0) */
-        Status: number[];
+        get Status(): number[];
+        set Status(value: number[]);
         /** String header (GET String SHIORI/2.5) */
-        String: string | undefined;
+        get String(): string | undefined;
+        set String(value: string | undefined);
         /** Value header (GET SHIORI/3.0) */
-        Value: string | undefined;
+        get Value(): string | undefined;
+        set Value(value: string | undefined);
     }
 }
 export declare namespace Shiori {
@@ -362,7 +388,7 @@ export declare namespace Shiori {
     }
     /** parser base class */
     abstract class Parser<Container> {
-        section: Section;
+        section: Section<string>;
         result: Container;
         parsers: {
             [name: string]: {
@@ -440,15 +466,15 @@ export declare namespace Shiori {
         abstract parse_main(line: string): void;
     }
     /** parser section state manager */
-    class Section {
-        readonly sections: string[];
+    class Section<S extends string> {
+        readonly sections: readonly S[];
         private index;
-        constructor(sections: string[]);
-        is(section: string): boolean;
+        constructor(sections: readonly S[]);
+        is(section: S): boolean;
         next(): number;
         previous(): number;
-        set(section: string): number;
-        get(): string;
+        set(section: S): number;
+        get(): S;
     }
     namespace Header {
         abstract class Parser<Container extends Headers> extends Shiori.Parser<Container> {
@@ -457,8 +483,8 @@ export declare namespace Shiori {
                 state: string;
             };
         }
-        class Section extends Shiori.Section {
-            constructor(sections?: string[]);
+        class Section extends Shiori.Section<"idle" | "header" | "end"> {
+            constructor(sections?: readonly ["idle", "header", "end"]);
         }
     }
     namespace Request {
@@ -499,8 +525,8 @@ export declare namespace Shiori {
             class Section extends Shiori.Header.Section {
             }
         }
-        class Section extends Shiori.Section {
-            constructor(sections?: string[]);
+        class Section extends Shiori.Section<"idle" | "request_line" | "headers" | "end"> {
+            constructor(sections?: readonly ["idle", "request_line", "headers", "end"]);
         }
     }
     namespace Response {
@@ -541,8 +567,8 @@ export declare namespace Shiori {
             class Section extends Shiori.Header.Section {
             }
         }
-        class Section extends Shiori.Section {
-            constructor(sections?: string[]);
+        class Section extends Shiori.Section<"idle" | "status_line" | "headers" | "end"> {
+            constructor(sections?: readonly ["idle", "status_line", "headers", "end"]);
         }
     }
 }

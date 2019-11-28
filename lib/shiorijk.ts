@@ -885,7 +885,7 @@ export namespace Shiori {
 
   /** parser base class */
   export abstract class Parser<Container> {
-    section: Section;
+    section: Section<string>;
     result: Container;
     parsers: {[name: string]: {abort_parse?(): void}};
 
@@ -1042,15 +1042,15 @@ export namespace Shiori {
   }
 
   /** parser section state manager */
-  export class Section {
-    readonly sections: string[];
+  export class Section<S extends string> {
+    readonly sections: readonly S[];
     private index = 0;
 
-    constructor(sections: string[]) {
+    constructor(sections: readonly S[]) {
       this.sections = sections;
     }
 
-    is(section: string) {
+    is(section: S) {
       return this.sections[this.index] === section;
     }
 
@@ -1070,7 +1070,7 @@ export namespace Shiori {
       }
     }
 
-    set(section: string) {
+    set(section: S) {
       return this.index = this.sections.indexOf(section);
     }
 
@@ -1110,8 +1110,8 @@ export namespace Shiori {
     }
 
     // tslint:disable-next-line no-shadowed-variable
-    export class Section extends Shiori.Section {
-      constructor(sections = ["idle", "header", "end"]) {
+    export class Section extends Shiori.Section<"idle" | "header" | "end"> {
+      constructor(sections = ["idle", "header", "end"] as const) {
         super(sections);
       }
     }
@@ -1139,7 +1139,7 @@ export namespace Shiori {
         const parser = this.parsers[section];
         const parser_result = parser.parse_line(line);
         if (parser_result.state === "end") {
-          this.result[section] = parser_result.result;
+          this.result[section] = parser_result.result as Headers.Request & RequestLine;
           this.section.next();
         }
       }
@@ -1202,8 +1202,8 @@ export namespace Shiori {
     }
 
     // tslint:disable-next-line no-shadowed-variable
-    export class Section extends Shiori.Section {
-      constructor(sections = ["idle", "request_line", "headers", "end"]) {
+    export class Section extends Shiori.Section<"idle" | "request_line" | "headers" | "end"> {
+      constructor(sections = ["idle", "request_line", "headers", "end"] as const) {
         super(sections);
       }
     }
@@ -1231,7 +1231,7 @@ export namespace Shiori {
         const parser = this.parsers[section];
         const parser_result = parser.parse_line(line);
         if (parser_result.state === "end") {
-          this.result[section] = parser_result.result;
+          this.result[section] = parser_result.result as Headers.Response & StatusLine;
           this.section.next();
         }
       }
@@ -1294,8 +1294,8 @@ export namespace Shiori {
     }
 
     // tslint:disable-next-line no-shadowed-variable
-    export class Section extends Shiori.Section {
-      constructor(sections = ["idle", "status_line", "headers", "end"]) {
+    export class Section extends Shiori.Section<"idle" | "status_line" | "headers" | "end"> {
+      constructor(sections = ["idle", "status_line", "headers", "end"] as const) {
         super(sections);
       }
     }
