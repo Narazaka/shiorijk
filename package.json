@@ -61,7 +61,7 @@
     "prettier": "^1.19.1",
     "shx": "^0.3.0",
     "ts-loader": "^6.2.1",
-    "typedoc": "^0.15.3",
+    "typedoc": "^0.16.0",
     "typescript": "^3.7.2",
     "webpack": "^4.8.3",
     "webpack-cli": "^3.0.0"
