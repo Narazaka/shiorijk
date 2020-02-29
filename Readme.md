@@ -14,9 +14,7 @@ ShioriJK - SHIORI/3.x Parser/Container
 [![Travis Build Status](https://travis-ci.org/Narazaka/shiorijk.svg?branch=master)](https://travis-ci.org/Narazaka/shiorijk)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/Narazaka/shiorijk?svg=true&branch=master)](https://ci.appveyor.com/project/Narazaka/shiorijk)
 [![codecov.io](https://codecov.io/github/Narazaka/shiorijk/coverage.svg?branch=master)](https://codecov.io/github/Narazaka/shiorijk?branch=master)
-[![Code Climate](https://codeclimate.com/github/Narazaka/shiorijk/badges/gpa.svg)](https://codeclimate.com/github/Narazaka/shiorijk)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/3e8aa6e24b6d47c29aa8ebb82b6a1e06)](https://www.codacy.com/app/narazaka/shiorijk?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Narazaka/shiorijk&amp;utm_campaign=Badge_Grade)
-[![Greenkeeper badge](https://badges.greenkeeper.io/Narazaka/shiorijk.svg)](https://greenkeeper.io/)
 
 **Do you know that SHIORI is not JS but JK ?**
 
@@ -150,6 +148,6 @@ History
 License
 --------------------------
 
-This is released under [Zlib License](https://narazaka.net/license/Zlib?2014-2018).
+This is released under [Zlib License](https://narazaka.net/license/Zlib?2014-2020).
 
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FNarazaka%2Fshiorijk.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FNarazaka%2Fshiorijk?ref=badge_large)

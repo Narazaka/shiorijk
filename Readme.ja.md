@@ -13,9 +13,7 @@ ShioriJK - SHIORI/3.x パーサ/コンテナ
 [![Travis Build Status](https://travis-ci.org/Narazaka/shiorijk.svg?branch=master)](https://travis-ci.org/Narazaka/shiorijk)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/Narazaka/shiorijk?svg=true&branch=master)](https://ci.appveyor.com/project/Narazaka/shiorijk)
 [![codecov.io](https://codecov.io/github/Narazaka/shiorijk/coverage.svg?branch=master)](https://codecov.io/github/Narazaka/shiorijk?branch=master)
-[![Code Climate](https://codeclimate.com/github/Narazaka/shiorijk/badges/gpa.svg)](https://codeclimate.com/github/Narazaka/shiorijk)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/3e8aa6e24b6d47c29aa8ebb82b6a1e06)](https://www.codacy.com/app/narazaka/shiorijk?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Narazaka/shiorijk&amp;utm_campaign=Badge_Grade)
-[![Greenkeeper badge](https://badges.greenkeeper.io/Narazaka/shiorijk.svg)](https://greenkeeper.io/)
 
 **つまるところ、栞はJKである**
 
@@ -161,4 +159,4 @@ APIドキュメント
 ライセンス
 --------------------------
 
-[Zlibライセンス](https://narazaka.net/license/Zlib?2014-2018)の元で配布いたします。
+[Zlibライセンス](https://narazaka.net/license/Zlib?2014-2020)の元で配布いたします。
