@@ -41,6 +41,8 @@
     "@typescript-eslint/no-dynamic-delete": [
       "error"
     ],
-    "no-plusplus": ["off"]
+    "no-plusplus": ["off"],
+    "@typescript-eslint/no-implied-eval": "off",
+    "@typescript-eslint/no-throw-literal": "off"
   }
 }
