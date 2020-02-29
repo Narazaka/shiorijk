@@ -148,6 +148,6 @@ History
 License
 --------------------------
 
-This is released under [Zlib License](https://narazaka.net/license/Zlib?2014-2020).
+This is released under [Zlib License](LICENSE).
 
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FNarazaka%2Fshiorijk.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FNarazaka%2Fshiorijk?ref=badge_large)
