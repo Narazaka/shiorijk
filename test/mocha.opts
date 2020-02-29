@@ -1,4 +1,0 @@
---require espower-typescript/guess
---ui bdd
---recursive
-test/*.ts

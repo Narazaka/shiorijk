@@ -7,6 +7,7 @@ coverage
 !.gitignore
 !.travis.yml
 !.codeclimate.yml
+!.mocharc.json
 !.npmrc
 !.nycrc
 !.eslintrc.json

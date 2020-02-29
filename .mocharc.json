@@ -1,0 +1,6 @@
+{
+    "require": ["espower-typescript/guess"],
+    "ui": "bdd",
+    "recursive": true,
+    "extension": ["ts"]
+}
