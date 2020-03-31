@@ -2,7 +2,7 @@
 const path = require("path");
 const webpack = require("./webpack.config.nwjs.test");
 
-module.exports = function(config) {
+module.exports = function (config) {
     config.set({
         browsers: ["NWJS"],
         frameworks: ["nodewebkit-mocha"],

@@ -1,7 +1,7 @@
 /* eslint no-process-env: 0, no-magic-numbers: 0, max-statements: 0 */
 const webpack = require("./webpack.config.test");
 
-module.exports = function(config) {
+module.exports = function (config) {
     config.set({
         mime: { "text/x-typescript": ["ts", "tsx"] }, // fix typescript serving video/mp2t mime type
         frameworks: ["mocha"].concat(process.env.NO_DETECT ? [] : ["detectBrowsers"]),

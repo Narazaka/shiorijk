@@ -512,7 +512,7 @@ export class Headers {
         const value = this.header[name];
         // eslint-disable-next-line no-negated-condition
         if (value != null) {
-            return value.split(separator1).map(value1 => value1.split(separator2));
+            return value.split(separator1).map((value1) => value1.split(separator2));
         }
         return undefined;
     }
@@ -527,7 +527,7 @@ export class Headers {
      */
     set_separated2(name: string, value: string[][], separator1 = "\x02", separator2 = "\x01") {
         // eslint-disable-next-line no-return-assign
-        return (this.header[name] = value.map(value1 => value1.join(separator2)).join(separator1));
+        return (this.header[name] = value.map((value1) => value1.join(separator2)).join(separator1));
     }
 
     /**
@@ -731,7 +731,7 @@ export namespace Headers {
         set Surface(value) {
             this.set_separated(
                 "Surface",
-                value.map(elem => elem.toString()),
+                value.map((elem) => elem.toString()),
                 ",",
             );
         }
@@ -830,13 +830,13 @@ export namespace Headers {
 
         /** BalloonOffset header (SHIORI/2.0) */
         get BalloonOffset() {
-            return (this.get_separated2("BalloonOffset", "\x01", ",") || []).map(value1 => value1.map(Number));
+            return (this.get_separated2("BalloonOffset", "\x01", ",") || []).map((value1) => value1.map(Number));
         }
 
         set BalloonOffset(value) {
             this.set_separated2(
                 "BalloonOffset",
-                value.map(elems => elems.map(elem => elem.toString())),
+                value.map((elems) => elems.map((elem) => elem.toString())),
                 "\x01",
                 ",",
             );
@@ -850,7 +850,7 @@ export namespace Headers {
         set Surface(value) {
             this.set_separated(
                 "Surface",
-                value.map(elem => elem.toString()),
+                value.map((elem) => elem.toString()),
                 ",",
             );
         }
@@ -881,7 +881,7 @@ export namespace Headers {
         set Status(value) {
             this.set_separated(
                 "Status",
-                value.map(elem => elem.toString()),
+                value.map((elem) => elem.toString()),
                 ",",
             );
         }
