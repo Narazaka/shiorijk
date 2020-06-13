@@ -117,6 +117,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Shiori = exports.Headers = exports.StatusLine = exports.RequestLine = exports.Message = void 0;
 /**
  * SHIORI Protocol Message Container
  */
@@ -249,7 +250,7 @@ var RequestLine = /** @class */ (function () {
             }
             this.arguments.method = method;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(RequestLine.prototype, "protocol", {
@@ -263,7 +264,7 @@ var RequestLine = /** @class */ (function () {
             }
             this.arguments.protocol = protocol;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(RequestLine.prototype, "version", {
@@ -291,7 +292,7 @@ var RequestLine = /** @class */ (function () {
             }
             this.arguments.version = version;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     /**
@@ -416,7 +417,7 @@ var StatusLine = /** @class */ (function () {
             }
             this.arguments.code = code;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(StatusLine.prototype, "protocol", {
@@ -430,7 +431,7 @@ var StatusLine = /** @class */ (function () {
             }
             this.arguments.protocol = protocol;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(StatusLine.prototype, "version", {
@@ -455,7 +456,7 @@ var StatusLine = /** @class */ (function () {
             }
             this.arguments.version = version;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     /**
@@ -693,7 +694,7 @@ exports.Headers = Headers;
             set: function (value) {
                 this.set("Charset", value);
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(Request.prototype, "Sender", {
@@ -704,7 +705,7 @@ exports.Headers = Headers;
             set: function (value) {
                 this.set("Sender", value);
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(Request.prototype, "SecurityLevel", {
@@ -715,7 +716,7 @@ exports.Headers = Headers;
             set: function (value) {
                 this.set("SecurityLevel", value);
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(Request.prototype, "ID", {
@@ -726,7 +727,7 @@ exports.Headers = Headers;
             set: function (value) {
                 this.set("ID", value);
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(Request.prototype, "Event", {
@@ -737,7 +738,7 @@ exports.Headers = Headers;
             set: function (value) {
                 this.set("Event", value);
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(Request.prototype, "Type", {
@@ -748,7 +749,7 @@ exports.Headers = Headers;
             set: function (value) {
                 this.set("Type", value);
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(Request.prototype, "Status", {
@@ -759,7 +760,7 @@ exports.Headers = Headers;
             set: function (value) {
                 this.set_separated("Status", value, ",");
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(Request.prototype, "Ghost", {
@@ -770,7 +771,7 @@ exports.Headers = Headers;
             set: function (value) {
                 this.set("Ghost", value);
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(Request.prototype, "Sentence", {
@@ -781,7 +782,7 @@ exports.Headers = Headers;
             set: function (value) {
                 this.set("Sentence", value);
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(Request.prototype, "To", {
@@ -792,7 +793,7 @@ exports.Headers = Headers;
             set: function (value) {
                 this.set("To", value);
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(Request.prototype, "Age", {
@@ -804,7 +805,7 @@ exports.Headers = Headers;
             set: function (value) {
                 this.set("Age", value == null ? undefined : value.toString());
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(Request.prototype, "Surface", {
@@ -815,7 +816,7 @@ exports.Headers = Headers;
             set: function (value) {
                 this.set_separated("Surface", value.map(function (elem) { return elem.toString(); }), ",");
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(Request.prototype, "Word", {
@@ -826,7 +827,7 @@ exports.Headers = Headers;
             set: function (value) {
                 this.set("Word", value);
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         return Request;
@@ -930,7 +931,7 @@ exports.Headers = Headers;
             set: function (value) {
                 this.set_separated2("BalloonOffset", value.map(function (elems) { return elems.map(function (elem) { return elem.toString(); }); }), "\x01", ",");
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(Response.prototype, "Surface", {
@@ -941,7 +942,7 @@ exports.Headers = Headers;
             set: function (value) {
                 this.set_separated("Surface", value.map(function (elem) { return elem.toString(); }), ",");
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(Response.prototype, "Sentence", {
@@ -952,7 +953,7 @@ exports.Headers = Headers;
             set: function (value) {
                 this.set("Sentence", value);
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(Response.prototype, "Word", {
@@ -963,7 +964,7 @@ exports.Headers = Headers;
             set: function (value) {
                 this.set("Word", value);
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(Response.prototype, "Status", {
@@ -974,7 +975,7 @@ exports.Headers = Headers;
             set: function (value) {
                 this.set_separated("Status", value.map(function (elem) { return elem.toString(); }), ",");
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(Response.prototype, "String", {
@@ -985,7 +986,7 @@ exports.Headers = Headers;
             set: function (value) {
                 this.set("String", value);
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(Response.prototype, "Value", {
@@ -996,7 +997,7 @@ exports.Headers = Headers;
             set: function (value) {
                 this.set("Value", value);
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         return Response;

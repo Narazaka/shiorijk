@@ -22,6 +22,7 @@
     "max-classes-per-file": ["off"],
     "func-names": 0,
     "camelcase": 0,
+    "@typescript-eslint/naming-convention": 0,
     "@typescript-eslint/camelcase": 0,
     "valid-jsdoc": [
       "error",
@@ -43,6 +44,7 @@
     ],
     "no-plusplus": ["off"],
     "@typescript-eslint/no-implied-eval": "off",
-    "@typescript-eslint/no-throw-literal": "off"
+    "@typescript-eslint/no-throw-literal": "off",
+    "@typescript-eslint/dot-notation": "off"
   }
 }
