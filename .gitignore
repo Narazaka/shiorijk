@@ -15,3 +15,4 @@ coverage
 !.prettierrc.json
 dist/test
 dist/example
+package-lock.json
