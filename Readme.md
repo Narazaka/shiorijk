@@ -1,5 +1,4 @@
-ShioriJK - SHIORI/3.x Parser/Container
-=============================================
+# ShioriJK - SHIORI/3.x Parser/Container
 
 [![npm](https://img.shields.io/npm/v/shiorijk.svg)](https://www.npmjs.com/package/shiorijk)
 [![npm license](https://img.shields.io/npm/l/shiorijk.svg)](https://www.npmjs.com/package/shiorijk)
@@ -14,12 +13,11 @@ ShioriJK - SHIORI/3.x Parser/Container
 [![Travis Build Status](https://travis-ci.org/Narazaka/shiorijk.svg?branch=master)](https://travis-ci.org/Narazaka/shiorijk)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/Narazaka/shiorijk?svg=true&branch=master)](https://ci.appveyor.com/project/Narazaka/shiorijk)
 [![codecov.io](https://codecov.io/github/Narazaka/shiorijk/coverage.svg?branch=master)](https://codecov.io/github/Narazaka/shiorijk?branch=master)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/3e8aa6e24b6d47c29aa8ebb82b6a1e06)](https://www.codacy.com/app/narazaka/shiorijk?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Narazaka/shiorijk&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/3e8aa6e24b6d47c29aa8ebb82b6a1e06)](https://www.codacy.com/app/narazaka/shiorijk?utm_source=github.com&utm_medium=referral&utm_content=Narazaka/shiorijk&utm_campaign=Badge_Grade)
 
 **Do you know that SHIORI is not JS but JK ?**
 
-Installation
---------------------------
+## Installation
 
     npm install shiorijk
 
@@ -27,15 +25,14 @@ or
 
     bower install shiorijk
 
-What is ShioriJK ?
---------------------------
+## What is ShioriJK ?
 
 ShioriJK is a library of SHIORI protocol parsers and containers implemented by Javascript (TypeScript) for making SHIORI subsystem.
 
-Usage overview
---------------------------
+## Usage overview
 
 [example/example.ts](example/example.ts)
+
 ```typescript
 import * as ShioriJK from "shiorijk";
 // const ShioriJK = require("shiorijk"); // also OK
@@ -85,12 +82,7 @@ console.log(parseResult.results[0].headers.ID === "version");
 // ---------- parse response ----------
 
 const responseParser = new ShioriJK.Shiori.Response.Parser();
-const responseStr =
-  "SHIORI/3.0 200 OK\r\n" +
-  "Sender: ikaga\r\n" +
-  "Charset: UTF-8\r\n" +
-  "Value: 8.2.8\r\n" +
-  "\r\n";
+const responseStr = "SHIORI/3.0 200 OK\r\n" + "Sender: ikaga\r\n" + "Charset: UTF-8\r\n" + "Value: 8.2.8\r\n" + "\r\n";
 const response = responseParser.parse(responseStr);
 console.log(response.headers.Value === "8.2.8");
 
@@ -99,7 +91,7 @@ console.log(response.headers.Value === "8.2.8");
 // ---------- build request ----------
 
 const request2 = new ShioriJK.Message.Request({
-  request_line: {method: "GET", version: "3.0"},
+  request_line: { method: "GET", version: "3.0" },
   headers: {
     Charset: "UTF-8",
     Sender: "embryo",
@@ -114,12 +106,12 @@ console.log(request2.toString() === "GET SHIORI/3.0\r\nCharset: UTF-8\r\nSender:
 // ---------- build response ----------
 
 const response2 = new ShioriJK.Message.Response({
-  status_line: {code: 200, version: "3.0"},
+  status_line: { code: 200, version: "3.0" },
   headers: {
     Charset: "UTF-8",
     Sender: "ikaga",
     Value: "8.2.8",
-  }
+  },
 });
 
 console.log(response2.toString() === "SHIORI/3.0 200 OK\r\nCharset: UTF-8\r\nSender: ikaga\r\nValue: 8.2.8\r\n\r\n");
@@ -127,15 +119,13 @@ console.log(response2.toString() === "SHIORI/3.0 200 OK\r\nCharset: UTF-8\r\nSen
 
 MORE: See the SHIORI implementation [SanaJK](https://github.com/Narazaka/sanajk) and Ukagaka Baseware implementation [Ikagaka](https://github.com/Ikagaka/Ikagaka.demo) that is using ShioriJK.
 
-API Document
---------------------------
+## API Document
 
 See [http://narazaka.github.io/shiorijk/](http://narazaka.github.io/shiorijk/) or the source in [lib/](lib).
 
 Also you can found the code snippets in [test/](test).
 
-History
---------------------------
+## History
 
 ### v1.0.0
 
@@ -145,8 +135,7 @@ History
 - The string throw that existed in some APIs has been changed to throw classes that inherited Error.
 - Needs >= ES5 (so IE <= 8 needs shims).
 
-License
---------------------------
+## License
 
 This is released under [Zlib License](LICENSE).
 

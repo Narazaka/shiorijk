@@ -1,50 +1,41 @@
 {
-  "parser": "@typescript-eslint/parser",
-  "plugins": [
-    "@typescript-eslint",
-    "prettier"
-  ],
-  "extends": [
-    "airbnb-typescript/base",
-    "plugin:prettier/recommended",
-    "prettier/@typescript-eslint"
-  ],
-  "overrides": [
-    {
-      "files": ["*.js"],
-      "rules": {
-        "@typescript-eslint/no-var-requires": 0
-      }
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint", "prettier"],
+    "extends": ["airbnb-typescript/base", "plugin:prettier/recommended", "prettier/@typescript-eslint"],
+    "overrides": [
+        {
+            "files": ["*.js"],
+            "rules": {
+                "@typescript-eslint/no-var-requires": 0
+            }
+        }
+    ],
+    "rules": {
+        "default-case": ["off"],
+        "max-classes-per-file": ["off"],
+        "func-names": 0,
+        "camelcase": 0,
+        "@typescript-eslint/naming-convention": 0,
+        "@typescript-eslint/camelcase": 0,
+        "valid-jsdoc": [
+            "error",
+            {
+                "requireParamType": false,
+                "requireReturnType": false,
+                "requireReturn": false
+            }
+        ],
+        "no-use-before-define": 0,
+        "@typescript-eslint/no-use-before-define": 0,
+        "no-magic-numbers": 0,
+        "max-lines": 0,
+        "init-declarations": 0,
+        "@typescript-eslint/no-namespace": 0,
+        "@typescript-eslint/explicit-function-return-type": 0,
+        "@typescript-eslint/no-dynamic-delete": ["error"],
+        "no-plusplus": ["off"],
+        "@typescript-eslint/no-implied-eval": "off",
+        "@typescript-eslint/no-throw-literal": "off",
+        "@typescript-eslint/dot-notation": "off"
     }
-  ],
-  "rules": {
-    "default-case": ["off"],
-    "max-classes-per-file": ["off"],
-    "func-names": 0,
-    "camelcase": 0,
-    "@typescript-eslint/naming-convention": 0,
-    "@typescript-eslint/camelcase": 0,
-    "valid-jsdoc": [
-      "error",
-      {
-        "requireParamType": false,
-        "requireReturnType": false,
-        "requireReturn": false
-      }
-    ],
-    "no-use-before-define": 0,
-    "@typescript-eslint/no-use-before-define": 0,
-    "no-magic-numbers": 0,
-    "max-lines": 0,
-    "init-declarations": 0,
-    "@typescript-eslint/no-namespace": 0,
-    "@typescript-eslint/explicit-function-return-type": 0,
-    "@typescript-eslint/no-dynamic-delete": [
-      "error"
-    ],
-    "no-plusplus": ["off"],
-    "@typescript-eslint/no-implied-eval": "off",
-    "@typescript-eslint/no-throw-literal": "off",
-    "@typescript-eslint/dot-notation": "off"
-  }
 }

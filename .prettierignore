@@ -1,0 +1,8 @@
+package.json
+package-lock.json
+bower.json
+coverage
+.*/
+dist
+doc
+node_modules
