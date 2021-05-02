@@ -14,7 +14,8 @@
         "preserveConstEnums": true,
         "sourceMap": true,
         "strictNullChecks": true,
-        "outDir": "dist"
+        "outDir": "dist",
+        "newLine": "lf"
     },
     "exclude": ["node_modules", "dist"]
 }
