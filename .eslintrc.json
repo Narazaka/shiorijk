@@ -1,7 +1,7 @@
 {
     "parser": "@typescript-eslint/parser",
-    "plugins": ["@typescript-eslint", "prettier"],
-    "extends": ["airbnb-typescript/base", "plugin:prettier/recommended", "prettier/@typescript-eslint"],
+    "plugins": ["@typescript-eslint"],
+    "extends": ["airbnb-typescript/base", "prettier"],
     "overrides": [
         {
             "files": ["*.js"],
@@ -36,6 +36,7 @@
         "no-plusplus": ["off"],
         "@typescript-eslint/no-implied-eval": "off",
         "@typescript-eslint/no-throw-literal": "off",
-        "@typescript-eslint/dot-notation": "off"
+        "@typescript-eslint/dot-notation": "off",
+        "@typescript-eslint/return-await": "off"
     }
 }
