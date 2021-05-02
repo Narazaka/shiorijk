@@ -1115,7 +1115,7 @@ export namespace Shiori {
     }
 
     export namespace Header {
-        // eslint-disable-next-line no-shadow
+        // eslint-disable-next-line @typescript-eslint/no-shadow
         export abstract class Parser<Container extends Headers> extends Shiori.Parser<Container> {
             parse_main(line: string) {
                 const result = this.parse_header(line);
@@ -1144,7 +1144,7 @@ export namespace Shiori {
             }
         }
 
-        // eslint-disable-next-line no-shadow
+        // eslint-disable-next-line @typescript-eslint/no-shadow
         export class Section extends Shiori.Section<"idle" | "header" | "end"> {
             constructor(sections = ["idle", "header", "end"] as ["idle", "header", "end"]) {
                 super(sections);
@@ -1154,7 +1154,7 @@ export namespace Shiori {
 
     export namespace Request {
         /** SHIORI Request parser */
-        // eslint-disable-next-line no-shadow
+        // eslint-disable-next-line @typescript-eslint/no-shadow
         export class Parser extends Shiori.Parser<Message.Request> {
             parsers = {
                 request_line: new RequestLine.Parser(),
@@ -1181,9 +1181,9 @@ export namespace Shiori {
             }
         }
 
-        // eslint-disable-next-line no-shadow
+        // eslint-disable-next-line @typescript-eslint/no-shadow
         export namespace RequestLine {
-            // eslint-disable-next-line no-shadow
+            // eslint-disable-next-line @typescript-eslint/no-shadow
             export class Parser {
                 result: RequestLine;
 
@@ -1221,9 +1221,9 @@ export namespace Shiori {
             }
         }
 
-        // eslint-disable-next-line no-shadow
+        // eslint-disable-next-line @typescript-eslint/no-shadow
         export namespace Header {
-            // eslint-disable-next-line no-shadow
+            // eslint-disable-next-line @typescript-eslint/no-shadow
             export class Parser extends Shiori.Header.Parser<Headers.Request> {
                 constructor() {
                     super();
@@ -1239,7 +1239,7 @@ export namespace Shiori {
             export class Section extends Shiori.Header.Section {}
         }
 
-        // eslint-disable-next-line no-shadow
+        // eslint-disable-next-line @typescript-eslint/no-shadow
         export class Section extends Shiori.Section<"idle" | "request_line" | "headers" | "end"> {
             constructor(
                 sections = ["idle", "request_line", "headers", "end"] as ["idle", "request_line", "headers", "end"],
@@ -1251,7 +1251,7 @@ export namespace Shiori {
 
     export namespace Response {
         /** SHIORI Response parser */
-        // eslint-disable-next-line no-shadow
+        // eslint-disable-next-line @typescript-eslint/no-shadow
         export class Parser extends Shiori.Parser<Message.Response> {
             parsers = {
                 status_line: new StatusLine.Parser(),
@@ -1278,9 +1278,9 @@ export namespace Shiori {
             }
         }
 
-        // eslint-disable-next-line no-shadow
+        // eslint-disable-next-line @typescript-eslint/no-shadow
         export namespace StatusLine {
-            // eslint-disable-next-line no-shadow
+            // eslint-disable-next-line @typescript-eslint/no-shadow
             export class Parser {
                 result: StatusLine;
 
@@ -1318,9 +1318,9 @@ export namespace Shiori {
             }
         }
 
-        // eslint-disable-next-line no-shadow
+        // eslint-disable-next-line @typescript-eslint/no-shadow
         export namespace Header {
-            // eslint-disable-next-line no-shadow
+            // eslint-disable-next-line @typescript-eslint/no-shadow
             export class Parser extends Shiori.Header.Parser<Headers.Response> {
                 constructor() {
                     super();
@@ -1336,7 +1336,7 @@ export namespace Shiori {
             export class Section extends Shiori.Header.Section {}
         }
 
-        // eslint-disable-next-line no-shadow
+        // eslint-disable-next-line @typescript-eslint/no-shadow
         export class Section extends Shiori.Section<"idle" | "status_line" | "headers" | "end"> {
             constructor(
                 sections = ["idle", "status_line", "headers", "end"] as ["idle", "status_line", "headers", "end"],

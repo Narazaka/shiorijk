@@ -13,5 +13,7 @@ coverage
 !.eslintrc.json
 !.eslintignore
 !.prettierrc.json
+!.prettierignore
 dist/test
 dist/example
+package-lock.json
